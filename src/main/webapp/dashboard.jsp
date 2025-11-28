@@ -512,9 +512,7 @@ h3 {
 
 			<div class="nav-links">
 				<a href="#" class="active"><i class="fas fa-home"></i> Home</a> <a
-					href="#categories"><i class="fas fa-list-ul"></i> Categories</a> <a
-					href="#learning-paths"><i class="fas fa-map-marked-alt"></i>
-					Learning Paths</a> <a href="#my-tests"><i class="fas fa-history"></i>
+					href="#categories"><i class="fas fa-list-ul"></i> Categories</a> <a href="#my-tests"><i class="fas fa-history"></i>
 					My Tests</a>
 			</div>
 
@@ -612,59 +610,7 @@ h3 {
 				</div>
 			</div>
 		</div>
-		<div class="section" id="learning-paths">
-			<h2>
-				<i class="fas fa-map-marked-alt"></i> Personalized Learning Paths
-			</h2>
-			<p
-				style="color: var(--subtle-gray); margin-bottom: 25px; text-align: left;">Choose
-				a path to master a skill or prepare for a certification.</p>
-
-			<div class="path-grid">
-				<div class="path-card">
-					<h3 style="color: var(--primary-color);">AWS Certified
-						Solutions Architect</h3>
-					<p>Master Cloud Architecture and deployment principles across
-						core AWS services.</p>
-					<div class="progress-bar-container" style="margin-bottom: 10px;">
-						<div class="progress-bar" style="width: 45%;"></div>
-					</div>
-					<small style="color: var(--subtle-gray);">45% Complete
-						(Next: Networking Module)</small> <a href="#" class="cta-button"
-						style="background-color: var(--primary-color); color: white; margin-top: 15px;">Resume
-						Path</a>
-				</div>
-
-				<div class="path-card">
-					<h3 style="color: var(--primary-color);">Python Mastery for
-						Data Science</h3>
-					<p>From basic syntax to advanced libraries (Pandas,
-						Scikit-learn, TensorFlow).</p>
-					<div class="progress-bar-container" style="margin-bottom: 10px;">
-						<div class="progress-bar" style="width: 0%;"></div>
-					</div>
-					<small style="color: var(--subtle-gray);">Not Started</small> <a
-						href="#" class="cta-button"
-						style="background-color: var(--accent-color); color: var(--light-text); margin-top: 15px;">Start
-						Path</a>
-				</div>
-
-				<div class="path-card">
-					<h3 style="color: var(--primary-color);">CFA Level I Prep
-						Course</h3>
-					<p>Deep dive into Ethical and Professional Standards,
-						Economics, and Financial Reporting.</p>
-					<div class="progress-bar-container" style="margin-bottom: 10px;">
-						<div class="progress-bar" style="width: 78%;"></div>
-					</div>
-					<small style="color: var(--subtle-gray);">78% Complete
-						(Review: Fixed Income)</small> <a href="#" class="cta-button"
-						style="background-color: var(--primary-color); color: white; margin-top: 15px;">Review
-						Progress</a>
-				</div>
-			</div>
-		</div>
-		<section class="section" id="faq"
+				<section class="section" id="faq"
 			style="background-color: var(--dark-bg);">
 			<div class="container">
 				<h2 style="text-align: center;">
