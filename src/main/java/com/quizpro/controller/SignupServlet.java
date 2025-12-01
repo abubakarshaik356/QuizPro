@@ -25,7 +25,7 @@ public class SignupServlet extends HttpServlet{
 		String email=req.getParameter("email");
 		String password=req.getParameter("password");
 		long phone=Long.parseLong(req.getParameter("phone"));
-		boolean result=userDAO.signup(name, email, phone, password);
+		boolean result=userDAO.signup(name, email,"user", phone, password);
 		if(result) {
 			resp.sendRedirect("login.jsp?msg=Account created successfully");
 		}

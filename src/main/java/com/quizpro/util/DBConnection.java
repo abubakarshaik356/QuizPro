@@ -8,7 +8,7 @@ public class DBConnection {
 	public static Connection getConnector() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/quizpro","root","root");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/onlinequiz","root","root");
 			return con;
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block

@@ -12,9 +12,9 @@ import com.quizpro.util.DBConnection;
 public class UserDAOImpl implements UserDAO{
 	static User user;
 	@Override
-	public boolean signup(String name, String email, long phone, String password) {
+	public boolean signup(String name, String email,String role, long phone, String password) {
 		Connection conn=DBConnection.getConnector();
-		String qry="INSERT into users values(?,?,?,?,?)";
+		String qry="INSERT into emps values(?,?,?,?,?,?)";
 		PreparedStatement ps;
 		try {
 			ps=conn.prepareStatement(qry);
@@ -23,7 +23,8 @@ public class UserDAOImpl implements UserDAO{
 			ps.setString(2, name);
 			ps.setString(3, email);
 			ps.setLong(4, phone);
-			ps.setString(5, password);
+			ps.setString(5, role);
+			ps.setString(6, password);
 			int result=ps.executeUpdate();
 			if(result>0) {
 				return true;
@@ -37,7 +38,7 @@ public class UserDAOImpl implements UserDAO{
 
 	public User login(String email, String password) {
 		Connection conn=DBConnection.getConnector();
-		String qry="select * from users where email=? and password=?";
+		String qry="select * from emps where email=? and password=?";
 		PreparedStatement ps;
 		try {
 			ps = conn.prepareStatement(qry);
@@ -45,7 +46,7 @@ public class UserDAOImpl implements UserDAO{
 			ps.setString(2, password);
 			ResultSet rs=ps.executeQuery();
 			if(rs.next()) {
-				user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getString(5));
+				user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getString(6));
 				return user;
 			}
 		} catch (SQLException e) {
