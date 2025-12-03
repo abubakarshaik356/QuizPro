@@ -511,8 +511,8 @@ h3 {
 			<a href="dashboard.html" class="logo">Quiz<span>Pro</span></a>
 
 			<div class="nav-links">
-				<a href="#" class="active"><i class="fas fa-home"></i> Home</a> <a
-					href="#categories"><i class="fas fa-list-ul"></i> Categories</a> <a href="#my-tests"><i class="fas fa-history"></i>
+				<a href="#" class="active"><i class="fas fa-home"></i> Home</a> 
+				<a href="categories"><i class="fas fa-list-ul"></i> Categories</a></i> Categories</a> <a href="#my-tests"><i class="fas fa-history"></i>
 					My Tests</a>
 			</div>
 
