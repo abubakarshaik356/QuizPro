@@ -31,6 +31,7 @@ public class LoginServlet extends HttpServlet{
 			session.setAttribute("name", result.getName());
 			session.setAttribute("email", result.getEmail());
 			session.setAttribute("phone", result.getPhone());
+			session.setAttribute("user", result);
 			System.out.println("success");
 			resp.sendRedirect("dashboard.jsp");
 		}
