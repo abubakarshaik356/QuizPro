@@ -523,7 +523,7 @@ h3 {
 					onclick="toggleDropdown()">
 				<div class="dropdown-content" id="profileDropdown">
 					<a href="#"><i class="fas fa-user-circle"></i> Profile</a> <a
-						href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+						href="login.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
 				</div>
 			</div>
 		</div>

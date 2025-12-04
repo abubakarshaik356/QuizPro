@@ -5,14 +5,22 @@ public class User {
 	private String name;
 	private String email;
 	private long phone;
+	private String role;
 	private String password;
-	public User(int userid, String name, String email, long phone, String password) {
+	public User(int userid, String name, String email, long phone,String role, String password) {
 		super();
 		this.userid = userid;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
+		this.role=role;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 	public int getUserid() {
 		return userid;

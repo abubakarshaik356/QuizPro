@@ -50,7 +50,7 @@ public class UserDAOImpl implements UserDAO {
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getString(6));
+				user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getString(5), rs.getString(6));
 				return user;
 			}
 		} catch (SQLException e) {
