@@ -506,28 +506,7 @@ h3 {
 	<%
 	String name = (String) session.getAttribute("name");
 	%>
-	<header class="navbar">
-		<div class="container">
-			<a href="dashboard.html" class="logo">Quiz<span>Pro</span></a>
-
-			<div class="nav-links">
-				<a href="#" class="active"><i class="fas fa-home"></i> Home</a> 
-				<a href="categories"><i class="fas fa-list-ul"></i> Categories</a><a href="#my-tests"><i class="fas fa-history"></i>
-					My Tests</a>
-			</div>
-
-			<div class="profile-menu">
-				<img
-					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwJgi2tfPov2vnIRkuxgRw_gHSqt_uRGbrdA&s"
-					alt="User Avatar" class="profile-icon" id="profileIcon"
-					onclick="toggleDropdown()">
-				<div class="dropdown-content" id="profileDropdown">
-					<a href="#"><i class="fas fa-user-circle"></i> Profile</a> <a
-						href="login.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
-				</div>
-			</div>
-		</div>
-	</header>
+	<%@ include file="navbar.jsp" %>
 
 	<div class="container dashboard-grid">
 

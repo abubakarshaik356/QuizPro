@@ -157,15 +157,7 @@
 
 <div class="admin-layout">
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <a class="logo" href="#">Admin<span>Pro</span></a>
-        <nav>
-            <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="#"><i class="fas fa-users"></i> Users</a>
-            <a href="#" class="active"><i class="fas fa-puzzle-piece"></i> Content</a>
-        </nav>
-    </aside>
+<%@ include file="adminSideBar.jsp" %>
 
     <!-- Main Content -->
     <main class="main-content">
