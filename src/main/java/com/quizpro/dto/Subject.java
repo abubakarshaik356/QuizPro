@@ -32,4 +32,11 @@ public class Subject {
     public void setSubDesc(String subDesc) {
         this.subDesc = subDesc;
     }
+	@Override
+	public String toString() {
+		return "Subject [subId=" + subId + ", subname=" + subname + ", subDesc=" + subDesc + ", quizCount=" + quizCount
+				+ "]";
+	}
+    
 }
+

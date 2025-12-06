@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
+import com.quizpro.dto.Quizzes;
+import com.quizpro.dto.Subject;
 import com.quizpro.dto.User;
+import com.quizpro.dto.UserManage;
 import com.quizpro.dto.UserTestHis;
 import com.quizpro.util.DBConnection;
 
@@ -50,7 +52,8 @@ public class UserDAOImpl implements UserDAO {
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getString(5), rs.getString(6));
+				user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getLong(4), rs.getString(5),
+						rs.getString(6));
 				return user;
 			}
 		} catch (SQLException e) {
@@ -90,27 +93,24 @@ public class UserDAOImpl implements UserDAO {
 
 		Connection con = DBConnection.getConnector();
 		PreparedStatement pst;
-		ArrayList<UserTestHis> list=null;
+		ArrayList<UserTestHis> list = null;
 		try {
 			pst = con.prepareStatement(query);
 			pst.setInt(1, id);
 			ResultSet rs = pst.executeQuery();
 			list = new ArrayList<UserTestHis>();
-			while(rs.next()) {
-//				UserTestHis ushis = new UserTestHis(rs.getString("quiz_name"),rs.getString("subject_name"), rs.getDate("date_taken").toString(), rs.getFloat("percentage"), rs.getString("result_status"));
-//				userhis.add(ushis);
-				
+			while (rs.next()) {
 				UserTestHis uth = new UserTestHis();
-	            uth.setQuizName(rs.getString("quiz_name"));
-	            uth.setCategory(rs.getString("subject_name"));
-	            uth.setScorePer(rs.getDouble("percentage"));
-	            uth.setStatus(rs.getString("result_status"));
+				uth.setQuizName(rs.getString("quiz_name"));
+				uth.setCategory(rs.getString("subject_name"));
+				uth.setScorePer(rs.getDouble("percentage"));
+				uth.setStatus(rs.getString("result_status"));
 
-	            // Convert Date to String (safe)
-	            Date dt = rs.getDate("date_taken");
-	            uth.setDateTaken(dt != null ? dt.toString() : "N/A");
+				// Convert Date to String (safe)
+				Date dt = rs.getDate("date_taken");
+				uth.setDateTaken(dt != null ? dt.toString() : "N/A");
 
-	            list.add(uth);
+				list.add(uth);
 			}
 			return list;
 		} catch (SQLException e) {
@@ -118,5 +118,94 @@ public class UserDAOImpl implements UserDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public ArrayList<UserManage> getUsers() {
+		Connection con = DBConnection.getConnector();
+
+		String str = "SELECT e.eid AS empid, e.name AS ename, e.email AS email, e.role AS erole, "
+				+ "SUM(CASE WHEN r.resstatus = 'pass' THEN 1 ELSE 0 END) AS total_certificates, "
+				+ "COUNT(r.userId) AS total_quizzes_attended " + "FROM emps e LEFT JOIN result r ON e.eid = r.userid "
+				+ "WHERE e.role != 'Admin' " + "GROUP BY e.eid, e.name, e.email, e.role";
+		ArrayList<UserManage> list = null;
+		try {
+			PreparedStatement ps = con.prepareStatement(str);
+			ResultSet rs = ps.executeQuery();
+			list = new ArrayList<>();
+			while (rs.next()) {
+				UserManage usr = new UserManage();
+				usr.setId(rs.getInt(1));
+				usr.setName(rs.getString(2));
+				usr.setEmail(rs.getString(3));
+				usr.setRole(rs.getString(4));
+				usr.setTotalQuizAttend(rs.getInt(5));
+				usr.setCertificateAchieve(rs.getInt(6));
+
+				list.add(usr);
+
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ArrayList<Subject> getSubjects() {
+
+		ArrayList<Subject> sub = new ArrayList<>();
+
+		Connection conn = DBConnection.getConnector();
+
+		String str = "SELECT sb.subId AS subid, sb.subname AS subName, COUNT(q.quizid) AS total_quizzes "
+				+ "FROM subjects sb " + "LEFT JOIN quizzs q ON sb.subId = q.subid " + "GROUP BY sb.subId, sb.subname";
+
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(str);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Subject subject = new Subject();
+				subject.setSubId(rs.getInt("subid"));
+				subject.setSubname(rs.getString("subName"));
+				subject.setQuizCount(rs.getInt("total_quizzes"));
+				sub.add(subject); 
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return sub;
+	}
+
+	@Override
+	public ArrayList<Quizzes> getQuizzes() {
+		ArrayList<Quizzes> quiz = new ArrayList<Quizzes>();
+		Connection conn = DBConnection.getConnector();
+		String str = "SELECT q.quizid AS ID, q.quizname AS Title, s.subname AS SubjectName, "
+				+ "COUNT(ques.quesid) AS Total_Questions, q.quizmarks AS Marks " + "FROM quizzs q "
+				+ "JOIN subjects s ON q.subid = s.subid " + "LEFT JOIN questions ques ON q.quizid = ques.quizid "
+				+ "GROUP BY q.quizid, q.quizname, s.subname, q.quizmarks";
+
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(str);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Quizzes qz = new Quizzes();
+				qz.setUserId(rs.getInt(1));
+				qz.setTitle(rs.getString(2));
+				qz.setCategory(rs.getString(3));
+				qz.setQuestions(rs.getInt(4));
+				qz.setMarks(rs.getInt(5));
+				quiz.add(qz);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return quiz;
 	}
 }
