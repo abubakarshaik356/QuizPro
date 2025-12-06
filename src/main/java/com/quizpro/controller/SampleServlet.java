@@ -2,7 +2,6 @@ package com.quizpro.controller;
 
 import java.io.IOException;
 
-import com.mysql.cj.Session;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;

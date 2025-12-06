@@ -243,7 +243,7 @@
                 <div id="Quizzes" class="content-section active">
                     <div class="content-controls">
                         <input type="text" placeholder="Search Quiz Title or ID...">
-                        <a href="#" class="add-btn"><i class="fas fa-plus"></i> Create New Quiz</a>
+                        <a href="AddNewQuiz" class="add-btn"><i class="fas fa-plus"></i> Create New Quiz</a>
                     </div>
                     <table class="data-table">
                         <thead>
@@ -279,7 +279,7 @@
                 <div id="Categories" class="content-section">
                     <div class="content-controls">
                         <input type="text" placeholder="Search Category Name...">
-                        <a href="#" class="add-btn"><i class="fas fa-plus"></i> Add New Category</a>
+                        <a href="AddCategory.jsp" class="add-btn"><i class="fas fa-plus"></i> Add New Category</a>
                     </div>
                     <table class="data-table">
                         <thead>
