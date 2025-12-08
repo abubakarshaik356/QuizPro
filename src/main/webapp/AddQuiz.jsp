@@ -262,19 +262,22 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="passing_score"><i class="fas fa-percent"></i> Quiz Marks</label>
+                            <label for="passing_score"> Quiz Marks</label>
                             <input type="number" id="passing_score" name="passing_score" min="0" max="100" value="70" required>
-                            <small>Percentage of correct answers required to pass.</small>
+                            <small>Total marks quiz can contains</small>
                         </div>
                         
                         <div class="form-group">
-                            <label for="retakes"><i class="fas fa-redo"></i> Retakes Allowed</label>
+                           <!--  <label for="retakes"><i class="fas fa-redo"></i> Retakes Allowed</label>
                             <select id="retakes" name="retakes" required>
                                 <option value="-1">Unlimited</option>
                                 <option value="1">1</option>
                                 <option value="3">3</option>
                                 <option value="0">None</option>
-                            </select>
+                            </select> -->
+                            <label for="passing_score">Quiz No Of Questions</label>
+                            <input type="number" id="passing_score" name="NoOfQuestions" min="0" max="100" value="10" required>
+                            <small>Total No.of Questions quiz can contains</small>
                         </div>
 
                     </div>

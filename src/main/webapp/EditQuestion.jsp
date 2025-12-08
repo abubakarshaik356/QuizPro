@@ -4,12 +4,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
-	int quizId = (int) session.getAttribute("QuizId");
-    String quizTitle = (String) session.getAttribute("QuizName");
-    String quizCategory = (String) session.getAttribute("QuizCategory");
-	int noOfQues = (int) session.getAttribute("NoOfQuestions");
-    ArrayList<Questions> questions = (ArrayList<Questions>) session.getAttribute("ListQuestions");
-    int questionCount = questions.size();
+
+	Questions ques = (Questions) request.getAttribute("QuestionDetails");
+	String quizName = (String)request.getAttribute("quizName");
+	String category = (String) request.getAttribute("category");
+	
 %>
 
 <!DOCTYPE html>
@@ -103,6 +102,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 4px var(--shadow-light);
     margin-bottom: 25px;
+    width:94.5%;
 }
 
 /* ******************************
@@ -142,12 +142,13 @@ body {
     font-size: 1em;
 }
 .form-group textarea{
-	width: 97%;
+	width: 98%;
     padding: 12px;
     border-radius: 6px;
     border: 1px solid #ccc;
     font-size: 1em;
 }
+
 
 .answer-option {
     display: flex;
@@ -232,7 +233,6 @@ body {
 
 <div class="admin-layout">
 
-<%@ include file="adminSideBar.jsp" %>
 
 <main class="main-content">
 
@@ -240,11 +240,10 @@ body {
         <h1>Add / Edit Questions</h1>
     </div>
 
-    <div class="quiz-summary">
-        <p>Quiz: <strong><%= quizTitle != null ? quizTitle : "Sample Quiz" %></strong></p>
-        <p>Category: <strong><%= quizCategory != null ? quizCategory : "General" %></strong></p>
-        <p>Total Questions: <strong><%= questionCount + 1 %> of <%= noOfQues %></strong></p>
-    </div>
+   <div class="quiz-summary">
+        <p>Quiz: <strong><%= quizName != null ? quizName : "Sample Quiz" %></strong></p>
+        <p>Category: <strong><%= category != null ? category : "General" %></strong></p>
+    </div> 
 
     <div class="editor-container">
 
@@ -255,13 +254,18 @@ body {
 
             <form action="ADDQuestion" method="post">
 
-                <div class="form-group">
+				<div class="form-group">
                     <label>Question Text</label>
-                    <textarea name="question_text" required></textarea>
+                    <input type="text" readonly value="<%= ques.getId() %>" name="QuesId" style="width: 98%">
+                    <input type = "hidden" value="<%= ques.getQuizId() %>" name="QuizId"> 
                 </div>
 
                 <div class="form-group">
-                <input type = "hidden" value="<%=quizId  %>" name="QuizId">
+                    <label>Question Text</label>
+                    <textarea name="question_text" value=<%= ques.getQuestion() %> required></textarea>
+                </div>
+
+                <div class="form-group">
                     <label>Question Type</label>
                     <select id="type" name="type" onchange="updateOptions()" required>
                         <option value="mcq">Multiple Choice</option>
@@ -280,24 +284,11 @@ body {
                 </div>
 
                 <button class="save-button" type="submit">
-                    <i class="fas fa-save"></i> Save Question
+                     Update & Save Question
                 </button>
 
             </form>
         </div>
-
-       <%--  <!-- QUESTION LIST -->
-        <div class="question-list-card">
-            <h3>Current Questions</h3>
-
-            <ul class="question-list">
-                <% int i = 1; for (Questions q : questions) { %>
-                    <li><%= i %>. <%= q.getQuestion() %></li>
-                <% i++; } %>
-            </ul>
-
-            <a class="finish-quiz-btn" href="#">Finish</a>
-        </div> --%>
 
     </div>
 
