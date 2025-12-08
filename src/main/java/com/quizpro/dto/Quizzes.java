@@ -2,6 +2,23 @@ package com.quizpro.dto;
 
 public class Quizzes {
 
+	private int quizId;
+	private String desc;
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public int getQuizId() {
+		return quizId;
+	}
+
+	public void setQuizId(int quizId) {
+		this.quizId = quizId;
+	}
 	private int userId;
 	private String title;
 	private String category;

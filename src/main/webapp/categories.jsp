@@ -11,6 +11,7 @@ if (list == null) {
 	if (list == null)
 		list = new java.util.ArrayList<>();
 }
+int id=(int)session.getAttribute("id");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -326,7 +327,7 @@ h1 {
 							style="color: var(--accent-color);">Available</span>
 					</div>
 				</div>
-				<a href="quizzes.jsp?subId=<%=s.getSubId()%>"
+				<a href="quizes?subId=<%=s.getSubId()%>&userId=<%=id %>&title=<%=s.getSubname() %>"
 					class="action-button"> <i class="fas fa-chevron-right"></i>
 					Browse All Quizzes
 				</a>

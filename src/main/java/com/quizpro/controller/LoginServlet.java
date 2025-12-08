@@ -1,10 +1,18 @@
 package com.quizpro.controller;
 
+import java.awt.List;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.quizpro.dao.UserDAO;
 import com.quizpro.dao.UserDAOImpl;
+import com.quizpro.dto.Subject;
 import com.quizpro.dto.User;
+import com.quizpro.util.DBConnection;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -42,6 +50,25 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("email", result.getEmail());
             session.setAttribute("phone", result.getPhone());
             session.setAttribute("role", result.getRole());
+            
+            Connection con=DBConnection.getConnector();
+            try {
+            	String qryString="select subId,subName,description from subjects";
+				PreparedStatement ps=con.prepareStatement(qryString);
+				ResultSet rSet=ps.executeQuery();
+				ArrayList<Subject> subjects=new ArrayList<>();
+				while(rSet.next()) {
+					Subject subject=new Subject();
+					subject.setSubId(rSet.getInt(1));
+					subject.setSubname(rSet.getString(2));
+					subject.setSubDesc(rSet.getString(3));
+					subjects.add(subject);
+				}
+				session.setAttribute("subjects", subjects);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
             System.out.println("Login Successful: " + result.getRole());
 

@@ -3,6 +3,8 @@ package com.quizpro.dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.quizpro.dto.Quizzes;
 import com.quizpro.dto.Subject;
 import com.quizpro.util.DBConnection;
 
@@ -41,4 +43,36 @@ public class SubjectDAOImpl implements SubjectDAO {
         }
         return list;
     }
+
+	@Override
+	public List<Quizzes> getAllQuizes(int subId, int userid) {
+		List<Quizzes> quizes=new ArrayList<Quizzes>();
+		String qry = "SELECT q.quizid, q.quizname, q.description, q.quizmarks, r.percentage " +
+	             "FROM quizzs q " +
+	             "LEFT JOIN result r ON q.quizId = r.quizid AND r.userid = ? " +
+	             "WHERE q.subId = ?";
+
+		try {
+			PreparedStatement ps=con.prepareStatement(qry);
+			ps.setInt(1, userid);
+			ps.setInt(2, subId);
+			ResultSet rSet=ps.executeQuery();
+			while(rSet.next()) {
+				System.out.println("1");
+				Quizzes quiz=new Quizzes();
+				quiz.setQuizId(rSet.getInt(1));
+				quiz.setTitle(rSet.getString(2));
+				quiz.setDesc(rSet.getString(3));
+				quiz.setQuestions(rSet.getInt(4));
+				quiz.setMarks((int)rSet.getFloat(5));
+				quizes.add(quiz);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return quizes;
+	}
 }
