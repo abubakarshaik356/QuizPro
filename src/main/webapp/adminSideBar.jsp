@@ -112,8 +112,7 @@
 				<a href="adminDashboard.jsp" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a> 
 				<a href="UserManagement"><i class="fas fa-users"></i> User Management</a> 
 				<a href="ContentManagement"><i class="fas fa-puzzle-piece"></i>Content Management</a> 
-				<a href="#"><i class="fas fa-chart-line"></i>Analytics & Reports</a> 
-				<a href="#"><i class="fas fa-cog"></i>Settings</a> 
+				<a href="AnalyticsReports"><i class="fas fa-chart-line"></i>Analytics & Reports</a> 
 				<a href="index.jsp"><i class="fas fa-sign-out-alt"></i>Logout</a>
 			</nav>
 		</aside>
