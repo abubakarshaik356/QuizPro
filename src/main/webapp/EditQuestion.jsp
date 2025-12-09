@@ -645,7 +645,7 @@ body {
                 <div class="form-group">
                     <label>Question ID</label>
                     <input type="text" readonly value="<%= ques.getId() %>" name="QuesId" style="width: 98%">
-                    <input type="hidden" value="<%= ques.getQuizId() %>" name="QuizId">
+                    <input type="hidden" value="<%= ques.getQuizId() %>" name="quizId">
                     <input type="hidden" value="<%= quizName %>" name ="quizName">
                     <input type="hidden" value="<%= category %>" name ="quizCategory">
                 </div> 

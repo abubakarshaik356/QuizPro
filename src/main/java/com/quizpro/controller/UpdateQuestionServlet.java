@@ -24,7 +24,7 @@ public class UpdateQuestionServlet extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		int questionId = Integer.parseInt(req.getParameter("QuesId"));
-        int quizId = Integer.parseInt(req.getParameter("QuizId"));
+        int quizId = Integer.parseInt(req.getParameter("quizId"));
         String questionText = req.getParameter("question_text");
         String optionType = req.getParameter("type");
         String quizName = req.getParameter("quizName");
