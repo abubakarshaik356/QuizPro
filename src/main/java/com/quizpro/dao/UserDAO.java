@@ -16,4 +16,6 @@ public interface UserDAO {
 	public ArrayList<UserManage> getUsers();
 	public ArrayList<Subject> getSubjects();
 	public ArrayList<Quizzes> getQuizzes();
+	ArrayList<Quizzes> getQuizzesByCategory(int categoryId);
+
 }

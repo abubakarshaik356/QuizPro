@@ -280,7 +280,6 @@ body {
 	.content-controls input {
 		width: 100%;
 	}
-	
 }
 </style>
 </head>
@@ -347,8 +346,9 @@ body {
                                     <button class="action-button" style="color: var(--accent-color)"><i class="fas fa-eye"></i> View Qs</button>
                                 </td> -->
 								<td><a href="EditQuiz.jsp?quizId=<%=quiz.getUserId()%>"
-									class="action-button" > <i class="fas fa-edit"></i> Edit
-								</a> <a href="ViewAllQuestions?quizId=<%=quiz.getUserId()%>&quizName=<%=quiz.getTitle() %>&quizCategory=<%=quiz.getCategory() %>"
+									class="action-button"> <i class="fas fa-edit"></i> Edit
+								</a> <a
+									href="ViewAllQuestions?quizId=<%=quiz.getUserId()%>&quizName=<%=quiz.getTitle()%>&quizCategory=<%=quiz.getCategory()%>"
 									class="action-button" style="color: var(--accent-color)"> <i
 										class="fas fa-eye"></i> View Qs
 								</a></td>
@@ -387,10 +387,15 @@ body {
 								<td>
 									<button class="action-button">
 										<i class="fas fa-edit"></i> Edit
-									</button>
-									<button class="action-button publish">
-										<i class="fas fa-eye"></i> Show
-									</button>
+									</button> 
+									<a href="ViewAllQuizes?categoryId=<%=sub.getSubId()%>
+									&categoryName=<%=sub.getSubname()%>"
+									class="action-button publish"> <i class="fas fa-eye"></i>
+										Show
+								</a>
+								
+
+
 								</td>
 							</tr>
 							<%

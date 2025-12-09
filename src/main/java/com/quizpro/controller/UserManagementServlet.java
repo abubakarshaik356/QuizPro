@@ -53,7 +53,7 @@ public class UserManagementServlet extends HttpServlet {
         req.setAttribute("Users", paginatedUsers);
         req.setAttribute("currentPage", page);
         req.setAttribute("totalPages", totalPages);
-
+        req.setAttribute("activePage", "user");
         req.getRequestDispatcher("UserManagement.jsp").forward(req, resp);
     }
 }

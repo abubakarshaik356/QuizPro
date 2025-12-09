@@ -49,6 +49,7 @@ public class AnalyticsReports extends HttpServlet {
         req.setAttribute("quizzes", quizzes);   
    
         // Forward to JSP
+        req.setAttribute("activePage", "analytics");
         RequestDispatcher rd = req.getRequestDispatcher("adAnalyticsReports.jsp");
         rd.forward(req, resp);
     }

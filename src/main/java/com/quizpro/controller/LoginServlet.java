@@ -74,7 +74,9 @@ public class LoginServlet extends HttpServlet {
 
             // Redirect based on role
             if ("ADMIN".equalsIgnoreCase(result.getRole())) {
-            	resp.sendRedirect("adminDashboard");
+            	req.setAttribute("activePage", "dashboard");
+            	req.getRequestDispatcher("adminDashboard.jsp").forward(req, resp);
+
             } else {
                 resp.sendRedirect("dashboard.jsp");
             }

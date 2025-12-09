@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-pO1fL7+N3rRzv0NpZk5vYQxKJXY4rVxg4J7iA3QJuq2R8V7u7O4g2S1XZcGYNJmX6bR4Z1x+q45sB1uJ5WQ0Ug==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 <title>Insert title here</title>
 
 <style>
-
 .admin-layout {
 	display: flex;
 	min-height: 100vh;
@@ -30,7 +31,7 @@
 	font-weight: 800;
 	display: block;
 	text-align: center;
-	margin-bottom: 30px;
+	margin-bottom: 30px;a
 	color: white;
 	text-decoration: none;
 }
@@ -66,7 +67,6 @@
 	background-color: var(--dark-bg);
 }
 
-
 /* Responsive adjustments */
 @media ( max-width : 992px) {
 	.admin-layout {
@@ -80,9 +80,6 @@
 		display: flex;
 		flex-direction: row;
 		padding: 15px 0;
-	}
-	.sidebar .logo {
-		display: none;
 	}
 	.sidebar nav {
 		display: flex;
@@ -106,15 +103,41 @@
 </style>
 </head>
 <body>
-	<aside class="sidebar">
-			<a href="#" class="logo">Admin<span>Pro</span></a>
-			<nav>
-				<a href="adminDashboard.jsp" class="active"><i class="fas fa-tachometer-alt"></i>Dashboard</a> 
-				<a href="UserManagement"><i class="fas fa-users"></i> User Management</a> 
-				<a href="ContentManagement"><i class="fas fa-puzzle-piece"></i>Content Management</a> 
-				<a href="AnalyticsReports"><i class="fas fa-chart-line"></i>Analytics & Reports</a> 
-				<a href="index.jsp"><i class="fas fa-sign-out-alt"></i>Logout</a>
-			</nav>
-		</aside>
+	<%
+    String activePage = (String) request.getAttribute("activePage");
+    if(activePage == null) activePage = "";
+%>
+
+<aside class="sidebar">
+    <a href="#" class="logo">Admin<span>Pro</span></a>
+    <nav>
+
+        <a href="adminDashboard"
+           class="<%= activePage.equals("dashboard") ? "active" : "" %>">
+            <i class="fas fa-tachometer-alt"></i>Dashboard
+        </a>
+
+        <a href="UserManagement"
+           class="<%= activePage.equals("user") ? "active" : "" %>">
+            <i class="fas fa-users"></i>User Management
+        </a>
+
+        <a href="ContentManagement"
+           class="<%= activePage.equals("content") ? "active" : "" %>">
+            <i class="fas fa-puzzle-piece"></i>Content Management
+        </a>
+
+        <a href="AnalyticsReports"
+           class="<%= activePage.equals("analytics") ? "active" : "" %>">
+            <i class="fas fa-chart-line"></i>Analytics & Reports
+        </a>
+
+        <a href="index.jsp">
+            <i class="fas fa-sign-out-alt"></i>Logout
+        </a>
+
+    </nav>
+</aside>
+
 </body>
 </html>

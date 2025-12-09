@@ -30,6 +30,7 @@ public class ContentManagementServlet extends HttpServlet{
 		ArrayList<Subject> subjects = userDAO.getSubjects();
 		req.setAttribute("Subjects", subjects);
 		req.setAttribute("Quizzes", quizzes); 
+		req.setAttribute("activePage", "content");
 		req.getRequestDispatcher("ContentManagement.jsp").forward(req, resp);
 	}
 }

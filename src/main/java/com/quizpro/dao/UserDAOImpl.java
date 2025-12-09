@@ -208,4 +208,41 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return quiz;
 	}
-}
+	
+	 @Override
+	    public ArrayList<Quizzes> getQuizzesByCategory(int categoryId) {
+
+	        ArrayList<Quizzes> list = new ArrayList<>();
+
+	        Connection conn = DBConnection.getConnector();
+
+	        String sql = "SELECT q.quizid AS quiz_id, q.quizname AS title, "
+	                   + "COUNT(ques.quesid) AS total_questions, q.quizmarks AS marks "
+	                   + "FROM quizzs q "
+	                   + "LEFT JOIN questions ques ON q.quizid = ques.quizid "
+	                   + "WHERE q.subid = ? "
+	                   + "GROUP BY q.quizid, q.quizname, q.quizmarks";
+
+	        try {
+	            PreparedStatement ps = conn.prepareStatement(sql);
+	            ps.setInt(1, categoryId);
+
+	            ResultSet rs = ps.executeQuery();
+
+	            while (rs.next()) {
+	                Quizzes q = new Quizzes();
+	                q.setUserId(rs.getInt("quiz_id"));
+	                q.setTitle(rs.getString("title"));
+	                q.setQuestions(rs.getInt("total_questions"));
+	                q.setMarks(rs.getInt("marks"));
+
+	                list.add(q);
+	            }
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	        return list;
+	    }
+	}

@@ -306,6 +306,7 @@ body {
 <body>
 
 	<div class="admin-layout">
+	
 
 		<%@ include file="adminSideBar.jsp" %>
 

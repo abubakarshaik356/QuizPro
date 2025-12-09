@@ -250,6 +250,7 @@ body {
 						<option>Admin</option>
 						<option>Standard User</option>
 						<option>Editor</option>
+						
 					</select> <select class="filter-select">
 						<option>Filter by Status (All)</option>
 						<option>Active</option>
