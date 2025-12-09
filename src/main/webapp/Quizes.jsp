@@ -317,34 +317,17 @@ h1 {
 		grid-column: span 1;
 	}
 }
+.empty {
+	width: 100%;
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+}
 </style>
 </head>
 <body>
 
-	<header class="navbar">
-		<div class="container">
-			<a href="dashboard.html" class="logo">Quiz<span>Pro</span></a>
-
-			<div class="nav-links">
-				<a href="#"><i class="fas fa-home"></i> Home</a> <a href="#"><i
-					class="fas fa-map-marked-alt"></i> Learning Paths</a> <a
-					href="categories.html" class="active"><i class="fas fa-list-ul"></i>
-					Categories</a> <a href="#"><i class="fas fa-history"></i> My Tests</a>
-			</div>
-
-			<div class="profile-menu">
-				<img src="https://via.placeholder.com/40/0077B6/FFFFFF?text=J"
-					alt="User Avatar" class="profile-icon" id="profileIcon"
-					onclick="toggleDropdown()">
-
-				<div class="dropdown-content" id="profileDropdown">
-					<a href="#"><i class="fas fa-user-circle"></i> Profile</a> <a
-						href="login.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
-				</div>
-			</div>
-		</div>
-	</header>
-
+	<%@ include file="navbar.jsp" %>
 	<div class="container">
 		<div class="page-header">
 			<p class="breadcrumbs">
@@ -372,6 +355,13 @@ h1 {
 
 		<div class="quiz-list">
 			<%
+			if(quizes.isEmpty()){%>
+				<div class="empty">
+					<img alt="Empty"
+					src="https://cdn-icons-png.flaticon.com/128/13543/13543236.png">
+					<h3>Currently, No Quizes Available under this catergory</h3>
+				</div>
+			<%}
 			for (Quizzes q : quizes) {
 			%>
 			<div class="quiz-item">

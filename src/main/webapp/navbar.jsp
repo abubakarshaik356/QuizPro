@@ -60,7 +60,7 @@
 
 			<div class="nav-links">
 				<a href="dashboard.jsp" class="active"><i class="fas fa-home"></i> Home</a> 
-				<a href="categories"><i class="fas fa-list-ul"></i> Categories</a><a href="#my-tests"><i class="fas fa-history"></i>
+				<a href="categories"><i class="fas fa-list-ul"></i> Categories</a><a href="ViewTestHis"><i class="fas fa-history"></i>
 					My Tests</a>
 			</div>
 

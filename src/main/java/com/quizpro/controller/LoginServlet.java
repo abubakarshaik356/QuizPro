@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             
             Connection con=DBConnection.getConnector();
             try {
-            	String qryString="select subId,subName,description from subjects";
+            	String qryString="select * from subjects";
 				PreparedStatement ps=con.prepareStatement(qryString);
 				ResultSet rSet=ps.executeQuery();
 				ArrayList<Subject> subjects=new ArrayList<>();
@@ -74,9 +74,7 @@ public class LoginServlet extends HttpServlet {
 
             // Redirect based on role
             if ("ADMIN".equalsIgnoreCase(result.getRole())) {
-            	req.setAttribute("activePage", "dashboard");
-            	req.getRequestDispatcher("adminDashboard.jsp").forward(req, resp);
-
+            	resp.sendRedirect("adminDashboard");
             } else {
                 resp.sendRedirect("dashboard.jsp");
             }

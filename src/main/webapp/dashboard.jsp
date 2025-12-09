@@ -228,9 +228,16 @@ h3 {
 	margin-top: 20px;
 }
 
+.viewall {
+	width: 100%;
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+}
 .category-card {
 	background-color: var(--card-bg);
 	padding: 25px 15px;
+	height:180px;
 	border-radius: 8px;
 	text-align: center;
 	cursor: pointer;
@@ -534,6 +541,8 @@ h3 {
 
 .empty {
 	width: 100%;
+	display:flex;
+	flex-direction: column;
 	align-items: center;
 }
 </style>
@@ -600,16 +609,20 @@ h3 {
 			</h2>
 			<div class="category-grid">
 				<%
+				int count=0;
 				for (Subject s : list) {
 				%>
-				<a href="quizes" class="card-anchor">
+				<a href="quizes?subId=<%=s.getSubId()%>&userId=<%=id %>&title=<%=s.getSubname() %>" class="card-anchor">
 					<div class="category-card">
 						<i class="fas fa-code icon"></i>
 						<h3><%=s.getSubname()%></h3>
 						<p><%=s.getSubDesc()%></p>
 					</div>
 				</a>
-				<%
+				<% count++;
+				if(count==5){
+					break;
+				}
 				}
 				%>
 				<!-- 
@@ -638,6 +651,9 @@ h3 {
 					<h3>Cloud Infrastructure</h3>
 				</div>
 			 -->
+			</div>
+			<div class="viewall">
+				<a href="categories" class="cta-button" style="margin-top: 40px">View All Categories</a>
 			</div>
 		</div>
 		<section class="section" id="faq"
