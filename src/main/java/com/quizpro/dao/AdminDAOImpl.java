@@ -211,6 +211,34 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		return qs;
 	}
+
+	
+	@Override
+	public boolean updateQuestion(int questionId,String questionText,String option1,String option2,String option3,String option4,String answer) {
+		String sql = "UPDATE questions SET quesdesc = ?, option1 = ?, option2 = ?, option3 = ?, option4 = ?, answer = ? "
+	            + "WHERE quesid = ?";
+		Connection con = DBConnection.getConnector();
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, questionText);
+	        ps.setString(2, option1);
+	        ps.setString(3, option2);
+	        ps.setString(4, option3);
+	        ps.setString(5, option4);
+	        ps.setString(6, answer);
+	        ps.setInt(7, questionId);
+
+	        int rows = ps.executeUpdate();
+
+	        if (rows > 0) {
+	            return true;
+	        }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 
 }

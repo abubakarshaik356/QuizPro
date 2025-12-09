@@ -25,6 +25,7 @@ public class ViewQuestionServlet extends HttpServlet{
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("23");
 		int quizId = Integer.parseInt(req.getParameter("quizId"));
 		String quizName = req.getParameter("quizName");
 		String quizCategory = req.getParameter("quizCategory");

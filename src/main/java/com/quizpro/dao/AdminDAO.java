@@ -15,4 +15,5 @@ public interface AdminDAO {
 	int addQuiz(String quizName, String quizDesc, String quizCategory, int marks,int noOfQuestions);
 	ArrayList<Questions> getQuestions(int id);	
 	Questions getQuestionDetails(int id);
+	boolean updateQuestion(int questionId,String questionText,String option1,String option2,String option3,String option4,String answer);
 }

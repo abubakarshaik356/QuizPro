@@ -25,9 +25,7 @@
         min-height: 100vh;
     }
 
-    /* ---------------- NAVBAR ---------------- */
     .navbar {
-        
         background: #1976d2;
         color: white;
         padding: 14px 30px;
@@ -68,7 +66,6 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ----------- QUIZ HEADER INFO ----------- */
     .quiz-info-box {
         background: white;
         padding: 20px;
@@ -106,7 +103,6 @@
         transform: translateY(-2px);
     }
 
-    /* ----------- QUESTION CARDS ----------- */
     .question-card {
         background: white;
         padding: 20px;
@@ -116,11 +112,6 @@
         border-left: 6px solid #2196f3;
         transition: 0.2s ease;
     }
-
-    /* .question-card:hover {
-        transform: translateX(6px);
-        box-shadow: 0 6px 25px rgba(0,0,0,0.2);
-    } */
 
     .question-title {
         font-size: 20px;
@@ -164,68 +155,85 @@
         background: #fb8c00;
         transform: scale(1.05);
     }
-   
-.quiztitle{
-            display: flex;
-            flex-direction: column;
-        }
-        .subquiztitle{
-            display: flex;
-            justify-content: space-between;
-            flex-direction: row;
-             padding-bottom: 20px;
-        }
+
+    .quiztitle {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .subquiztitle {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 20px;
+    }
 </style>
 </head>
 
 <body>
 
-<!-- NAVIGATION BAR -->
 <div class="navbar">
     <div class="logo">Admin<span>Pro</span></div>
 </div>
 
-<!-- MAIN PAGE BOX -->
 <div class="container">
 
-    
-            
-   <div class="quiztitle">
-        <Center><h2><%= quizName %></h2></Center>
+    <div class="quiztitle">
+        <center><h2><%= quizName %></h2></center>
         <div class="subquiztitle">
-            	<p><strong>Category:</strong> <%= quizCategory %></p>
-                <p><strong>Total Questions:</strong> <%= totalQuestions %></p>
+            <p><strong>Category:</strong> <%= quizCategory %></p>
+            <p><strong>Total Questions:</strong> <%= totalQuestions %></p>
         </div>
     </div>
 
-    <!-- QUESTIONS LIST -->
-    <% if (questions != null && !questions.isEmpty()) { 
-           int qNo = 1;
-           for (Questions q : questions) { %>
+    <% 
+        if (questions != null && !questions.isEmpty()) { 
+            int qNo = 1;
+            for (Questions q : questions) { 
+    %>
 
         <div class="question-card">
-            
+
             <div class="question-title">
                 Q<%= qNo++ %>. <%= q.getQuestion() %>
             </div>
 
-            <div class="options-grid">
-                <div>A) <%= q.getOption1() %></div>
-                <div>B) <%= q.getOption2() %></div>
-                <div>C) <%= q.getOption3() %></div>
-                <div>D) <%= q.getOption4() %></div>
-            </div>
+            <% 
+                if (q.getOptionType().equalsIgnoreCase("mcq") || 
+                    q.getOptionType().equalsIgnoreCase("multi-select")) {
+            %>
+
+                <div class="options-grid">
+                    <div>A) <%= q.getOption1() %></div>
+                    <div>B) <%= q.getOption2() %></div>
+                    <div>C) <%= q.getOption3() %></div>
+                    <div>D) <%= q.getOption4() %></div>
+                </div>
+
+            <% 
+                } else { 
+            %>
+
+                <div class="options-grid">
+                    <div>A) <%= q.getOption1() %></div>
+                    <div>B) <%= q.getOption2() %></div>
+                </div>
+
+            <% } %>
 
             <div class="answer">Correct Answer: <%= q.getAnswer() %></div>
 
             <a class="edit-btn" href="EditQuestion?id=<%= q.getId() %>">Edit</a>
         </div>
 
-    <% } } else { %>
+    <% 
+            } 
+        } else { 
+    %>
 
         <h3 style="text-align:center; color:#555;">No questions found.</h3>
 
     <% } %>
+
     <a href="ContentManagement" class="back-btn">Save and Back to Category Management</a>
 
 </div>
