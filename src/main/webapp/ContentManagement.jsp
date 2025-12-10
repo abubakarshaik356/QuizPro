@@ -345,7 +345,7 @@ body {
                                     <button class="action-button"><i class="fas fa-edit"></i> Edit</button>
                                     <button class="action-button" style="color: var(--accent-color)"><i class="fas fa-eye"></i> View Qs</button>
                                 </td> -->
-								<td><a href="EditQuiz.jsp?quizId=<%=quiz.getUserId()%>"
+								<td><a href="EditQuiz.jsp?id=<%=quiz.getUserId()%>"
 									class="action-button"> <i class="fas fa-edit"></i> Edit
 								</a> <a
 									href="ViewAllQuestions?quizId=<%=quiz.getUserId()%>&quizName=<%=quiz.getTitle()%>&quizCategory=<%=quiz.getCategory()%>"

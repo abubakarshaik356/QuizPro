@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.quizpro.dto.Questions;
+import com.quizpro.dto.Quizzes;
 import com.quizpro.dto.Subject;
 import com.quizpro.util.DBConnection;
 
@@ -240,5 +241,77 @@ public class AdminDAOImpl implements AdminDAO {
 		return false;
 	}
 	
+	public Quizzes getQuizDetails(int id) {
+		Connection con = DBConnection.getConnector();
+		String str = "Select * from quizzs where quizid=?";
+		Quizzes quizzes=new Quizzes();
+		try {
+			PreparedStatement ps=con.prepareStatement(str);
+			ps.setInt(1, id);
+			ResultSet rSet=ps.executeQuery();
+			if(rSet.next()) {
+				quizzes.setTitle(rSet.getString(3));
+				quizzes.setDesc(rSet.getString(4));
+				String qry="select subName from subjects where subid=?";
+				PreparedStatement ps1=con.prepareStatement(qry);
+				ps1.setInt(1, rSet.getInt(2));
+				ResultSet rSet2=ps1.executeQuery();
+				if(rSet2.next()) {
+					quizzes.setCategory(rSet2.getString(1));
+				}
+				quizzes.setMarks(rSet.getInt(5));
+				quizzes.setQuestions(rSet.getInt(6));
+				System.out.println(quizzes.toString());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return quizzes;
+	}
+	
+	@Override
+	public int updateQuiz(String quizName, String quizDesc, String quizCategory, int marks,int noOfQuestions) {
+
+	    Connection con = DBConnection.getConnector();
+	    try {
+	        // Step 1: Fetch subject ID
+	        PreparedStatement pstmt = con.prepareStatement(
+	                "SELECT subId FROM subjects WHERE subname = ?");
+	        pstmt.setString(1, quizCategory);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        int id = -1;
+	        if (rs.next()) {      // Move cursor to first row
+	            id = rs.getInt("subId");
+	        } else {
+	            System.out.println("Subject not found!");
+	            return -1;
+	        }
+	        pstmt = con.prepareStatement(
+	                "SELECT quizId FROM quizzs WHERE quizname = ?");
+	        pstmt.setString(1, quizName);
+	        ResultSet rs1 = pstmt.executeQuery();
+	        rs1.next();
+	        int quizId=rs1.getInt(1);
+	        // Step 2: Insert quiz into quizzs table
+	        String qry = "UPDATE quizzs SET quizname=?, description=?, quizmarks=?, quizNoOfQues=? where quizId=?";
+	        pstmt = con.prepareStatement(qry);
+	        pstmt.setInt(5, quizId);
+	        pstmt.setString(1, quizName);
+	        pstmt.setInt(3, marks);
+	        pstmt.setString(2, quizDesc);
+	        pstmt.setInt(4, noOfQuestions);
+
+	        int res = pstmt.executeUpdate();
+	        if(res > 0) return quizId;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    
+	    return -1;
+	}
 
 }

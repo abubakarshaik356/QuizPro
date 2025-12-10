@@ -2,6 +2,11 @@ package com.quizpro.dto;
 
 public class Quizzes {
 
+	@Override
+	public String toString() {
+		return "Quizzes [quizId=" + quizId + ", desc=" + desc + ", userId=" + userId + ", title=" + title
+				+ ", category=" + category + ", questions=" + questions + ", marks=" + marks + ", date=" + date + "]";
+	}
 	private int quizId;
 	private String desc;
 	public String getDesc() {

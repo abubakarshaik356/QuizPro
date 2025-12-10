@@ -3,6 +3,7 @@ package com.quizpro.dao;
 import java.util.ArrayList;
 
 import com.quizpro.dto.Questions;
+import com.quizpro.dto.Quizzes;
 import com.quizpro.dto.Subject;
 
 public interface AdminDAO {
@@ -16,4 +17,7 @@ public interface AdminDAO {
 	ArrayList<Questions> getQuestions(int id);	
 	Questions getQuestionDetails(int id);
 	boolean updateQuestion(int questionId,String questionText,String option1,String option2,String option3,String option4,String answer);
+	Quizzes getQuizDetails(int id);
+	int updateQuiz(String quizName, String quizDesc, String quizCategory, int marks,int noOfQuestions);
+
 }
