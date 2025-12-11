@@ -17,5 +17,5 @@ public interface UserDAO {
 	public ArrayList<Subject> getSubjects();
 	public ArrayList<Quizzes> getQuizzes();
 	ArrayList<Quizzes> getQuizzesByCategory(int categoryId);
-
+	public boolean isEmailExist(String email); 
 }

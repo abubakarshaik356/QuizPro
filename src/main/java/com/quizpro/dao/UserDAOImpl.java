@@ -42,6 +42,20 @@ public class UserDAOImpl implements UserDAO {
 		return false;
 	}
 
+	public boolean isEmailExist(String email) {
+		Connection conn = DBConnection.getConnector();
+		String qry = "SELECT * FROM emps WHERE email=?";
+		try {
+			PreparedStatement ps = conn.prepareStatement(qry);
+			ps.setString(1, email);
+			ResultSet rs = ps.executeQuery();
+			return rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public User login(String email, String password) {
 		Connection conn = DBConnection.getConnector();
 		String qry = "select * from emps where email=? and password=?";
@@ -171,7 +185,7 @@ public class UserDAOImpl implements UserDAO {
 				subject.setSubId(rs.getInt("subid"));
 				subject.setSubname(rs.getString("subName"));
 				subject.setQuizCount(rs.getInt("total_quizzes"));
-				sub.add(subject); 
+				sub.add(subject);
 			}
 
 		} catch (SQLException e) {
@@ -208,41 +222,39 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return quiz;
 	}
-	
-	 @Override
-	    public ArrayList<Quizzes> getQuizzesByCategory(int categoryId) {
 
-	        ArrayList<Quizzes> list = new ArrayList<>();
+	@Override
+	public ArrayList<Quizzes> getQuizzesByCategory(int categoryId) {
 
-	        Connection conn = DBConnection.getConnector();
+		ArrayList<Quizzes> list = new ArrayList<>();
 
-	        String sql = "SELECT q.quizid AS quiz_id, q.quizname AS title, "
-	                   + "COUNT(ques.quesid) AS total_questions, q.quizmarks AS marks "
-	                   + "FROM quizzs q "
-	                   + "LEFT JOIN questions ques ON q.quizid = ques.quizid "
-	                   + "WHERE q.subid = ? "
-	                   + "GROUP BY q.quizid, q.quizname, q.quizmarks";
+		Connection conn = DBConnection.getConnector();
 
-	        try {
-	            PreparedStatement ps = conn.prepareStatement(sql);
-	            ps.setInt(1, categoryId);
+		String sql = "SELECT q.quizid AS quiz_id, q.quizname AS title, "
+				+ "COUNT(ques.quesid) AS total_questions, q.quizmarks AS marks " + "FROM quizzs q "
+				+ "LEFT JOIN questions ques ON q.quizid = ques.quizid " + "WHERE q.subid = ? "
+				+ "GROUP BY q.quizid, q.quizname, q.quizmarks";
 
-	            ResultSet rs = ps.executeQuery();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, categoryId);
 
-	            while (rs.next()) {
-	                Quizzes q = new Quizzes();
-	                q.setUserId(rs.getInt("quiz_id"));
-	                q.setTitle(rs.getString("title"));
-	                q.setQuestions(rs.getInt("total_questions"));
-	                q.setMarks(rs.getInt("marks"));
+			ResultSet rs = ps.executeQuery();
 
-	                list.add(q);
-	            }
+			while (rs.next()) {
+				Quizzes q = new Quizzes();
+				q.setUserId(rs.getInt("quiz_id"));
+				q.setTitle(rs.getString("title"));
+				q.setQuestions(rs.getInt("total_questions"));
+				q.setMarks(rs.getInt("marks"));
 
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
+				list.add(q);
+			}
 
-	        return list;
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
+}

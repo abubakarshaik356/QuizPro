@@ -109,7 +109,7 @@
 %>
 
 <aside class="sidebar">
-    <a href="#" class="logo">Admin<span>Pro</span></a>
+    <a href="adminDashboard" class="logo">Admin<span>Pro</span></a>
     <nav>
 
         <a href="adminDashboard"
