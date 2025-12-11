@@ -388,7 +388,7 @@ document.addEventListener("DOMContentLoaded", updateOptions);
     Questions ques = (Questions) request.getAttribute("QuestionDetails");
     String quizName = (String) request.getAttribute("quizName");
     String category = (String) request.getAttribute("category");
-
+    System.out.println(quizName+"+"+category);
     // Prevent null pointer issues
     if (ques == null) {
         ques = new Questions();
@@ -640,14 +640,14 @@ body {
 
             <%-- <form action="UpdateQuestionServletPage?quizName=<%= quizName%> & quizCategory=<%=category %>" method="post"> --%>
 			<form action="UpdateQuestionServletPage" method="post">
-			
-
-                <div class="form-group">
-                    <label>Question ID</label>
-                    <input type="text" readonly value="<%= ques.getId() %>" name="QuesId" style="width: 98%">
+				
                     <input type="hidden" value="<%= ques.getQuizId() %>" name="quizId">
                     <input type="hidden" value="<%= quizName %>" name ="quizName">
                     <input type="hidden" value="<%= category %>" name ="quizCategory">
+				
+                <div class="form-group">
+                    <label>Question ID</label>
+                    <input type="text" readonly value="<%= ques.getId() %>" name="QuesId" style="width: 98%">
                 </div> 
 
                 <div class="form-group">

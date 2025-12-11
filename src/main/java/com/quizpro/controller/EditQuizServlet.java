@@ -45,7 +45,7 @@ public class EditQuizServlet extends HttpServlet {
 			session.setAttribute("NoOfQuestions", noOfQuestions);
 			
 			
-			req.getRequestDispatcher("ViewAllQuestions").forward(req, resp);
+			req.getRequestDispatcher("ViewAllQuestions.jsp").forward(req, resp);
 		} else {
 			req.getRequestDispatcher("").forward(req, resp);
 		}

@@ -167,17 +167,7 @@
 
     <div class="admin-layout">
         
-        <aside class="sidebar">
-            <a href="admin-dashboard.jsp" class="logo">Admin<span>Pro</span></a>
-            <nav>
-                <a href="adminDashboard.jsp"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                <a href="admin-users.jsp"><i class="fas fa-users"></i> User Management</a>
-                <a href="Contentmanagement.jsp" class="active"><i class="fas fa-puzzle-piece"></i> Content Management</a>
-                <a href="#"><i class="fas fa-chart-line"></i> Analytics & Reports</a>
-                <a href="#"><i class="fas fa-cog"></i> Settings</a>
-                <a href="login.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </nav>
-        </aside>
+        <%@include file="adminSideBar.jsp" %>
 
         <main class="main-content">
             <div class="page-header">

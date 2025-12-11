@@ -219,6 +219,10 @@ body {
 .page-btn:hover {
 	opacity: 0.85;
 }
+
+.notification-fail {
+        background-color: #dc3545 !important; /* Red color for error */
+    }
 </style>
 </head>
 
@@ -258,7 +262,7 @@ body {
 					</select>
 				</div>
 
-				<a href="#" class="add-user-btn"><i class="fas fa-plus"></i> Add
+				<a href="AddNewUser.jsp" class="add-user-btn"><i class="fas fa-plus"></i> Add
 					New User</a>
 			</div>
 
@@ -286,9 +290,9 @@ body {
 							<td><%=uHis.getTotalQuizAttend()%></td>
 							<td><%=uHis.getCertificateAchieve()%></td>
 							<td>
-								<button class="action-button">
+								<a class="action-button" href="EditUser.jsp?id=<%= uHis.getId() %>">
 									<i class="fas fa-edit"></i> Edit
-								</button>
+								</a>
 								<button class="action-button delete">
 									<i class="fas fa-trash-alt"></i> Delete
 								</button>
@@ -333,6 +337,58 @@ body {
 		</main>
 
 	</div>
+
+<div class="main-content">
+    <div id="popup-notification" style="display: none; position: fixed; top: 20px; right: 20px; background-color: #28a745; color: white; padding: 15px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000;">
+        <i class="fas fa-check-circle" id="popup-icon"></i> <span id="popup-message"></span>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('status');
+        const message = params.get('message');
+        
+        const notification = document.getElementById('popup-notification');
+        const messageElement = document.getElementById('popup-message');
+        const iconElement = document.getElementById('popup-icon');
+
+        if ((status === 'success' || status === 'failed') && message) {
+            
+            const decodedMessage = decodeURIComponent(message);
+            messageElement.textContent = decodedMessage;
+
+            // --- CONDITION 1: STATUS IS SUCCESS ---
+            if (status === 'success') {
+                notification.style.backgroundColor = '#28a745'; // Green
+                iconElement.className = 'fas fa-check-circle'; // Success icon
+                notification.classList.remove('notification-fail');
+            } 
+            
+            // --- CONDITION 2: STATUS IS FAILED ---
+            else if (status === 'failed') {
+                notification.style.backgroundColor = '#dc3545'; // Red (You can use the CSS class too)
+                iconElement.className = 'fas fa-times-circle'; // Failure icon
+                // Or: notification.classList.add('notification-fail');
+            }
+
+            // Display the message (common for both success and fail)
+            notification.style.display = 'block';
+
+            // (Optional) Remove parameters from URL for cleanliness
+            if (history.replaceState) {
+                const cleanUrl = window.location.pathname;
+                history.replaceState(null, '', cleanUrl);
+            }
+
+            // (Optional) Hide the popup after a few seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000); // Popup disappears after 5 seconds
+        }
+    });
+</script>
 
 </body>
 </html>

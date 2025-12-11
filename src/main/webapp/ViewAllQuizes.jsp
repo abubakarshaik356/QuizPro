@@ -127,7 +127,7 @@
 <div class="navbar">AdminPro</div>
 
 <div class="container">
-
+	
     <h2>Quizzes in: <%= categoryName %></h2>
 
     <% if (quizes != null && !quizes.isEmpty()) { 

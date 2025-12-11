@@ -364,15 +364,13 @@ body {
 					<div class="card">
 						<h3>Quick Actions</h3>
 						<div class="action-button-grid">
-							<a href="#" class="action-button"> <i
+							<a href="AddNewQuiz" class="action-button"> <i
 								class="fas fa-plus-circle"></i> Add New Quiz
-							</a> <a href="#" class="action-button"> <i
-								class="fas fa-user-times"></i> Ban User Account
-							</a> <a href="#" class="action-button"> <i
-								class="fas fa-check-double"></i> Review Pending Content
-							</a> <a href="#" class="action-button"> <i class="fas fa-bell"></i>
+							</a> <a href="AddNewUser.jsp" class="action-button"><i class="fa fa-user-circle" aria-hidden="true"></i>Add New User
+							</a> <a href="AddCategory.jsp" class="action-button"> <i class="fa fa-folder-open" aria-hidden="true"></i> Add New Category
+							</a> <!-- <a href="#" class="action-button"> <i class="fas fa-bell"></i>
 								Send System Broadcast
-							</a>
+							</a> -->
 						</div>
 					</div>
 				</div>

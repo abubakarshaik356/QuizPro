@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.quizpro.dto.Questions;
 import com.quizpro.dto.Quizzes;
 import com.quizpro.dto.Subject;
+import com.quizpro.dto.User;
 import com.quizpro.util.DBConnection;
 
 public class AdminDAOImpl implements AdminDAO {
@@ -313,5 +314,115 @@ public class AdminDAOImpl implements AdminDAO {
 	    
 	    return -1;
 	}
+	
+	@Override
+    public boolean editCategories(String categoryId, String categoryName, String description) {
 
+        String sql = "INSERT INTO subjects(subId, subName, subDesc) VALUES (?, ?, ?)";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, categoryId);
+            ps.setString(2, categoryName);
+            ps.setString(3, description);
+
+            int rows = ps.executeUpdate();
+            return rows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+	
+	public Subject getSubjectDetails(int id) {
+		Connection con = DBConnection.getConnector();
+		String str = "Select * from subjects where subId=?";
+		Subject subject=new Subject();
+		try {
+			PreparedStatement ps=con.prepareStatement(str);
+			ps.setInt(1, id);
+			ResultSet rSet=ps.executeQuery();
+			if(rSet.next()) {
+				subject.setSubId(id);
+				subject.setSubname(rSet.getString(2));
+				subject.setSubDesc(rSet.getString(3));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return subject;
+	}
+
+	@Override
+	public boolean createNewUser(String name, String email, String role, long phone, String password) {
+		Connection conn = DBConnection.getConnector();
+		String qry = "INSERT into emps values(?,?,?,?,?,?)";
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement(qry);
+			int userid = (int) (Math.random() * 100000000);
+			ps.setInt(1, userid);
+			ps.setString(2, name);
+			ps.setString(3, email);
+			ps.setLong(4, phone);
+			ps.setString(5, role);
+			ps.setString(6, password);
+			int result = ps.executeUpdate();
+			if (result > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean updateUser(int userId, String name, String email, long phone,String password) {
+		Connection conn = DBConnection.getConnector();
+		String qry = "UPDATE emps SET name=?, email=?, phone=?, password=? WHERE eid=? ";
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement(qry);
+			ps.setString(1, name);
+			ps.setString(2, email);
+			ps.setLong(3, phone);
+			ps.setString(4, password);
+			ps.setInt(5, userId);
+			int result = ps.executeUpdate();
+			if (result > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public User getUserDetails(int id) {
+		Connection conn = DBConnection.getConnector();
+		String qry = "select * from emps where eid=?";
+		PreparedStatement ps;
+		User user=new User();
+		try {
+			ps=conn.prepareStatement(qry);
+			ps.setInt(1, id);
+			ResultSet rSet=ps.executeQuery();
+			if(rSet.next()) {
+				user.setUserid(id);
+				user.setName(rSet.getString(2));
+				user.setEmail(rSet.getString(3));
+				user.setPhone(rSet.getLong(4));
+				user.setRole(rSet.getString(5));
+				user.setPassword(rSet.getString(6));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
+	}
 }

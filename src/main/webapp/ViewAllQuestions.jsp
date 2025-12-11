@@ -4,10 +4,18 @@
 
 <%
     ArrayList<Questions> questions = (ArrayList<Questions>) session.getAttribute("ListQuestions");
-
-    String quizName = (String) session.getAttribute("QuizName");
-    String quizCategory = (String) session.getAttribute("QuizCategory");
-
+	String quizName="";
+	String quizCategory="";
+	if(session.getAttribute("QuizName")!=null){
+    	quizName = (String) session.getAttribute("QuizName");
+    	quizCategory = (String) session.getAttribute("QuizCategory");
+	}
+	else{
+		quizName=(String)request.getAttribute("quizName");
+		quizCategory=(String)request.getAttribute("quizCategory");
+	}
+	request.setAttribute("quizName", quizName);
+	request.setAttribute("quizCategory", quizCategory);
     int totalQuestions = (questions != null) ? questions.size() : 0;
 %>
 
@@ -222,7 +230,7 @@
 
             <div class="answer">Correct Answer: <%= q.getAnswer() %></div>
 
-            <a class="edit-btn" href="EditQuestion?id=<%= q.getId() %>">Edit</a>
+            <a class="edit-btn" href="EditQuestion?id=<%= q.getId() %>&quizName=<%=quizName%>&quizCategory=<%=quizCategory%>">Edit</a>
         </div>
 
     <% 

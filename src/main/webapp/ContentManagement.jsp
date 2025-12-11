@@ -385,9 +385,8 @@ body {
 								<td><%=sub.getSubname()%></td>
 								<td><%=sub.getQuizCount()%></td>
 								<td>
-									<button class="action-button">
-										<i class="fas fa-edit"></i> Edit
-									</button> 
+									<a href="EditCategory.jsp?id=<%=sub.getSubId()%>	"
+									class="action-button"> <i class="fas fa-edit"></i> Edit</a> 
 									<a href="ViewAllQuizes?categoryId=<%=sub.getSubId()%>
 									&categoryName=<%=sub.getSubname()%>"
 									class="action-button publish"> <i class="fas fa-eye"></i>

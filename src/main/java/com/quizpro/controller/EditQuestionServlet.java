@@ -24,12 +24,13 @@ public class EditQuestionServlet extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int id = Integer.parseInt(req.getParameter("id"));
-		String category = req.getParameter("");
-		String quizName = req.getParameter("");
+		String category = req.getParameter("quizCategory");
+		String quizName = req.getParameter("quizName");
 		
 		Questions qs = adDAO.getQuestionDetails(id);
 		if(qs != null) {
 			req.setAttribute("QuestionDetails", qs);
+			System.out.println(quizName+"-"+category);
 			req.setAttribute("category", category);
 			req.setAttribute("quizName", quizName);
 			req.getRequestDispatcher("EditQuestion.jsp").forward(req, resp);
