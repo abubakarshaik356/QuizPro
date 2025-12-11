@@ -215,6 +215,7 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	
+	
 	@Override
 	public boolean updateQuestion(int questionId,String questionText,String option1,String option2,String option3,String option4,String answer) {
 		String sql = "UPDATE questions SET quesdesc = ?, option1 = ?, option2 = ?, option3 = ?, option4 = ?, answer = ? "
@@ -242,6 +243,35 @@ public class AdminDAOImpl implements AdminDAO {
 		return false;
 	}
 	
+//	public Quizzes getQuizDetails(int id) {
+//		Connection con = DBConnection.getConnector();
+//		String str = "Select * from quizzs where quizid=?";
+//		Quizzes quizzes=new Quizzes();
+//		try {
+//			PreparedStatement ps=con.prepareStatement(str);
+//			ps.setInt(1, id);
+//			ResultSet rSet=ps.executeQuery();
+//			if(rSet.next()) {
+//				quizzes.setTitle(rSet.getString(3));
+//				quizzes.setDesc(rSet.getString(4));
+//				String qry="select subName from subjects where subid=?";
+//				PreparedStatement ps1=con.prepareStatement(qry);
+//				ps1.setInt(1, rSet.getInt(2));
+//				ResultSet rSet2=ps1.executeQuery();
+//				if(rSet2.next()) {
+//					quizzes.setCategory(rSet2.getString(1));
+//				}
+//				quizzes.setMarks(rSet.getInt(5));
+//				quizzes.setQuestions(rSet.getInt(6));
+//				System.out.println(quizzes.toString());
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return quizzes;
+//	}
+	
 	public Quizzes getQuizDetails(int id) {
 		Connection con = DBConnection.getConnector();
 		String str = "Select * from quizzs where quizid=?";
@@ -251,6 +281,7 @@ public class AdminDAOImpl implements AdminDAO {
 			ps.setInt(1, id);
 			ResultSet rSet=ps.executeQuery();
 			if(rSet.next()) {
+				quizzes.setQuizId(id);
 				quizzes.setTitle(rSet.getString(3));
 				quizzes.setDesc(rSet.getString(4));
 				String qry="select subName from subjects where subid=?";
@@ -262,7 +293,7 @@ public class AdminDAOImpl implements AdminDAO {
 				}
 				quizzes.setMarks(rSet.getInt(5));
 				quizzes.setQuestions(rSet.getInt(6));
-				System.out.println(quizzes.toString());
+//				System.out.println(quizzes.toString());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -270,6 +301,7 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		return quizzes;
 	}
+
 	
 	@Override
 	public int updateQuiz(String quizName, String quizDesc, String quizCategory, int marks,int noOfQuestions) {

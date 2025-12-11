@@ -1,5 +1,11 @@
+<%@page import="com.quizpro.dto.Quizzes"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<% 
+	Quizzes quiz = (Quizzes)request.getAttribute("QuizDetails");
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -188,12 +194,12 @@
                 
                 <div class="metric-item">
                     <strong><i class="fas fa-list-ol"></i> Total Questions</strong>
-                    <span class="metric-value">50</span>
+                    <span class="metric-value"><%=quiz.getQuestions() %></span>
                 </div>
                 
                 <div class="metric-item">
                     <strong><i class="fas fa-clock"></i> Time Allowed</strong>
-                    <span class="metric-value">45 Minutes</span>
+                    <span class="metric-value">1 Min perQues</span>
                 </div>
                 
                 <div class="metric-item">
@@ -203,12 +209,12 @@
                 
                 <div class="metric-item">
                     <strong><i class="fas fa-percent"></i> Passing Score</strong>
-                    <span class="metric-value pass">70% (35/50 correct)</span>
+                    <span class="metric-value pass">80%</span>
                 </div>
                 
                 <div class="metric-item">
                     <strong><i class="fas fa-redo"></i> Retakes Available</strong>
-                    <span class="metric-value">Unlimited</span>
+                    <span class="metric-value">Unavailable</span>
                 </div>
             </div>
 
@@ -229,7 +235,7 @@
             <a href="categories" class="back-button">
                 <i class="fas fa-arrow-left"></i> Change Quiz
             </a>
-            <a href="TestWindow.jsp" class="start-button">
+            <a href="TestWindow?quizId=<%= quiz.getQuizId() %>" class="start-button">
                 <i class="fas fa-play"></i> Start Test Now
             </a>
         </div>
