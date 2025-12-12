@@ -1,6 +1,8 @@
 package com.quizpro.dao;
 
+import java.awt.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.quizpro.dto.Questions;
 import com.quizpro.dto.Quizzes;
@@ -25,4 +27,7 @@ public interface AdminDAO {
 	boolean createNewUser(String name, String email,String role, long phone,String password); 
 	boolean updateUser(int id,String name, String email, long phone,String password);
 	User getUserDetails(int id);
+	Map<Integer, String> getAnswers(int quizId);
+	ArrayList<Integer> getQuesIds(int quizId);
+	boolean setScore(int userId, int quizId, int perc);
 }

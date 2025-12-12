@@ -181,7 +181,7 @@
 <body>
 
     <header class="overview-header">
-        <h1>Test Setup: Data Structures Fundamentals</h1>
+        <h1>Test Setup: <%=quiz.getTitle() %></h1>
         <p>Review the details and rules before beginning the assessment.</p>
     </header>
 
@@ -235,7 +235,7 @@
             <a href="categories" class="back-button">
                 <i class="fas fa-arrow-left"></i> Change Quiz
             </a>
-            <a href="TestWindow?quizId=<%= quiz.getQuizId() %>" class="start-button">
+            <a href="Test?quizId=<%=quiz.getQuizId() %>" class="start-button">
                 <i class="fas fa-play"></i> Start Test Now
             </a>
         </div>

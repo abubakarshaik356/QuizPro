@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.quizpro.dto.Questions;
 import com.quizpro.dto.Quizzes;
@@ -456,5 +458,67 @@ public class AdminDAOImpl implements AdminDAO {
 			e.printStackTrace();
 		}
 		return user;
+	}
+
+	@Override
+	public Map<Integer, String> getAnswers(int quizId) {
+		Map<Integer, String> answers=new HashMap<Integer, String>();
+		Connection conn = DBConnection.getConnector();
+		String qryString="SELECT quesId, answer from questions where quizId=?";
+		try {
+			PreparedStatement ps=conn.prepareStatement(qryString);
+			ps.setInt(1, quizId);
+			ResultSet rSet=ps.executeQuery();
+			while(rSet.next()) {
+				answers.put(rSet.getInt(1), rSet.getString(2));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return answers;
+	}
+	
+	public ArrayList<Integer> getQuesIds(int quizId) {
+		ArrayList<Integer> quesids=new ArrayList<Integer>();
+		Connection conn = DBConnection.getConnector();
+		String qryString="SELECT quesId from questions where quizId=?";
+		try {
+			PreparedStatement ps=conn.prepareStatement(qryString);
+			ps.setInt(1, quizId);
+			ResultSet rSet=ps.executeQuery();
+			while(rSet.next()) {
+				quesids.add(rSet.getInt(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return quesids;
+	}
+	
+	public boolean setScore(int userId, int quizId, int perc) {
+		Connection conn = DBConnection.getConnector();
+		String qryString="INSERT INTO result (userId, quizId, percentage, resstatus, date) VALUES (?, ?, ?, ?, ?)";
+		try {
+			PreparedStatement pStatement=conn.prepareStatement(qryString);
+			pStatement.setInt(1, userId);
+			pStatement.setInt(2, quizId);
+			pStatement.setDouble(3, perc);
+			String status="";
+			if(perc>=80) {
+				status="PASS";
+			} else {
+				status="FAIL";
+			}
+			pStatement.setString(4, status);
+			pStatement.setDate(5, new java.sql.Date(System.currentTimeMillis()));
+			pStatement.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
