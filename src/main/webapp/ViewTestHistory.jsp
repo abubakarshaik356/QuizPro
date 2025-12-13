@@ -354,7 +354,7 @@ h1 {
 						<td><%=uHis.getStatus()%></td>
 						<td>
 							<a href="TestPreview?quizId=<%=uHis.getQuizId() %>" class="retake-button">Retake</a>
-							<a href="#" class="download-button">Download Certificate</a>
+							<a href="GenerateCertificate?quizId=<%=uHis.getQuizId()%>&Date=<%=uHis.getDateTaken() %>" class="download-button">Download Certificate</a>
 						</td>
 					</tr>
 					<%

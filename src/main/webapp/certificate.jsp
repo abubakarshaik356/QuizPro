@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -299,4 +299,238 @@
 
 </body>
 
+</html> --%>
+
+
+<%@page import="com.quizpro.dto.Quizzes"%>
+<%@page import="com.quizpro.dto.User"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	User user = (User) request.getAttribute("User");
+	Quizzes quiz = (Quizzes) request.getAttribute("Quiz");
+	String date = (String) request.getAttribute("Date");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Certificate of Mastery</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #d0d0d0;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .certificate-wrapper {
+            background: #e6e6e6;
+            padding: 35px;
+            box-shadow: 0 25px 55px rgba(0,0,0,0.35);
+        }
+
+        .certificate-container {
+            width: 100%;
+            max-width: 900px;
+            background: #f7f4e4;
+            border: 12px solid #c8a853;
+            padding: 55px 65px;
+            text-align: center;
+        }
+
+        /* LOGO */
+        .logo {
+            font-size: 50px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .logo-quiz { color: #2b6b7f; }
+        .logo-pro { color: #d4a429; }
+
+        /* TITLE */
+        .certificate-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 70px;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .certifies-text {
+            font-size: 19px;
+            margin-bottom: 2px;
+        }
+
+        /* RIBBON */
+        .recipient-banner {
+            display: inline-block;
+            /* background: linear-gradient(to right, #2b6b7f, #3a8aa3, #2b6b7f); */
+            color: #000;
+            font-size: 35.8px;
+            padding: 17px 70px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 8px; /* VERY SMALL – matches image */
+            position: relative;
+        }
+
+        .recipient-banner::before,
+        .recipient-banner::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-top: 30px solid transparent;
+            border-bottom: 30px solid transparent;
+        }
+
+        /* .recipient-banner::before {
+            left: -38px;
+            border-right: 38px solid #2b6b7f;
+        }
+
+        .recipient-banner::after {
+            right: -38px;
+            border-left: 38px solid #2b6b7f;
+        } */
+
+        .completion-text {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .course-name {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            margin-top: 0;
+            margin-bottom: 50px;
+        }
+
+        /* FOOTER */
+        .certificate-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        /* SEAL */
+        .gold-seal {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #f4d03f, #d4a429, #b8941f);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 4px solid #c8a853;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .gold-seal::before {
+            content: "";
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            border: 2px dashed #8b7220;
+        }
+
+        .seal-text {
+            color: white;
+            font-weight: 700;
+            font-size: 13px;
+            text-align: center;
+            z-index: 2;
+            line-height: 1.3;
+        }
+
+        /* AWARD TEXT */
+        .award-details {
+            text-align: left;
+            font-size: 18px;
+            line-height: 1.0;
+            flex: 1;
+            padding-left: 35px;
+        }
+
+        /* SIGNATURE */
+        .signature-section {
+            text-align: right;
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 40px;
+            color: #2b6b7f;
+            margin-bottom: 0;
+        }
+
+        .signature-title {
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="certificate-wrapper">
+        <div class="certificate-container">
+
+            <!-- LOGO -->
+            <div class="logo">
+                <span class="logo-quiz">Quiz</span><span class="logo-pro">Pro</span>
+            </div>
+
+            <!-- TITLE -->
+            <div class="certificate-title">Certificate of Mastery</div>
+
+            <div class="certifies-text">This certifies that</div>
+
+            <!-- NAME RIBBON -->
+            <div class="recipient-banner"><%= user.getName() %></div>
+
+            <!-- SUBTEXT -->
+            <div class="completion-text">
+                has successfully completed and mastered the specialized learning path in
+            </div>
+
+            <!-- COURSE -->
+            <div class="course-name"><%= quiz.getTitle() %></div>
+
+            <!-- FOOTER -->
+            <div class="certificate-footer">
+
+                <!-- SEAL -->
+                <div class="gold-seal">
+                    <div class="seal-text">QuizPro<br>Certified</div>
+                </div>
+
+                <!-- AWARD DETAILS -->
+                <div class="award-details">
+                    <p><strong>Awarded on:</strong> <%= date %></p>
+                    <p><strong>Unique Verification ID:</strong> QPM-DSML-2025-<%=user.getUserid() %></p>
+                </div>
+
+                <!-- SIGNATURE -->
+                <div class="signature-section">
+                    <div class="signature">Narendra</div>
+                    <div class="signature-title">CEO, QuizPro</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
 </html>
+
