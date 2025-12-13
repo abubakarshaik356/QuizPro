@@ -829,7 +829,7 @@ h1 {
 						</div>
 
 				<div class="quiz-action">
-					<a href="TestPreview.jsp" class="action-button"> <i
+					<a href="TestPreview?quizId=<%=q.getQuizId() %>" class="action-button"> <i
 						class="fas fa-redo"></i> Retake
 					</a>
 				</div>

@@ -7,6 +7,15 @@ public class UserTestHis {
 	private String dateTaken;
 	private double scorePer;
 	private String status;
+	private int quizId;
+
+	public int getQuizId() {
+		return quizId;
+	}
+
+	public void setQuizId(int quizId) {
+		this.quizId = quizId;
+	}
 
 	public UserTestHis(String quizName, String category, String dateTaken, double scorePer, String status) {
 		super();

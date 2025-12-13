@@ -1,6 +1,7 @@
 package com.quizpro.dao;
 
 import java.awt.List;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -29,5 +30,6 @@ public interface AdminDAO {
 	User getUserDetails(int id);
 	Map<Integer, String> getAnswers(int quizId);
 	ArrayList<Integer> getQuesIds(int quizId);
-	boolean setScore(int userId, int quizId, int perc);
+	boolean setScore(int userId, int quizId, double perc, String email);
+	
 }

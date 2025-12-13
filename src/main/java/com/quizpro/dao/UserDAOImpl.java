@@ -101,7 +101,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public ArrayList<UserTestHis> userTestHistory(int id) {
 		String query = "SELECT q.quizname AS quiz_name, s.subname AS subject_name, "
-				+ "r.percentage AS percentage, r.resstatus AS result_status, r.date AS date_taken " + "FROM result r "
+				+ "r.percentage AS percentage, r.resstatus AS result_status, r.date AS date_taken, q.quizId as quizId " + "FROM result r "
 				+ "JOIN quizzs q ON r.quizId = q.quizId " + "JOIN subjects s ON q.subId = s.subId "
 				+ "JOIN emps e ON r.userId = e.eid " + "WHERE r.userId = ?";
 
@@ -119,6 +119,7 @@ public class UserDAOImpl implements UserDAO {
 				uth.setCategory(rs.getString("subject_name"));
 				uth.setScorePer(rs.getDouble("percentage"));
 				uth.setStatus(rs.getString("result_status"));
+				uth.setQuizId(rs.getInt("quizId"));
 
 				// Convert Date to String (safe)
 				Date dt = rs.getDate("date_taken");
