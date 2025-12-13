@@ -43,5 +43,17 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setPhone(long phone) {
+		this.phone = phone;
+	}
+	public User() {
+		super();
+	}
 	
 }

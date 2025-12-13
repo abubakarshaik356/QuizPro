@@ -11,6 +11,7 @@ if (list == null) {
 	if (list == null)
 		list = new java.util.ArrayList<>();
 }
+int id=(int)session.getAttribute("id");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -280,26 +281,7 @@ h1 {
 </head>
 <body>
 
-	<header class="navbar">
-		<div class="container">
-			<a href="dashboard.jsp" class="logo">Quiz<span>Pro</span></a>
-			<div class="nav-links">
-				<a href="#"><i class="fas fa-home"></i> Home</a> <a href="#"><i
-					class="fas fa-map-marked-alt"></i> Learning Paths</a> <a
-					href="categories.jsp" class="active"><i class="fas fa-list-ul"></i>
-					Categories</a> <a href="#"><i class="fas fa-history"></i> My Tests</a>
-			</div>
-			<div class="profile-menu">
-				<img src="https://via.placeholder.com/40/0077B6/FFFFFF?text=J"
-					alt="User Avatar" class="profile-icon" id="profileIcon"
-					onclick="toggleDropdown()">
-				<div class="dropdown-content" id="profileDropdown">
-					<a href="#"><i class="fas fa-user-circle"></i> Profile</a> <a
-						href="login.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
-				</div>
-			</div>
-		</div>
-	</header>
+<%@ include file="navbar.jsp" %>
 
 	<div class="container">
 		<div class="page-header">
@@ -345,7 +327,7 @@ h1 {
 							style="color: var(--accent-color);">Available</span>
 					</div>
 				</div>
-				<a href="quizzes.jsp?subId=<%=s.getSubId()%>"
+				<a href="quizes?subId=<%=s.getSubId()%>&userId=<%=id %>&title=<%=s.getSubname() %>"
 					class="action-button"> <i class="fas fa-chevron-right"></i>
 					Browse All Quizzes
 				</a>

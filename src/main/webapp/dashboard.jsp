@@ -1,5 +1,21 @@
+<%@page import="com.quizpro.dto.UserTestHis"%>
+<%@page import="com.quizpro.dao.UserDAOImpl"%>
+<%@page import="com.quizpro.dao.UserDAO"%>
+<%@page import="java.util.List"%>
+<%@page import="com.quizpro.dao.SubjectDAOImpl"%>
+<%@page import="com.quizpro.dao.SubjectDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.quizpro.dto.Subject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+String name = (String) session.getAttribute("name");
+int id = (int) session.getAttribute("id");
+SubjectDAO dao = new SubjectDAOImpl();
+List<Subject> list = dao.getAllSubjects();
+UserDAO userDAO = new UserDAOImpl();
+List<UserTestHis> history = userDAO.userTestHistory(id);
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -212,9 +228,16 @@ h3 {
 	margin-top: 20px;
 }
 
+.viewall {
+	width: 100%;
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+}
 .category-card {
 	background-color: var(--card-bg);
 	padding: 25px 15px;
+	height:180px;
 	border-radius: 8px;
 	text-align: center;
 	cursor: pointer;
@@ -233,6 +256,10 @@ h3 {
 	color: var(--card-bg);
 }
 
+.category-card:hover p {
+	color: var(--card-bg);
+}
+
 .category-card:hover .icon {
 	color: var(--accent-color);
 }
@@ -241,6 +268,18 @@ h3 {
 	font-size: 2.5em;
 	margin-bottom: 10px;
 	color: var(--primary-color);
+}
+
+.card-anchor {
+	text-decoration: none;
+}
+
+.card-anchor h3 {
+	color: var(--primary-color);
+}
+
+.card-anchor p {
+	color: var(--subtle-gray);
 }
 
 /* --- My Tests/Recents --- */
@@ -499,35 +538,18 @@ h3 {
 .footer-copyright a:hover {
 	color: var(--accent-color);
 }
+
+.empty {
+	width: 100%;
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+}
 </style>
 </head>
 
 <body>
-	<%
-	String name = (String) session.getAttribute("name");
-	%>
-	<header class="navbar">
-		<div class="container">
-			<a href="dashboard.html" class="logo">Quiz<span>Pro</span></a>
-
-			<div class="nav-links">
-				<a href="#" class="active"><i class="fas fa-home"></i> Home</a> 
-				<a href="categories"><i class="fas fa-list-ul"></i> Categories</a><a href="#my-tests"><i class="fas fa-history"></i>
-					My Tests</a>
-			</div>
-
-			<div class="profile-menu">
-				<img
-					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwJgi2tfPov2vnIRkuxgRw_gHSqt_uRGbrdA&s"
-					alt="User Avatar" class="profile-icon" id="profileIcon"
-					onclick="toggleDropdown()">
-				<div class="dropdown-content" id="profileDropdown">
-					<a href="#"><i class="fas fa-user-circle"></i> Profile</a> <a
-						href="login.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
-				</div>
-			</div>
-		</div>
-	</header>
+	<%@ include file="navbar.jsp"%>
 
 	<div class="container dashboard-grid">
 
@@ -549,34 +571,36 @@ h3 {
 			<h2>
 				<i class="fas fa-history"></i> My Recent Activity
 			</h2>
+			<%
+			if (history.isEmpty()) {
+			%>
+			<div class="empty">
+				<img alt="Empty"
+					src="https://cdn-icons-png.flaticon.com/128/13543/13543236.png">
+				<h3>No Recent Activity Available</h3>
+			</div>
+			<%
+			} else {
+			%>
 			<ul class="test-list">
+				<%
+				for (UserTestHis l : history) {
+				%>
 				<li class="test-item">
 					<div>
 						<p>
-							<strong>Cloud Security Compliance - AWS</strong>
+							<strong><%=l.getQuizName() %></strong>
 						</p>
 						<small>Status: Completed</small>
-					</div> <span>85% Accuracy</span>
+					</div> <span><%=l.getScorePer() %>% Scored</span>
 				</li>
-				<li class="test-item">
-					<div>
-						<p>
-							<strong>Financial Modeling in Python</strong>
-						</p>
-						<small>Status: In Progress</small>
-					</div> <span><a href="#"
-						style="color: var(--accent-color); text-decoration: none;">Resume
-							Test</a></span>
-				</li>
-				<li class="test-item">
-					<div>
-						<p>
-							<strong>Advanced JavaScript Frameworks</strong>
-						</p>
-						<small>Status: Completed</small>
-					</div> <span>92% Accuracy</span>
-				</li>
+				<%
+				}
+				%>
 			</ul>
+			<%
+			}
+			%>
 		</div>
 
 		<div class="section" id="categories">
@@ -584,6 +608,24 @@ h3 {
 				<i class="fas fa-list-alt"></i> Explore Top Categories
 			</h2>
 			<div class="category-grid">
+				<%
+				int count=0;
+				for (Subject s : list) {
+				%>
+				<a href="quizes?subId=<%=s.getSubId()%>&userId=<%=id %>&title=<%=s.getSubname() %>" class="card-anchor">
+					<div class="category-card">
+						<i class="fas fa-code icon"></i>
+						<h3><%=s.getSubname()%></h3>
+						<p><%=s.getSubDesc()%></p>
+					</div>
+				</a>
+				<% count++;
+				if(count==5){
+					break;
+				}
+				}
+				%>
+				<!-- 
 				<div class="category-card">
 					<i class="fas fa-code icon"></i>
 					<h3>Software Engineering</h3>
@@ -608,9 +650,13 @@ h3 {
 					<i class="fas fa-database icon"></i>
 					<h3>Cloud Infrastructure</h3>
 				</div>
+			 -->
+			</div>
+			<div class="viewall">
+				<a href="categories" class="cta-button" style="margin-top: 40px">View All Categories</a>
 			</div>
 		</div>
-				<section class="section" id="faq"
+		<section class="section" id="faq"
 			style="background-color: var(--dark-bg);">
 			<div class="container">
 				<h2 style="text-align: center;">

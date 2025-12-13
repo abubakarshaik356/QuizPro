@@ -2,7 +2,10 @@ package com.quizpro.dao;
 
 import java.util.ArrayList;
 
+import com.quizpro.dto.Quizzes;
+import com.quizpro.dto.Subject;
 import com.quizpro.dto.User;
+import com.quizpro.dto.UserManage;
 import com.quizpro.dto.UserTestHis;
 
 public interface UserDAO {
@@ -10,4 +13,9 @@ public interface UserDAO {
 	public User login(String email, String password);
 	public boolean updatePassword(int id,String password);
 	public ArrayList<UserTestHis> userTestHistory(int id);
+	public ArrayList<UserManage> getUsers();
+	public ArrayList<Subject> getSubjects();
+	public ArrayList<Quizzes> getQuizzes();
+	ArrayList<Quizzes> getQuizzesByCategory(int categoryId);
+	public boolean isEmailExist(String email); 
 }
