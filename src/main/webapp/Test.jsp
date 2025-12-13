@@ -298,29 +298,105 @@ body {
 	.question-grid {
 		grid-template-columns: repeat(4, 1fr);
 	}
+	}
+	.fullscreen-overlay {
+    position: fixed;              /* MUST be fixed */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0, 0, 0, 0.85);
+
+    display: flex;                /* Flexbox centering */
+    align-items: center;          /* Vertical center */
+    justify-content: center;      /* Horizontal center */
+
+    z-index: 99999;
 }
+
+.overlay-box {
+    background: #ffffff;
+    padding: 35px 45px;
+    width: 420px;
+    border-radius: 12px;
+    text-align: center;
+
+    /* Prevent top sticking */
+    margin: 0;
+}
+
+
+.overlay-box h2 {
+    margin-bottom: 15px;
+    color: #0077B6;
+}
+
+.overlay-box ul {
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.overlay-box li {
+    margin-bottom: 8px;
+}
+
+.start-test-btn {
+    background: #0077B6;
+    color: white;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.start-test-btn:hover {
+    background: #005f8d;
+}
+	
+	
 </style>
 </head>
 <body>
 	<%
 	int quizId = (int) request.getAttribute("quizId");
-	String quizName=(String)request.getAttribute("quizName");
-	String category=(String)request.getAttribute("category");
-	int quescount=(int)request.getAttribute("quescount");
-	ArrayList<Questions> ques=(ArrayList<Questions>)request.getAttribute("questions");
+	String quizName = (String) request.getAttribute("quizName");
+	String category = (String) request.getAttribute("category");
+	int quescount = (int) request.getAttribute("quescount");
+	ArrayList<Questions> ques = (ArrayList<Questions>) request.getAttribute("questions");
 	request.setAttribute("quizId", quizId);
 	%>
+	<div id="fullscreenOverlay" class="fullscreen-overlay">
+		<div class="overlay-box">
+			<h2>Test Instructions</h2>
+			<ul>
+				<li>This test must be taken in fullscreen mode.</li>
+				<li>Do not switch tabs or exit fullscreen.</li>
+				<li>Exiting fullscreen may auto-submit your test.</li>
+			</ul>
+			<button class="start-test-btn" onclick="startTest()">Start
+				Test</button>
+		</div>
+	</div>
+
 	<header class="test-header">
 		<div class="container">
 			<div class="test-title-area">
-				<h2><%=quizName %></h2>
-				<p>Category: <%=category %> | Difficulty: Beginner</p>
+				<h2><%=quizName%></h2>
+				<p>
+					Category:
+					<%=category%>
+					| Difficulty: Beginner
+				</p>
 			</div>
 
 			<div class="test-status-area">
 				<div class="status-box">
 					<i class="fas fa-list-ol"></i> Question: <span
-						style="color: var(--primary-color);" id="count">5</span> / <%=quescount %>
+						style="color: var(--primary-color);" id="count">5</span> /
+					<%=quescount%>
 				</div>
 				<div class="status-box">
 					<i class="fas fa-clock"></i> Time Remaining: <span class="timer"></span>
@@ -337,15 +413,17 @@ body {
 			<div class="question-area">
 				<div id="question-number"></div>
 
-				<div id="question-text"><!-- What is the time complexity for
-					inserting an element into a hash table in the average case? --></div>
+				<div id="question-text">
+					<!-- What is the time complexity for
+					inserting an element into a hash table in the average case? -->
+				</div>
 
-				<pre class="question-code">
+				<!-- <pre class="question-code">
 // Example Context (optional)
 void insert(key, value) {
   // logic here...
 }
-                </pre>
+                </pre> -->
 
 				<div id="optionsBox">
 					<!-- <label class="answer-option"> <input type="radio"
@@ -368,8 +446,9 @@ void insert(key, value) {
 						class="fas fa-chevron-left"></i> Previous</a>
 
 					<div>
-						<a href="#" class="nav-button next-button" onclick="next()">Next <i
-							class="fas fa-chevron-right"></i></a>
+						<a href="#" class="nav-button next-button" onclick="next()">Next
+							<i class="fas fa-chevron-right"></i>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -382,9 +461,12 @@ void insert(key, value) {
 					<h3>Question Navigator</h3>
 					<div class="question-grid">
 						<%
-							for(int i=1;i<=quescount;i++){%>
-								<a href="#" onclick="loadQuestion(<%=i-1 %>)" class="q-button" id="ques<%=i-1%>"><%=i %></a>
-							<%}
+						for (int i = 1; i <= quescount; i++) {
+						%>
+						<a href="#" onclick="loadQuestion(<%=i - 1%>)" class="q-button"
+							id="ques<%=i - 1%>"><%=i%></a>
+						<%
+						}
 						%>
 						<!-- <a href="#" class="q-button answered">1</a> <a href="#"
 							class="q-button answered marked">2</a> <a href="#"
@@ -419,9 +501,11 @@ void insert(key, value) {
 	</div>
 
 	<script>
+	
+    
 let questions = [
 <%for (Questions q : ques) {
-System.out.println(q.getOptionType());%>
+	System.out.println(q.getOptionType());%>
 {
     id: <%=q.getId()%>,
     type: "<%=q.getOptionType()%>",
@@ -433,7 +517,7 @@ System.out.println(q.getOptionType());%>
 },
 <%}%>
 ];
-
+console.log(questions);
 let userAnswers = {};  
 let currentIndex = 0;
 loadQuestion(currentIndex);
@@ -443,7 +527,7 @@ function loadQuestion(i) {
     document.getElementById("question-text").innerHTML = q.question;
     document.getElementById("count").innerHTML = i+1;
     document.getElementById("ques"+i).className = "q-button current";
-
+	console.log("loadquestion")
 
     let html = "";
     if (q.type === "mcq")
@@ -461,10 +545,10 @@ function loadQuestion(i) {
 
 function renderMCQ(q) {
     return `
-       <label class="answer-option"><input type="radio" name="ans" value=${q.opt1} class="answer-input"><span class="answer-label"> ${q.opt1}</span></label><br>
-       <label class="answer-option"><input type="radio" name="ans" value=${q.opt2} class="answer-input"> <span class="answer-label"> ${q.opt2}</span></label><br>
-       <label class="answer-option"><input type="radio" name="ans" value=${q.opt3} class="answer-input"> <span class="answer-label"> ${q.opt3}</span></label><br>
-       <label class="answer-option"><input type="radio" name="ans" value=${q.opt4} class="answer-input"> <span class="answer-label"> ${q.opt4}</span></label><br>
+       <label class="answer-option"><input type="radio" name="ans" value="${q.opt1}" class="answer-input"><span class="answer-label"> ${q.opt1}</span></label><br>
+       <label class="answer-option"><input type="radio" name="ans" value="${q.opt2}" class="answer-input"> <span class="answer-label"> ${q.opt2}</span></label><br>
+       <label class="answer-option"><input type="radio" name="ans" value="${q.opt3}" class="answer-input"> <span class="answer-label"> ${q.opt3}</span></label><br>
+       <label class="answer-option"><input type="radio" name="ans" value="${q.opt4}" class="answer-input"> <span class="answer-label"> ${q.opt4}</span></label><br>
     `;
 }
 
@@ -480,8 +564,8 @@ function renderMultiSelect(q) {
 
 function renderTrueFalse(q) {
     return `
-       <label class="answer-option"><input type="radio" name="ans" value=${q.opt1} class="answer-input"><span class="answer-label"> True</span></label><br>
-       <label class="answer-option"><input type="radio" name="ans" value=${q.opt2} class="answer-input"><span class="answer-label"> False</span></label><br>
+       <label class="answer-option"><input type="radio" name="ans" value="${q.opt1}" class="answer-input"><span class="answer-label"> True</span></label><br>
+       <label class="answer-option"><input type="radio" name="ans" value="${q.opt2}" class="answer-input"><span class="answer-label"> False</span></label><br>
     `;
 }
 
@@ -552,6 +636,11 @@ function submitQuiz() {
     inp.name = "quizId";
     inp.value = <%=quizId%>;
     form.appendChild(inp);
+    inp = document.createElement("input");
+    inp.type = "hidden";
+    inp.name = "quizName";
+    inp.value = "<%=quizName%>";
+    form.appendChild(inp);
     document.body.appendChild(form);
     form.submit();
 }
@@ -587,7 +676,7 @@ let timer = setInterval(() => {
     if (totalSeconds <= 0) {
         clearInterval(timer);
         timerElement.textContent = "00:00";
-        return;
+        submitQuiz();
     }
 
     totalSeconds--;
@@ -601,6 +690,33 @@ let timer = setInterval(() => {
 
     timerElement.textContent = `${minutes}:${seconds}`;
 }, 1000);
+
+
+function enterFullScreen() {
+    const elem = document.documentElement;
+
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    }
+}
+
+function startTest() {
+    enterFullScreen();
+    document.getElementById("fullscreenOverlay").style.display = "none";
+}
+
+document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) {
+        alert("You exited fullscreen. Test will be submitted.");
+        submitQuiz();
+    }
+});
+
+
 
 
 </script>

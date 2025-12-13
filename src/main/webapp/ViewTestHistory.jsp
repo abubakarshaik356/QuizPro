@@ -245,6 +245,23 @@ h1 {
 	font-weight: 600;
 }
 
+.download-button {
+	background-color: var(--success-color);
+  	color: #ffffff;
+	padding: 8px 12px;
+	border-radius: 6px;
+	text-decoration: none;
+	font-weight: 600;
+}
+.download-button:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 10px var(--shadow-light);
+}
+.retake-button:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 10px var(--shadow-light);
+}
+
 /* Responsive adjustments */
 @media ( max-width : 768px) {
 	.navbar .nav-links {
@@ -335,7 +352,10 @@ h1 {
 						<td><%=uHis.getDateTaken()%></td>
 						<td><%=uHis.getScorePer()%></td>
 						<td><%=uHis.getStatus()%></td>
-						<td><a href="quiz-page.html" class="retake-button">Retake</a></td>
+						<td>
+							<a href="TestPreview?quizId=<%=uHis.getQuizId() %>" class="retake-button">Retake</a>
+							<a href="#" class="download-button">Download Certificate</a>
+						</td>
 					</tr>
 					<%
 					}

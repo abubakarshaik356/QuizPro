@@ -13,6 +13,7 @@ import com.quizpro.dto.Quizzes;
 import com.quizpro.dto.Subject;
 import com.quizpro.dto.User;
 import com.quizpro.util.DBConnection;
+import com.quizpro.util.EmailUtil;
 
 public class AdminDAOImpl implements AdminDAO {
 
@@ -497,28 +498,56 @@ public class AdminDAOImpl implements AdminDAO {
 		return quesids;
 	}
 	
-	public boolean setScore(int userId, int quizId, int perc) {
+	public boolean setScore(int userId, int quizId, double perc, String email) {
 		Connection conn = DBConnection.getConnector();
-		String qryString="INSERT INTO result (userId, quizId, percentage, resstatus, date) VALUES (?, ?, ?, ?, ?)";
+		String qryString="INSERT INTO result (userId, quizId, percentage, resstatus, date, resId) VALUES (?, ?, ?, ?, ?, ?)";
 		try {
-			PreparedStatement pStatement=conn.prepareStatement(qryString);
-			pStatement.setInt(1, userId);
-			pStatement.setInt(2, quizId);
-			pStatement.setDouble(3, perc);
-			String status="";
-			if(perc>=80) {
-				status="PASS";
-			} else {
-				status="FAIL";
+			String qryString2="SELECT percentage FROM result WHERE userId=? and quizId=?";
+			PreparedStatement ps=conn.prepareStatement(qryString2);
+			ps.setInt(1, userId);
+			ps.setInt(2, quizId);
+			ResultSet rSet=ps.executeQuery();
+			if(rSet.next()) {
+				if(rSet.getDouble(1)>perc) {
+					EmailUtil.sendCompleteMail(email);
+					return true;
+				} else {
+					String uqry="UPDATE result SET percentage=? where userId=? and quizId=?";
+					ps=conn.prepareStatement(uqry);
+					ps.setDouble(1, perc);
+					ps.setInt(2, userId);
+					ps.setInt(3, quizId);
+					ps.executeUpdate();
+					EmailUtil.sendCompleteMail(email);
+					return true;
+				}
 			}
-			pStatement.setString(4, status);
-			pStatement.setDate(5, new java.sql.Date(System.currentTimeMillis()));
-			pStatement.executeUpdate();
-			return true;
+			else {
+				PreparedStatement pStatement=conn.prepareStatement(qryString);
+				pStatement.setInt(1, userId);
+				pStatement.setInt(2, quizId);
+				pStatement.setDouble(3, perc);
+				String status="";
+				if(perc>=80) {
+					status="PASS";
+				} else {
+					status="FAIL";
+				}
+				pStatement.setString(4, status);
+				pStatement.setDate(5, new java.sql.Date(System.currentTimeMillis()));
+				int id=(int) (Math.random() * 100000000);
+				String resId="QPRO"+id;
+				pStatement.setString(6, resId);
+				pStatement.executeUpdate();
+				EmailUtil.sendCompleteMail(email);
+				return true;
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
 	}
+	
+	
 }

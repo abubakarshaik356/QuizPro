@@ -133,7 +133,14 @@
     </style>
 </head>
 <body>
-
+	<%
+    String quizName = (String) request.getAttribute("quizName");
+    int score = (int) request.getAttribute("score");
+    int total = (int) request.getAttribute("totalQuestions");
+    double perc = (score * 100.0) / total;
+    int quizId = (int) request.getAttribute("quizId");
+%>
+	
     <div class="result-container">
         
         <div class="status-box" id="statusBox">
@@ -150,96 +157,56 @@
                 <strong><span id="questionsCorrect">--</span>/<span id="questionsTotal">--</span></strong>
                 <span>Questions Correct</span>
             </div>
-            <div class="metric">
-                <strong><span id="timeTaken">--</span> min</strong>
-                <span>Time Taken</span>
-            </div>
         </div>
         
         <div id="certificateArea">
             </div>
 
         <div class="action-links">
-            <a href="quiz-dashboard.html"><i class="fas fa-home"></i> Back to Dashboard</a>
-            <a href="#"><i class="fas fa-share-alt"></i> Share Result</a>
+            <a href="dashboard.jsp"><i class="fas fa-home"></i> Back to Dashboard</a>
         </div>
         
     </div>
 
     <script>
-        // --- Data Extraction and Processing ---
-        document.addEventListener('DOMContentLoaded', function() {
-            const params = new URLSearchParams(window.location.search);
-            
-            // --- Simulated/Passed Data from Submission ---
-            const score = parseInt(params.get('score')) || 0; 
-            const total = parseInt(params.get('total')) || 10; 
-            // 'status' should be 'pass' or anything else (which defaults to fail)
-            const passStatus = params.get('status') === 'pass'; 
-            const quizId = params.get('quizId') || 'QZ001'; 
-            const time = params.get('time') || '15'; 
+    const quizName = "<%=quizName%>";
+    const score = <%=score%>;
+    const quizId = <%=quizId%>;
+    const total = <%=total%>;
+    const finalPerc = <%=perc%>.toFixed(2);
 
-            // --- Elements ---
-            const statusBox = document.getElementById('statusBox');
-            const finalScoreElement = document.getElementById('finalScore');
-            const questionsCorrectElement = document.getElementById('questionsCorrect');
-            const questionsTotalElement = document.getElementById('questionsTotal');
-            const timeTakenElement = document.getElementById('timeTaken');
-            const quizNameElement = document.getElementById('quizName');
-            const certificateArea = document.getElementById('certificateArea');
+    document.getElementById("quizName").textContent = quizName;
+    document.getElementById("finalScore").textContent = finalPerc;
+    document.getElementById("questionsCorrect").textContent = score;
+    document.getElementById("questionsTotal").textContent = total;
 
-            // --- Calculation & Display ---
-            const scorePercentage = total > 0 ? Math.round((score / total) * 100) : 0;
-            // Simulated lookup for quiz title
-            const quizName = quizId === 'QZ001' ? 'Python Fundamentals Assessment' : 'Quiz Result'; 
+    const statusBox = document.getElementById("statusBox");
+    const certificateArea = document.getElementById("certificateArea");
 
-            quizNameElement.textContent = quizName;
-            questionsCorrectElement.textContent = score;
-            questionsTotalElement.textContent = total;
-            finalScoreElement.textContent = scorePercentage;
-            timeTakenElement.textContent = time;
+    if (finalPerc >= 35) {
+        statusBox.classList.add("status-pass");
+        statusBox.innerHTML = `
+            <h1><i class="fas fa-check-circle"></i> PASS</h1>
+            <p>Great job! You cleared the quiz.</p>
+        `;
 
-            if (passStatus) {
-                // Passed State 🏆
-                statusBox.classList.add('status-pass');
-                statusBox.innerHTML = `
-                    <i class="fas fa-trophy fa-2x"></i>
-                    <h1>Congratulations!</h1>
-                    <p>You successfully passed the ${quizName} assessment.</p>
-                `;
-                
-                // Add Certificate Button linking to the generator page
-                certificateArea.innerHTML = `
-                    <a href="generateCertificate.jsp?quizId=${quizId}&userId=current_user" class="certificate-btn">
-                        <i class="fas fa-download"></i> Download Your Certificate
-                    </a>
-                `;
+        certificateArea.innerHTML = `
+            <a href="GenerateCertificate?quizId=${quizId}" class="certificate-btn">
+                <i class="fas fa-award"></i> Download Certificate
+            </a>
+        `;
+    } else {
+        statusBox.classList.add("status-fail");
+        statusBox.innerHTML = `
+            <h1><i class="fas fa-times-circle"></i> FAIL</h1>
+            <p>You can try again to improve your score.</p>
+        `;
 
-            } else {
-                // Failed State ❌
-                statusBox.classList.add('status-fail');
-                statusBox.innerHTML = `
-                    <i class="fas fa-times-circle fa-2x"></i>
-                    <h1>Try Again!</h1>
-                    <p>You did not meet the minimum passing requirement. Don't give up!</p>
-                `;
-                
-                // Add Retry Button
-                certificateArea.innerHTML = `
-                    <a href="quiz-start.html?quizId=${quizId}" class="certificate-btn" style="background-color: var(--info-color); color: white;">
-                        <i class="fas fa-redo"></i> Review and Retake Quiz
-                    </a>
-                `;
-            }
-        });
+        // No certificate on fail
+        certificateArea.innerHTML = "";
+    }
+</script>
 
-        // --- Example of how to call this page after a submission (for testing) ---
-        // To simulate a PASS, navigate to this URL:
-        // quiz-result.html?quizId=QZ001&score=9&total=10&status=pass&time=12
-        //
-        // To simulate a FAIL, navigate to this URL:
-        // quiz-result.html?quizId=QZ001&score=5&total=10&status=fail&time=18
-    </script>
 
 </body>
 </html>

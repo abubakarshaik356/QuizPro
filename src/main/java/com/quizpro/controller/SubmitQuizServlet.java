@@ -27,11 +27,15 @@ public class SubmitQuizServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int quizId=Integer.parseInt(req.getParameter("quizId"));
+		String quizName=req.getParameter("quizName");
 		Map<Integer, String> answers=adminDAO.getAnswers(quizId);
 		ArrayList<Integer> quesids=adminDAO.getQuesIds(quizId);
 		int score=0;
 		for(Integer i:quesids) {
 			String answer=req.getParameter(i+"");
+			if(answer==null) {
+				continue;
+			}
 			if(answer.startsWith("[")) {
 				JSONArray arr = new JSONArray(answer);
 				List<String> temp = new ArrayList<>();
@@ -52,11 +56,17 @@ public class SubmitQuizServlet extends HttpServlet {
 		}
 		HttpSession session=req.getSession();
 		int userId=(int)session.getAttribute("id");
-		int perc=(score/quesids.size())*100;
-		System.out.println(userId);
-		boolean res=adminDAO.setScore(userId, quizId, perc);
+		double perc=((double)score/quesids.size())*100;
+		System.out.println(score);
+		System.out.println(quesids.size());
+		System.out.println(perc);
+		String email=(String)session.getAttribute("email");
+		boolean res=adminDAO.setScore(userId, quizId, perc, email);
 		System.out.println(res);
-		req.setAttribute("result", perc);
+		req.setAttribute("quizName", quizName);
+		req.setAttribute("score", score);
+		req.setAttribute("totalQuestions", quesids.size());
+		req.setAttribute("quizId", quizId);
 		
 		req.getRequestDispatcher("TestComplete.jsp").forward(req, resp);
 	}
