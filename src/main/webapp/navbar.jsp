@@ -70,8 +70,8 @@
 					alt="User Avatar" class="profile-icon" id="profileIcon"
 					onclick="toggleDropdown()">
 				<div class="dropdown-content" id="profileDropdown">
-					<a href="ViewProfile.jsp"><i class="fas fa-user-circle"></i> Profile</a> <a
-						href="index.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
+					<a href="ViewProfile"><i class="fas fa-user-circle"></i> Profile</a> <a
+						href="Logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
 				</div>
 			</div>
 		</div>

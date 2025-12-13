@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.quizpro.dto.Performance;
 import com.quizpro.dto.Quizzes;
 import com.quizpro.dto.Subject;
 import com.quizpro.dto.User;
@@ -257,5 +259,34 @@ public class UserDAOImpl implements UserDAO {
 		}
 
 		return list;
+	}
+
+	@Override
+	public Performance getPerformance(int userId) {
+		Connection conn = DBConnection.getConnector();
+		Performance performance=new Performance();
+		try {
+			String qry="SELECT COUNT(DISTINCT r.resid) AS total_attempts, AVG(r.percentage) AS avg_percentage, COUNT(q.quesId) AS total_questions FROM result r JOIN questions q  ON r.quizId = q.quizId WHERE r.userId = ?";
+			PreparedStatement pStatement=conn.prepareStatement(qry);
+			pStatement.setInt(1, userId);
+			ResultSet rSet=pStatement.executeQuery();
+			if(rSet.next()) {
+				performance.setQuizesTaken(rSet.getInt(1));
+				performance.setAverageScore(Math.round(rSet.getDouble(2) * 100.0) / 100.0);
+				performance.setQuesAnswered(rSet.getInt(3));
+			}
+			qry="SELECT count(*) FROM result WHERE userId=? AND resstatus='PASS'";
+			pStatement=conn.prepareStatement(qry);
+			pStatement.setInt(1, userId);
+			ResultSet rSet2=pStatement.executeQuery();
+			if(rSet2.next()) {
+				performance.setCertificates(rSet2.getInt(1));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return performance;
 	}
 }

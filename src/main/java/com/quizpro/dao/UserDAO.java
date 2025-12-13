@@ -2,6 +2,7 @@ package com.quizpro.dao;
 
 import java.util.ArrayList;
 
+import com.quizpro.dto.Performance;
 import com.quizpro.dto.Quizzes;
 import com.quizpro.dto.Subject;
 import com.quizpro.dto.User;
@@ -17,5 +18,6 @@ public interface UserDAO {
 	public ArrayList<Subject> getSubjects();
 	public ArrayList<Quizzes> getQuizzes();
 	ArrayList<Quizzes> getQuizzesByCategory(int categoryId);
-	public boolean isEmailExist(String email); 
+	public boolean isEmailExist(String email);
+	Performance getPerformance(int userId);
 }

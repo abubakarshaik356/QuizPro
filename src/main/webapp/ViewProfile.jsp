@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.quizpro.dto.Performance"%>
 <%@page import="com.quizpro.dto.User"%>
 <html lang="en">
 <head>
@@ -288,6 +289,7 @@ h1 {
 
 	<%
 	User user = (User) session.getAttribute("user");
+	Performance perf=(Performance) request.getAttribute("performance");
 	%>
 	<%@ include file="navbar.jsp" %>
 
@@ -304,26 +306,24 @@ h1 {
 				<div class="profile-card">
 					<h3>Personal Information</h3>
 					<div class="user-avatar-area">
-						<img src="https://via.placeholder.com/120/0077B6/FFFFFF?text=JD"
+						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwJgi2tfPov2vnIRkuxgRw_gHSqt_uRGbrdA&s"
 							alt="Profile Avatar" class="user-avatar">
 						<p style="font-size: 1.2em; font-weight: 700; margin: 5px 0 0 0;"><%=user.getName()%></p>
 						<a href="#" style="font-size: 0.9em; color: var(--primary-color);">Change
 							Photo</a>
 					</div>
-
+					<div class="user-detail-row">
+						<strong><i class="fa fa-id-badge"></i> User ID:</strong> <span><%=user.getUserid()%></span>
+					</div>
 					<div class="user-detail-row">
 						<strong><i class="fas fa-envelope"></i> Email:</strong> <span><%=user.getEmail()%></span>
 					</div>
 					<div class="user-detail-row">
 						<strong><i class="fas fa-mobile-alt"></i> Mobile:</strong> <span><%=user.getPhone()%></span>
 					</div>
-					<div class="user-detail-row">
-						<strong><i class="fas fa-calendar-alt"></i> Member Since:</strong>
-						<span>October 2024</span>
-					</div>
 					<div class="user-detail-row" style="border-bottom: none;">
 						<strong><i class="fas fa-certificate"></i>
-							Certifications:</strong> <span style="color: var(--success-color);">1
+							Certifications:</strong> <span style="color: var(--success-color);"><%=perf.getCertificates() %>
 							Achieved</span>
 					</div>
 
@@ -337,23 +337,18 @@ h1 {
 					<div class="stats-grid">
 
 						<div class="stat-box">
-							<div class="stat-value">55</div>
+							<div class="stat-value"><%=perf.getQuizesTaken() %></div>
 							<div class="stat-label">Total Quizzes Taken</div>
 						</div>
 
 						<div class="stat-box">
-							<div class="stat-value" style="color: var(--success-color);">81%</div>
+							<div class="stat-value" style="color: var(--success-color);"><%=perf.getAverageScore() %>%</div>
 							<div class="stat-label">Average Score</div>
 						</div>
 
 						<div class="stat-box">
-							<div class="stat-value" style="color: var(--accent-color);">1,200</div>
+							<div class="stat-value" style="color: var(--accent-color);"><%=perf.getQuesAnswered() %></div>
 							<div class="stat-label">Questions Answered</div>
-						</div>
-
-						<div class="stat-box">
-							<div class="stat-value">3</div>
-							<div class="stat-label">Paths In Progress</div>
 						</div>
 
 					</div>
