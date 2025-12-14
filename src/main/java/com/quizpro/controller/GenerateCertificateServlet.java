@@ -31,7 +31,7 @@ public class GenerateCertificateServlet extends HttpServlet {
 		String name=(String)session.getAttribute("username");
 		String date = (String) req.getParameter("Date");
 		
-		Quizzes quiz = adminDAO.getQuizDetails(userId);
+		Quizzes quiz = adminDAO.getQuizDetails(quizId);
 		req.setAttribute("Quiz", quiz);
 		req.setAttribute("User", session.getAttribute("user"));
 		req.setAttribute("Date", date);

@@ -319,22 +319,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
+
+        /* ================= GLOBAL ================= */
+
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
         body {
             margin: 0;
             padding: 40px;
             background: #d0d0d0;
             font-family: 'Montserrat', sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
 
-        .certificate-wrapper {
-            background: #e6e6e6;
-            padding: 35px;
-            box-shadow: 0 25px 55px rgba(0,0,0,0.35);
-        }
+        /* ================= CERTIFICATE ================= */
 
         .certificate-container {
             width: 100%;
@@ -367,39 +372,15 @@
             margin-bottom: 2px;
         }
 
-        /* RIBBON */
+        /* NAME */
         .recipient-banner {
             display: inline-block;
-            /* background: linear-gradient(to right, #2b6b7f, #3a8aa3, #2b6b7f); */
-            color: #000;
             font-size: 35.8px;
             padding: 17px 70px;
             font-weight: 700;
             letter-spacing: 3px;
-            margin-bottom: 8px; /* VERY SMALL – matches image */
-            position: relative;
+            margin-bottom: 8px;
         }
-
-        .recipient-banner::before,
-        .recipient-banner::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 0;
-            height: 0;
-            border-top: 30px solid transparent;
-            border-bottom: 30px solid transparent;
-        }
-
-        /* .recipient-banner::before {
-            left: -38px;
-            border-right: 38px solid #2b6b7f;
-        }
-
-        .recipient-banner::after {
-            right: -38px;
-            border-left: 38px solid #2b6b7f;
-        } */
 
         .completion-text {
             font-size: 17px;
@@ -410,7 +391,6 @@
             font-size: 28px;
             font-weight: 700;
             letter-spacing: 4px;
-            margin-top: 0;
             margin-bottom: 50px;
         }
 
@@ -431,17 +411,6 @@
             justify-content: center;
             align-items: center;
             border: 4px solid #c8a853;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            position: relative;
-        }
-
-        .gold-seal::before {
-            content: "";
-            position: absolute;
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            border: 2px dashed #8b7220;
         }
 
         .seal-text {
@@ -449,20 +418,15 @@
             font-weight: 700;
             font-size: 13px;
             text-align: center;
-            z-index: 2;
-            line-height: 1.3;
         }
 
-        /* AWARD TEXT */
         .award-details {
             text-align: left;
             font-size: 18px;
-            line-height: 1.0;
             flex: 1;
             padding-left: 35px;
         }
 
-        /* SIGNATURE */
         .signature-section {
             text-align: right;
         }
@@ -471,66 +435,198 @@
             font-family: 'Great Vibes', cursive;
             font-size: 40px;
             color: #2b6b7f;
-            margin-bottom: 0;
         }
 
         .signature-title {
             font-size: 16px;
         }
+
+        /* ================= BUTTON ================= */
+
+        .btn-center {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #f5d76e, #d4af37);
+            color: #2b1b00;
+            padding: 14px 32px;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        /* ================= PRINT SETTINGS ================= */
+
+        /* @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        @media print {
+
+            html {
+                zoom: 1;
+            }
+
+            html, body {
+                width: 257mm;
+                height: 180mm;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background: none;
+            }
+
+            body {
+                display: block !important;
+                min-height: auto !important;
+            }
+
+            body * {
+                visibility: hidden;
+            }
+
+            #elite-certificate,
+            #elite-certificate * {
+                visibility: visible;
+            }
+
+            #elite-certificate {
+                position: absolute;
+                left: 0;
+                top: 0;
+
+                width: 267mm;
+                min-height: 170mm;
+                max-height: 170mm;
+
+                padding: 55px 65px;
+                border: 12px solid #c8a853;
+                background: #f7f4e4;
+
+                page-break-inside: avoid;
+                break-inside: avoid;
+
+                box-shadow: none;
+            }
+
+            .btn-center {
+                display: none !important;
+            }
+        } */
+        @page {
+    size: A4 landscape;
+    margin: 0;
+}
+
+@media print {
+
+    /* Reset page */
+    html, body {
+        width: 297mm;
+        height: 210mm;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: none;
+    }
+
+    /* Hide everything */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Show ONLY certificate */
+    #elite-certificate,
+    #elite-certificate * {
+        visibility: visible;
+    }
+
+    /* Lock certificate to one page */
+    #elite-certificate {
+       /*  position: absolute;
+        left: 0;
+        top: 0;
+
+        width: 297mm;
+        height: 210mm;
+        box-sizing: border-box;
+
+        padding: 55px 65px;
+        border: 12px solid #c8a853;
+        background: #f7f4e4; 
+
+        page-break-inside: avoid;
+        break-inside: avoid;
+
+        box-shadow: none; */
+
+        /* -webkit-print-color-adjust: exact;
+        print-color-adjust: exact; */
+    }
+
+    /* Hide button */
+    .btn-center {
+        display: none !important;
+    }
+}
+        
     </style>
 </head>
 
 <body>
 
-    <div class="certificate-wrapper">
-        <div class="certificate-container">
+    <!-- CERTIFICATE -->
+    <div class="certificate-container" id="elite-certificate">
 
-            <!-- LOGO -->
-            <div class="logo">
-                <span class="logo-quiz">Quiz</span><span class="logo-pro">Pro</span>
+        <div class="logo">
+            <span class="logo-quiz">Quiz</span><span class="logo-pro">Pro</span>
+        </div>
+
+        <div class="certificate-title">Certificate of Mastery</div>
+
+        <div class="certifies-text">This certifies that</div>
+
+        <div class="recipient-banner"><%= user.getName() %></div>
+
+        <div class="completion-text">
+            has successfully completed and mastered the specialized learning path in
+        </div>
+
+        <div class="course-name"><%= quiz.getTitle() %></div>
+
+        <div class="certificate-footer">
+
+            <div class="gold-seal">
+                <div class="seal-text">QuizPro<br>Certified</div>
             </div>
 
-            <!-- TITLE -->
-            <div class="certificate-title">Certificate of Mastery</div>
-
-            <div class="certifies-text">This certifies that</div>
-
-            <!-- NAME RIBBON -->
-            <div class="recipient-banner"><%= user.getName() %></div>
-
-            <!-- SUBTEXT -->
-            <div class="completion-text">
-                has successfully completed and mastered the specialized learning path in
+            <div class="award-details">
+                <p><strong>Awarded on:</strong> <%= date %></p>
+                <p><strong>Unique Verification ID:</strong> QPM-DSML-2025-<%= user.getUserid() %></p>
             </div>
 
-            <!-- COURSE -->
-            <div class="course-name"><%= quiz.getTitle() %></div>
-
-            <!-- FOOTER -->
-            <div class="certificate-footer">
-
-                <!-- SEAL -->
-                <div class="gold-seal">
-                    <div class="seal-text">QuizPro<br>Certified</div>
-                </div>
-
-                <!-- AWARD DETAILS -->
-                <div class="award-details">
-                    <p><strong>Awarded on:</strong> <%= date %></p>
-                    <p><strong>Unique Verification ID:</strong> QPM-DSML-2025-<%=user.getUserid() %></p>
-                </div>
-
-                <!-- SIGNATURE -->
-                <div class="signature-section">
-                    <div class="signature">Narendra</div>
-                    <div class="signature-title">CEO, QuizPro</div>
-                </div>
-
+            <div class="signature-section">
+                <div class="signature">Sandesh</div>
+                <div class="signature-title">CEO, QuizPro</div>
             </div>
 
         </div>
     </div>
 
+    <!-- BUTTON BELOW CERTIFICATE -->
+    <div class="btn-center">
+        <button onclick="window.print()" class="download-btn">
+            Download Certificate
+        </button>
+    </div>
+
 </body>
 </html>
+
 

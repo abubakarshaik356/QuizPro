@@ -563,7 +563,7 @@ h3 {
 					<p>Continue your progress and explore new expert challenges
 						today.</p>
 				</div>
-				<a href="ViewProfile.jsp" class="cta-button">View My Profile</a>
+				<a href="ViewProfile" class="cta-button">View My Profile</a>
 			</div>
 		</div>
 
