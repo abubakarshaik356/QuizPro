@@ -183,7 +183,7 @@
     const statusBox = document.getElementById("statusBox");
     const certificateArea = document.getElementById("certificateArea");
 
-    if (finalPerc >= 35) {
+    if (finalPerc >= 80) {
         statusBox.classList.add("status-pass");
         statusBox.innerHTML = `
             <h1><i class="fas fa-check-circle"></i> PASS</h1>

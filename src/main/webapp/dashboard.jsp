@@ -584,7 +584,12 @@ h3 {
 			%>
 			<ul class="test-list">
 				<%
+				int count=0;
 				for (UserTestHis l : history) {
+					count++;
+					if(count==5){
+						break;
+					}
 				%>
 				<li class="test-item">
 					<div>

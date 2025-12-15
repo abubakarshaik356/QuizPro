@@ -169,6 +169,7 @@ body {
 .user-table th, .user-table td {
 	padding: 15px;
 	border-bottom: 1px solid #E9ECEF;
+	overflow: hidden;
 }
 
 .user-table th {
