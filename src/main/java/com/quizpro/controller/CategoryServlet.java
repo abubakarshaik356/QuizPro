@@ -14,7 +14,7 @@ import java.util.List;
 public class CategoryServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         SubjectDAO dao = new SubjectDAOImpl();
@@ -26,10 +26,10 @@ public class CategoryServlet extends HttpServlet {
         }
 
         // Set the list as request attribute
-        request.setAttribute("list", list);
+        req.setAttribute("list", list);
 
         // Forward to JSP
-        RequestDispatcher rd = request.getRequestDispatcher("categories.jsp");
-        rd.forward(request, response);
+        req.setAttribute("activePage", "categories");
+        req.getRequestDispatcher("categories.jsp").forward(req, resp);
     }
 }

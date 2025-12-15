@@ -30,6 +30,7 @@ public class TestServlet extends HttpServlet {
 		req.setAttribute("quizName", quiz.getTitle());
 		req.setAttribute("category", quiz.getCategory());
 		req.setAttribute("quescount", quiz.getQuestions());
+		req.setAttribute("activePage", "tests");
 		req.getRequestDispatcher("Test.jsp").forward(req, resp);
 	}
 }
