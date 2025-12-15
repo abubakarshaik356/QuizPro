@@ -217,7 +217,7 @@
                 </div>
             </div>
 
-            <a href="#" class="forgot-password">Forgot Password?</a>
+            <a href="ForgotPassword.jsp" class="forgot-password">Forgot Password?</a>
 
             <button type="submit" class="cta-button">Secure Login</button>
         </form>

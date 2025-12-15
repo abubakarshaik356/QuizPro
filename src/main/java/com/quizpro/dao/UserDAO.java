@@ -20,4 +20,5 @@ public interface UserDAO {
 	ArrayList<Quizzes> getQuizzesByCategory(int categoryId);
 	public boolean isEmailExist(String email);
 	Performance getPerformance(int userId);
+	boolean newPassword(String email, String password);
 }

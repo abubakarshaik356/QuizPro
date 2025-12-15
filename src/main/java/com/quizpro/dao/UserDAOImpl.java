@@ -289,4 +289,25 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return performance;
 	}
+	
+	public boolean newPassword(String email, String password) {
+		Connection conn = DBConnection.getConnector();
+		String qry = "update emps set password = ? where email = ?";
+		System.out.println(email+" "+password);
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement(qry);
+			ps.setString(1, password);
+			ps.setString(2, email);
+			int res = ps.executeUpdate();
+			System.out.println("res-"+res);
+			if (res > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
