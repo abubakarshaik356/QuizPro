@@ -47,7 +47,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 	@Override
 	public List<Quizzes> getAllQuizes(int subId, int userid) {
 		List<Quizzes> quizes=new ArrayList<Quizzes>();
-		String qry = "SELECT q.quizid, q.quizname, q.description, q.quizmarks, r.percentage " +
+		String qry = "SELECT q.quizid, q.quizname, q.description, q.quizmarks, r.percentage, q.quizlevel " +
 	             "FROM quizzs q " +
 	             "LEFT JOIN result r ON q.quizId = r.quizid AND r.userid = ? " +
 	             "WHERE q.subId = ?";
@@ -65,6 +65,7 @@ public class SubjectDAOImpl implements SubjectDAO {
 				quiz.setDesc(rSet.getString(3));
 				quiz.setQuestions(rSet.getInt(4));
 				quiz.setMarks((int)rSet.getFloat(5));
+				quiz.setQuizLevel(rSet.getString(6));
 				quizes.add(quiz);
 			}
 		} catch (SQLException e) {

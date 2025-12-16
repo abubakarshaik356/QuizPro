@@ -113,7 +113,7 @@ public class AdminDAOImpl implements AdminDAO {
 	 */
 
 	@Override
-	public int addQuiz(String quizName, String quizDesc, String quizCategory, int marks,int noOfQuestions) {
+	public int addQuiz(String quizName, String quizDesc, String quizCategory, int marks,int noOfQuestions,String quizlevel) {
 
 	    Connection con = DBConnection.getConnector();
 	    try {
@@ -132,7 +132,7 @@ public class AdminDAOImpl implements AdminDAO {
 	        }
 
 	        // Step 2: Insert quiz into quizzs table
-	        String qry = "INSERT INTO quizzs(quizId,quizname, quizmarks, subid, description,quizNoOfQues) VALUES (?,?,?,?,?,?)";
+	        String qry = "INSERT INTO quizzs(quizId,quizname, quizmarks, subid, description,quizNoOfQues,quizlevel) VALUES (?,?,?,?,?,?,?)";
 	        pstmt = con.prepareStatement(qry);
 	        int quizId = (int)(Math.random() * 1000000);
 	        pstmt.setInt(1, quizId);
@@ -141,6 +141,7 @@ public class AdminDAOImpl implements AdminDAO {
 	        pstmt.setInt(4, id);
 	        pstmt.setString(5, quizDesc);
 	        pstmt.setInt(6, noOfQuestions);
+	        pstmt.setString(7, quizlevel);
 
 	        int res = pstmt.executeUpdate();
 	        if(res > 0) return quizId;
@@ -296,6 +297,7 @@ public class AdminDAOImpl implements AdminDAO {
 				}
 				quizzes.setMarks(rSet.getInt(5));
 				quizzes.setQuestions(rSet.getInt(6));
+				quizzes.setQuizLevel(rSet.getString(7));
 //				System.out.println(quizzes.toString());
 			}
 		} catch (SQLException e) {
@@ -546,6 +548,27 @@ public class AdminDAOImpl implements AdminDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteUser(int userId) {
+		
+		Connection con = DBConnection.getConnector();
+		String query = "DELETE From emps where eid = ?";
+		
+		try {
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userId);
+			int res = pstmt.executeUpdate();
+			if(res > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 	

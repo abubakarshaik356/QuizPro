@@ -17,7 +17,7 @@ public interface AdminDAO {
     int totalTestAttempts();
     public boolean addCategories(String categoryId, String categoryName, String description);
     public ArrayList<Subject> getSubNames();
-	int addQuiz(String quizName, String quizDesc, String quizCategory, int marks,int noOfQuestions);
+	int addQuiz(String quizName, String quizDesc, String quizCategory, int marks,int noOfQuestions,String quizLevel);
 	ArrayList<Questions> getQuestions(int id);	
 	Questions getQuestionDetails(int id);
 	boolean updateQuestion(int questionId,String questionText,String option1,String option2,String option3,String option4,String answer);
@@ -31,5 +31,5 @@ public interface AdminDAO {
 	Map<Integer, String> getAnswers(int quizId);
 	ArrayList<Integer> getQuesIds(int quizId);
 	boolean setScore(int userId, int quizId, double perc, String email);
-	
+	boolean deleteUser(int userId);
 }

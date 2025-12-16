@@ -294,9 +294,14 @@ body {
 								<a class="action-button" href="EditUser.jsp?id=<%= uHis.getId() %>">
 									<i class="fas fa-edit"></i> Edit
 								</a>
-								<button class="action-button delete">
+								<!-- <button class="action-button delete">
 									<i class="fas fa-trash-alt"></i> Delete
+								</button> -->
+								<a class="action-button" href="DeleteUser?UserId=<%= uHis.getId() %>">
+									<button class="action-button delete">
+									<i class="fas fa-trash-alt"></i> Delete</i> 
 								</button>
+								</a>
 							</td>
 						</tr>
 						<%

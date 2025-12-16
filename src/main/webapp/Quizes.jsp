@@ -814,7 +814,7 @@ h1 {
 				<div class="quiz-details">
 					<div class="details-row">
 						<i class="fas fa-signal"></i> Difficulty: <span
-							style="color: var(--warning-color);">Expert</span>
+							style="color: var(--warning-color);"><%= q.getQuizLevel() %></span>
 					</div>
 					<div class="details-row">
 						<i class="fas fa-question-circle"></i> Total Questions: <%=q.getQuestions() %>

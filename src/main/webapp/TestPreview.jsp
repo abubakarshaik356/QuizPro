@@ -204,7 +204,7 @@
                 
                 <div class="metric-item">
                     <strong><i class="fas fa-signal"></i> Difficulty Level</strong>
-                    <span class="metric-value" style="color: var(--accent-color);">Intermediate</span>
+                    <span class="metric-value" style="color: var(--accent-color);"><%=quiz.getQuizLevel() %></span>
                 </div>
                 
                 <div class="metric-item">

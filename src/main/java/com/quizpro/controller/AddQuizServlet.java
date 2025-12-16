@@ -30,13 +30,14 @@ public class AddQuizServlet extends HttpServlet {
 		String quizName = req.getParameter("title");
 		String quizDesc = req.getParameter("description");
 		String quizCategory = req.getParameter("category");
+		String quizLevel = req.getParameter("difficulty");
 		int marks = Integer.parseInt(req.getParameter("passing_score"));
 		int noOfQuestions = Integer.parseInt(req.getParameter("NoOfQuestions"));
 		
 		  System.out.println(quizName + " " + quizDesc + " " + quizCategory + " " +
 		  marks);
 		 
-		int res = adDAO.addQuiz(quizName, quizDesc, quizCategory, marks, noOfQuestions);
+		int res = adDAO.addQuiz(quizName, quizDesc, quizCategory, marks, noOfQuestions,quizLevel);
 		if (res != -1) {
 			ArrayList<Questions> questions = adDAO.getQuestions(res);
 			HttpSession session = req.getSession();

@@ -233,15 +233,21 @@
                     </div>
 
                     <hr style="margin: 30px 0;">
+                    
 
                     <div class="setting-grid">
-                        
-                        <div class="form-group">
-                            <label for="time"><i class="fas fa-clock"></i> Time Limit (Minutes)</label>
-                            <input type="number" id="time" name="time" min="5" value="30" required>
-                            <small>Set to 0 for no time limit.</small>
+                    	<div class="form-group">
+                           <!--  <label for="retakes"><i class="fas fa-redo"></i> Retakes Allowed</label>
+                            <select id="retakes" name="retakes" required>
+                                <option value="-1">Unlimited</option>
+                                <option value="1">1</option>
+                                <option value="3">3</option>
+                                <option value="0">None</option>
+                            </select> -->
+                            <label for="passing_score">Quiz No Of Questions</label>
+                            <input type="number" id="passing_score" name="NoOfQuestions" min="0" max="100" oninput="syncInputs()" required>
+                            <small>Total No.of Questions quiz can contains</small>
                         </div>
-                        
                         <div class="form-group">
                             <label for="difficulty"><i class="fas fa-signal"></i> Difficulty Level</label>
                             <select id="difficulty" name="difficulty" required>
@@ -252,23 +258,20 @@
                         </div>
                         
                         <div class="form-group">
+                            <label for="time"><i class="fas fa-clock"></i> Time Limit (Minutes)</label>
+                            <input type="number" id="time" name="time" min="5"  readonly required>
+                            <small>Set to 0 for no time limit.</small>
+                        </div>
+                        
+                        
+                        
+                        <div class="form-group">
                             <label for="passing_score"> Quiz Marks</label>
-                            <input type="number" id="passing_score" name="passing_score" min="0" max="100" value="70" required>
+                            <input type="number" id="passing_score2" name="passing_score" min="0" max="100" readonly required>
                             <small>Total marks quiz can contains</small>
                         </div>
                         
-                        <div class="form-group">
-                           <!--  <label for="retakes"><i class="fas fa-redo"></i> Retakes Allowed</label>
-                            <select id="retakes" name="retakes" required>
-                                <option value="-1">Unlimited</option>
-                                <option value="1">1</option>
-                                <option value="3">3</option>
-                                <option value="0">None</option>
-                            </select> -->
-                            <label for="passing_score">Quiz No Of Questions</label>
-                            <input type="number" id="passing_score" name="NoOfQuestions" min="0" max="100" value="10" required>
-                            <small>Total No.of Questions quiz can contains</small>
-                        </div>
+                        
 
                     </div>
                     
@@ -281,6 +284,14 @@
         </main>
         
     </div>
+    <script type="text/javascript">
+    
+    function syncInputs() {
+        const input1Value = document.getElementById("passing_score").value;
+        document.getElementById("time").value = input1Value;
+        document.getElementById("passing_score2").value = input1Value;
+    }
+    </script>
 
 </body>
 </html>

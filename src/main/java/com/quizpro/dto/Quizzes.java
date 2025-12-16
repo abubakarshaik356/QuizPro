@@ -30,6 +30,15 @@ public class Quizzes {
 	private int questions;
 	private int marks;
 	private String date;
+	private String quizLevel;
+	public String getQuizLevel() {
+		return quizLevel;
+	}
+
+	public void setQuizLevel(String quizLevel) {
+		this.quizLevel = quizLevel;
+	}
+
 	public Quizzes(int userId, String title, String category, int questions,int marks, String date) {
 		super();
 		this.userId = userId;
