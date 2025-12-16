@@ -247,7 +247,7 @@ body {
 
 			<div class="control-bar">
 				<input type="text" placeholder="Search by Name, Email, or ID..."
-					class="search-input">
+					class="search-input" id="searchInput">
 
 				<div>
 					<select class="filter-select">
@@ -388,6 +388,23 @@ body {
                 notification.style.display = 'none';
             }, 5000); // Popup disappears after 5 seconds
         }
+    });
+</script>
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const cards = document.querySelectorAll(".user-table tbody tr");
+
+    searchInput.addEventListener("keyup", function () {
+        const searchText = searchInput.value.toLowerCase().trim();
+
+        cards.forEach(card => {
+            const cardText = card.innerText.toLowerCase();
+            if (cardText.includes(searchText)) {
+                card.style.display = "";
+            } else {
+                card.style.display = "none";
+            }
+        });
     });
 </script>
 

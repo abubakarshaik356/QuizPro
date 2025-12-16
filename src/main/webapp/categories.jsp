@@ -288,7 +288,7 @@ h1 {
 			<h1>Browse All Categories</h1>
 
         <div class="search-bar">
-            <input type="text" placeholder="Search for any subject...">
+        <input type="text" id="searchInput" placeholder="Search for any subject...">
             <select class="filter-select">
                 <option>Filter by Difficulty</option>
             </select>
@@ -338,23 +338,24 @@ h1 {
 		</div>
 	</div>
 
-	<script>
-		function toggleDropdown() {
-			document.getElementById("profileDropdown").classList.toggle("show");
-		}
-		window.onclick = function(event) {
-			if (!event.target.matches('.profile-icon')) {
-				var dropdowns = document
-						.getElementsByClassName("dropdown-content");
-				for (var i = 0; i < dropdowns.length; i++) {
-					var openDropdown = dropdowns[i];
-					if (openDropdown.classList.contains('show')) {
-						openDropdown.classList.remove('show');
-					}
-				}
-			}
-		}
-	</script>
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const cards = document.querySelectorAll(".category-card");
+
+    searchInput.addEventListener("keyup", function () {
+        const searchText = searchInput.value.toLowerCase().trim();
+
+        cards.forEach(card => {
+            const cardText = card.innerText.toLowerCase();
+            if (cardText.includes(searchText)) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+</script>
+
 
 </body>
 </html>

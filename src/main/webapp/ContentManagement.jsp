@@ -316,7 +316,7 @@ body {
 
 				<div id="Quizzes" class="content-section active">
 					<div class="content-controls">
-						<input type="text" placeholder="Search Quiz Title or ID...">
+						<input type="text" placeholder="Search Quiz Title or ID..." id="quizSearch">
 						<a href="AddNewQuiz" class="add-btn"><i class="fas fa-plus"></i>
 							Create New Quiz</a>
 					</div>
@@ -363,7 +363,7 @@ body {
 
 				<div id="Categories" class="content-section">
 					<div class="content-controls">
-						<input type="text" placeholder="Search Category Name...">
+						<input type="text" placeholder="Search Category Name..." id="categorySearch">
 						<a href="AddCategory.jsp" class="add-btn"><i
 							class="fas fa-plus"></i> Add New Category</a>
 					</div>
@@ -439,6 +439,33 @@ body {
 			document.getElementById('Quizzes').style.display = "block";
 		});
 	</script>
+<script>
+    const quizSearch = document.getElementById("quizSearch");
+    const categorySearch = document.getElementById("categorySearch");
+
+    quizSearch.addEventListener("keyup", function () {
+        const searchText = quizSearch.value.toLowerCase().trim();
+        const rows = document.querySelectorAll("#Quizzes tbody tr");
+
+        rows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+            row.style.display = rowText.includes(searchText) ? "" : "none";
+        });
+    });
+
+    categorySearch.addEventListener("keyup", function () {
+        const searchText = categorySearch.value.toLowerCase().trim();
+        const rows = document.querySelectorAll("#Categories tbody tr");
+
+        rows.forEach(row => {
+            const rowText = row.innerText.toLowerCase();
+            row.style.display = rowText.includes(searchText) ? "" : "none";
+        });
+    });
+</script>
+
+
+	
 
 </body>
 </html>

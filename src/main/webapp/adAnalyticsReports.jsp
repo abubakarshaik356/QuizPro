@@ -12,7 +12,7 @@ ArrayList<UserManage> users = (ArrayList<UserManage>) request.getAttribute("user
 if (totalUsers == null) totalUsers = 0;
 if (totalQuizzes == null) totalQuizzes = 0;
 if (totalSubjects == null) totalSubjects = 0;
-if (subjects == null) subjects = new ArrayList<>();
+if (subjects == null) subjects = new ArrayList<>(); 
 if (users == null) users = new ArrayList<>();
 %>
 
