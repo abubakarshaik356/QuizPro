@@ -28,7 +28,7 @@ public class AddCategoryServlet extends HttpServlet {
         if (result) {
             response.sendRedirect("ContentManagement?msg=success");
         } else {
-            response.sendRedirect("addCategories.jsp?msg=error");
+            response.sendRedirect("AddCategory.jsp?msg=error");
         }
     }
 }
