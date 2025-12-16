@@ -28,6 +28,7 @@ List<UserTestHis> history = userDAO.userTestHistory(id);
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <style>
 :root {
@@ -619,7 +620,7 @@ h3 {
 				%>
 				<a href="quizes?subId=<%=s.getSubId()%>&userId=<%=id %>&title=<%=s.getSubname() %>" class="card-anchor">
 					<div class="category-card">
-						<i class="fas fa-code icon"></i>
+						<i class="fas fa-book icon"></i>
 						<h3><%=s.getSubname()%></h3>
 						<p><%=s.getSubDesc()%></p>
 					</div>

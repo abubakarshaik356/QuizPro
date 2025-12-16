@@ -191,7 +191,7 @@
         `;
 
         certificateArea.innerHTML = `
-            <a href="GenerateCertificate?quizId=${quizId}" class="certificate-btn">
+            <a href="GenerateCertificate?quizId=${quizId}" class="certificate-btn" target="blank">
                 <i class="fas fa-award"></i> Download Certificate
             </a>
         `;

@@ -771,7 +771,7 @@ h1 {
 	<div class="container">
 		<div class="page-header">
 			<p class="breadcrumbs">
-				<a href="categories.html">Categories</a> / <span>Software
+				<a href="categories">Categories</a> / <span>Software
 					Engineering</span>
 			</p>
 			<h1><%=title %></h1>
@@ -823,10 +823,14 @@ h1 {
 
 				<div class="quiz-progress">
 					<span class="progress-label">Last Score:</span><%
-							if(q.getMarks()!=0){%>
+							if(q.getMarks()!=0){
+								if(q.getMarks()>80) {%>
 								<span class="accuracy-score"> <%=q.getMarks() %>%</span> <span
 						style="font-size: 0.9em; color: var(--success-color);">Completed</span>
-						</div>
+						</div><%}else { %>
+							<span class="accuracy-score" style="color:red;"> <%=q.getMarks() %>%</span> <span
+						style="font-size: 0.9em; color: var(--success-color);">Completed</span>
+						<%} %>
 
 				<div class="quiz-action">
 					<a href="TestPreview?quizId=<%=q.getQuizId() %>" class="action-button"> <i
@@ -835,7 +839,7 @@ h1 {
 				</div>
 							<%} else {%>
 								<span class="accuracy-score low"> N/A</span> <span
-						style="font-size: 0.9em; color: var(--assent-color);">Completed</span>
+						style="font-size: 0.9em; color: var(--assent-color);">Unattempted</span>
 						</div>
                 
                 <div class="quiz-action">

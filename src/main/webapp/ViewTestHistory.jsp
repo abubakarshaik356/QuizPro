@@ -356,7 +356,7 @@ h1 {
 							<a href="TestPreview?quizId=<%=uHis.getQuizId() %>" class="retake-button">Retake</a>
 							<%
 								if(uHis.getScorePer()>=80){%>
-									<a href="GenerateCertificate?quizId=<%=uHis.getQuizId()%>&Date=<%=uHis.getDateTaken() %>" class="download-button">Download Certificate</a>
+									<a href="GenerateCertificate?quizId=<%=uHis.getQuizId()%>&Date=<%=uHis.getDateTaken() %>" class="download-button" target="blank">Download Certificate</a>
 								<%} else {%>
 									<a href="#" class="download-button" style="background-color:red">Not Available</a>
 								<%}

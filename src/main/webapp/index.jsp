@@ -516,7 +516,7 @@ h2 {
 				%>
 				<a href="login.jsp" class="card-anchor">
 					<div class="card">
-						<i class="fas fa-code icon"></i>
+						<i class="fas fa-book icon"></i>
 						<h3><%=s.getSubname()%></h3>
 					</div>
 				</a>

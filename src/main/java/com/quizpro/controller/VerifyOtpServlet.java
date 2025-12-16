@@ -45,7 +45,7 @@ public class VerifyOtpServlet extends HttpServlet {
         boolean result = dao.signup(name, email, "user", phone, password);
 
         if (!result) {
-            resp.sendRedirect(redirectUrl + "?msg=Account already exists&type=info&redirect=login.jsp");
+            resp.sendRedirect(redirectUrl + "?msg=Mobile Number is Linked to other Account&type=info&redirect=login.jsp");
             return;
         }
 

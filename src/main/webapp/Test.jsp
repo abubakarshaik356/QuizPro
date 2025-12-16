@@ -298,65 +298,105 @@ body {
 	.question-grid {
 		grid-template-columns: repeat(4, 1fr);
 	}
-	}
-	.fullscreen-overlay {
-    position: fixed;              /* MUST be fixed */
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+}
 
-    background: rgba(0, 0, 0, 0.85);
-
-    display: flex;                /* Flexbox centering */
-    align-items: center;          /* Vertical center */
-    justify-content: center;      /* Horizontal center */
-
-    z-index: 99999;
+.fullscreen-overlay {
+	position: fixed; /* MUST be fixed */
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.85);
+	display: flex; /* Flexbox centering */
+	align-items: center; /* Vertical center */
+	justify-content: center; /* Horizontal center */
+	z-index: 99999;
 }
 
 .overlay-box {
-    background: #ffffff;
-    padding: 35px 45px;
-    width: 420px;
-    border-radius: 12px;
-    text-align: center;
-
-    /* Prevent top sticking */
-    margin: 0;
+	background: #ffffff;
+	padding: 35px 45px;
+	width: 420px;
+	border-radius: 12px;
+	text-align: center;
+	/* Prevent top sticking */
+	margin: 0;
 }
 
-
 .overlay-box h2 {
-    margin-bottom: 15px;
-    color: #0077B6;
+	margin-bottom: 15px;
+	color: #0077B6;
 }
 
 .overlay-box ul {
-    text-align: left;
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 25px;
+	text-align: left;
+	font-size: 14px;
+	color: #333;
+	margin-bottom: 25px;
 }
 
 .overlay-box li {
-    margin-bottom: 8px;
+	margin-bottom: 8px;
 }
 
 .start-test-btn {
-    background: #0077B6;
-    color: white;
-    padding: 12px 28px;
-    border: none;
-    border-radius: 6px;
-    font-size: 15px;
-    cursor: pointer;
+	background: #0077B6;
+	color: white;
+	padding: 12px 28px;
+	border: none;
+	border-radius: 6px;
+	font-size: 15px;
+	cursor: pointer;
 }
+
 .start-test-btn:hover {
-    background: #005f8d;
+	background: #005f8d;
 }
-	
-	
+
+/* Overlay */
+#loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+}
+
+/* Loader animation */
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ddd;
+    border-top: 5px solid #0077B6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+#loadingOverlay p {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Blur test content */
+.blur {
+    filter: blur(5px);
+    pointer-events: none;
+}
+
 </style>
 </head>
 <body>
@@ -380,8 +420,14 @@ body {
 				Test</button>
 		</div>
 	</div>
+	<!-- Loading Overlay -->
+	<div id="loadingOverlay">
+		<div class="loader"></div>
+		<p>Submitting your test...</p>
+	</div>
 
-	<header class="test-header">
+	<div id="testContent">
+		<header class="test-header">
 		<div class="container">
 			<div class="test-title-area">
 				<h2><%=quizName%></h2>
@@ -499,7 +545,9 @@ void insert(key, value) {
 			</div>
 		</div>
 	</div>
-
+		
+	</div>
+	
 	<script>
 	
     
@@ -523,7 +571,7 @@ let currentIndex = 0;
 loadQuestion(currentIndex);
 function loadQuestion(i) {
     let q = questions[i];
-    document.getElementById("question-number").innerHTML = "Question "+(i+1)+" of "+(questions.length+1) ;
+    document.getElementById("question-number").innerHTML = "Question "+(i+1)+" of "+(questions.length) ;
     document.getElementById("question-text").innerHTML = q.question;
     document.getElementById("count").innerHTML = i+1;
     document.getElementById("ques"+i).className = "q-button current";
@@ -554,10 +602,11 @@ function renderMCQ(q) {
 
 function renderMultiSelect(q) {
     return `
+       <label>Select Multiple Suitable Options</label><br>
        <label><input type="checkbox" name="ans" value="${q.opt1}" class="answer-input"> <span class="answer-label"> ${q.opt1}</span></label><br>
        <label><input type="checkbox" name="ans" value="${q.opt2}" class="answer-input"> <span class="answer-label"> ${q.opt2}</span></label><br>
        <label><input type="checkbox" name="ans" value="${q.opt3}" class="answer-input"> <span class="answer-label"> ${q.opt3}</span></label><br>
-       <label><input type="checkbox" name="ans" value="${q.opt4}" class="answer-input"> <span class="answer-label"> ${q.opt4}</span>}</label><br>
+       <label><input type="checkbox" name="ans" value="${q.opt4}" class="answer-input"> <span class="answer-label"> ${q.opt4}</span></label><br>
     `;
 }
 
@@ -617,6 +666,8 @@ function next() {
 }
 
 function submitQuiz() {
+	document.getElementById("loadingOverlay").style.display = "flex";
+    document.getElementById("testContent").classList.add("blur");
     let form = document.createElement("form");
     form.method = "post";
     form.action = "SubmitQuiz";
@@ -715,7 +766,12 @@ document.addEventListener("fullscreenchange", () => {
         submitQuiz();
     }
 });
-
+document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+    	alert("You exited fullscreen. Test will be submitted.");
+    	submitQuiz();
+    }
+});
 
 
 
