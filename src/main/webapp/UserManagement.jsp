@@ -159,7 +159,7 @@ body {
 			<input type="text" id="searchInput" class="search-input"
 				placeholder="Search by Name, Email, or ID...">
 
-			<!-- <div>
+			 <!-- <div>
 				<select id="roleFilter" class="filter-select">
 					<option value="">Filter by Role (All)</option>
 					<option value="admin">Admin</option>
@@ -172,8 +172,8 @@ body {
 					<option value="active">Active</option>
 					<option value="inactive">Inactive/Banned</option>
 				</select>
-			</div>
- -->
+			</div> -->
+			
 			<a href="AddNewUser.jsp" class="add-user-btn">
 				<i class="fas fa-plus"></i> Add New User
 			</a>
@@ -218,11 +218,8 @@ body {
 	</main>
 </div>
 
-<!-- ===== SCRIPT (FILTER + SEARCH + PAGINATION) ===== -->
 <script>
 const searchInput = document.getElementById("searchInput");
-const roleFilter = document.getElementById("roleFilter");
-const statusFilter = document.getElementById("statusFilter");
 
 const rows = Array.from(document.querySelectorAll("#userTableBody tr"));
 const pagination = document.getElementById("pagination");
@@ -233,14 +230,9 @@ let filteredRows = rows;
 
 function applyFilters() {
 	const search = searchInput.value.toLowerCase().trim();
-	const role = roleFilter.value;
-	const status = statusFilter.value;
 
 	filteredRows = rows.filter(row => {
-		const textMatch = row.innerText.toLowerCase().includes(search);
-		const roleMatch = !role || row.dataset.role === role;
-		const statusMatch = !status || row.dataset.status === status;
-		return textMatch && roleMatch && statusMatch;
+		return row.innerText.toLowerCase().includes(search);
 	});
 
 	currentPage = 1;
@@ -274,11 +266,10 @@ function renderPagination() {
 }
 
 searchInput.addEventListener("keyup", applyFilters);
-roleFilter.addEventListener("change", applyFilters);
-statusFilter.addEventListener("change", applyFilters);
 
 render();
 </script>
+
 
 </body>
 </html>

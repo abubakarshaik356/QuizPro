@@ -323,7 +323,7 @@ body {
 				<div class="stat-card users">
 					<i class="fas fa-user-plus stat-icon"></i>
 					<div class="stat-content">
-						<p class="stat-value"><%=totalUsers%></p>
+						<p class="stat-value"><%=totalUsers-1%></p>
 						<p class="stat-label">Total Users</p>
 					</div>
 				</div>
