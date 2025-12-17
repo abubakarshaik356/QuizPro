@@ -167,7 +167,7 @@ body {
 }
 
 .user-table th, .user-table td {
-	padding: 15px;
+	padding: 11px;
 	border-bottom: 1px solid #E9ECEF;
 	overflow: hidden;
 }
@@ -272,7 +272,7 @@ body {
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>Name <i class="fas fa-sort"></i></th>
+							<th>Name</th>
 							<th>Email</th>
 							<th>Total Quiz Attended</th>
 							<th>Certificate Achieved</th>
