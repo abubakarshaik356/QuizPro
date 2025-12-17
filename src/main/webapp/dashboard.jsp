@@ -618,7 +618,7 @@ h3 {
 				int count=0;
 				for (Subject s : list) {
 				%>
-				<a href="quizes?subId=<%=s.getSubId()%>&userId=<%=id %>&title=<%=s.getSubname() %>" class="card-anchor">
+				<a href="quizes?subId=<%=s.getSubId()%>&userId=<%=id %>&title=<%=s.getSubname() %> &desc=<%=s.getSubDesc()%>" class="card-anchor">
 					<div class="category-card">
 						<i class="fas fa-book icon"></i>
 						<h3><%=s.getSubname()%></h3>
@@ -705,7 +705,7 @@ h3 {
 						<h3 style="color: var(--primary-color);">The Future of AI in
 							Cloud Computing</h3>
 						<small style="color: var(--subtle-gray);">May 15, 2025 | 7
-							min read</small> <a href="#" class="read-more">Read More →</a>
+							min read</small> <a href="https://www.w3schools.com/ai/ai_whatis.asp" class="read-more" target="_blank">Read More →</a>
 					</div>
 					<div class="blog-post-card">
 						<img
@@ -714,7 +714,7 @@ h3 {
 						<h3 style="color: var(--primary-color);">5 Essential SQL
 							Tricks for Data Analysts</h3>
 						<small style="color: var(--subtle-gray);">May 8, 2025 | 5
-							min read</small> <a href="#" class="read-more">Read More →</a>
+							min read</small> <a href="https://www.w3schools.com/sql/" class="read-more" target="_blank">Read More →</a>
 					</div>
 					<div class="blog-post-card">
 						<img
@@ -723,7 +723,7 @@ h3 {
 						<h3 style="color: var(--primary-color);">Mastering Financial
 							Modeling in Q3 2025</h3>
 						<small style="color: var(--subtle-gray);">May 1, 2025 | 10
-							min read</small> <a href="#" class="read-more">Read More →</a>
+							min read</small> <a href="https://www.ey.com/en_in/services/ey-faas-learning-solutions/e-learning-certification-in-financial-modelling-and-valuation" class="read-more" target="_blank">Read More →</a>
 					</div>
 				</div>
 			</div>
@@ -735,18 +735,18 @@ h3 {
 			<h2 class="support-title">
 				<i class="fas fa-headset"></i> Need Help?
 			</h2>
-			<p class="support-subtitle">Reach out to our professional support
+			<!-- <p class="support-subtitle">Reach out to our professional support
 				team for assistance.</p>
-
-			<div class="support-form-container">
+ -->
+			<!-- <div class="support-form-container">
 				<input type="email" placeholder="Enter your email"
 					class="support-input"> <a href="#"
 					class="cta-button support-button">Get Support</a>
-			</div>
+			</div> -->
 
 			<p class="support-links">
 				<a href="#" class="knowledge-base-link">Visit our Knowledge Base</a>
-				| <span class="phone-number">Call us at: (555) 123-4567</span>
+				| <span class="phone-number">Call us at: +91 <b>7569700589</b> | <b>quizpro.org@gmail.com</b></span>
 			</p>
 		</div>
 	</section>
@@ -754,8 +754,8 @@ h3 {
 	<footer class="footer">
 		<div class="container">
 			<p class="footer-copyright">
-				&copy; 2025 QuizPro. All Rights Reserved. | <a href="#">Legal</a> |
-				<a href="#">Privacy</a> | <a href="#">Careers</a>
+				&copy; 2025 QuizPro. All Rights Reserved. <!-- | <a href="#">Legal</a> |
+				<a href="#">Privacy</a> | <a href="#">Careers</a> -->
 			</p>
 		</div>
 	</footer>

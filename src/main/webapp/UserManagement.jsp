@@ -159,7 +159,7 @@ body {
 			<input type="text" id="searchInput" class="search-input"
 				placeholder="Search by Name, Email, or ID...">
 
-			<div>
+			<!-- <div>
 				<select id="roleFilter" class="filter-select">
 					<option value="">Filter by Role (All)</option>
 					<option value="admin">Admin</option>
@@ -173,7 +173,7 @@ body {
 					<option value="inactive">Inactive/Banned</option>
 				</select>
 			</div>
-
+ -->
 			<a href="AddNewUser.jsp" class="add-user-btn">
 				<i class="fas fa-plus"></i> Add New User
 			</a>
