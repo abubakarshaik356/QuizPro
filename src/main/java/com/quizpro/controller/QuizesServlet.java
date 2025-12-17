@@ -63,6 +63,7 @@ public class QuizesServlet extends HttpServlet{
 		}
 		req.setAttribute("quizes", quizes);
 		req.setAttribute("title", req.getParameter("title"));
+		req.setAttribute("desc", req.getParameter("desc"));
 		req.getRequestDispatcher("Quizes.jsp").forward(req, resp);
 	}
 }

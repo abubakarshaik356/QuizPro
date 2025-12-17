@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.quizpro.dao.AdminDAO;
 import com.quizpro.dao.AdminDAOImpl;
+import com.quizpro.util.EmailUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,6 +31,7 @@ public class CreateUserServlet extends HttpServlet {
 		if(result) {
 			String targetPage = "UserManagement";
 			String successMessage = "New user successfully created!";
+			EmailUtil.sendCreateMail(email, name, password);
 			String encodedMessage = java.net.URLEncoder.encode(successMessage, "UTF-8");
 			resp.sendRedirect(targetPage + "?status=success&message=" + encodedMessage);
 		}

@@ -21,6 +21,12 @@ public class EmailUtil {
 		sendMail(to, subject, html);
 	}
 	
+	public static void sendCreateMail(String to, String name, String password) {
+		String subject = "Account Creation Successful";
+		String html = getCreationMail(name, to, password);
+		sendMail(to, subject, html);
+	}
+
 	public static void sendCompleteMail(String to) {
 		String subject = "Test Completed Successfully";
 		String html = getTestCompleteTemplate();
@@ -247,7 +253,7 @@ public class EmailUtil {
 				            You have successfully completed the test.
 				            You can check your score by login in to the portal and download the certificate from there.
 				        </p>
-				        
+
 				        <p style="font-size:14px; color:#444;">
 				            Thanks for using QuizPro
 				        </p>
@@ -261,5 +267,58 @@ public class EmailUtil {
 				</div>
 
 								""";
+	}
+
+	public static String getCreationMail(String name, String email, String password) {
+
+	    String loginUrl = "http://localhost:8080/QuizPro/login.jsp"; // change if needed
+
+	    return """
+	        <div style="max-width:600px; margin:40px auto; background:#ffffff; padding:30px;
+	                    border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+
+	            <h2 style="text-align:center; color:#0077B6; margin-bottom:10px;">
+	                Welcome to QuizPro 🎉
+	            </h2>
+	            <p style="text-align:center; color:#6c757d; margin-top:0;">
+	                Your account has been successfully created by the administrator
+	            </p>
+
+	            <hr style="border:none; border-top:1px solid #e0e0e0; margin:25px 0;">
+
+	            <p style="font-size:16px; color:#333;">
+	                Hello <strong>%s</strong>,
+	            </p>
+
+	            <p style="font-size:15px; color:#555; line-height:1.6;">
+	                We’re excited to inform you that your <strong>QuizPro</strong> account has been
+	                successfully created by the administrator.
+	                You can now log in and start exploring quizzes, assessments, and certifications.
+	            </p>
+
+	            <div style="background:#f8f9fa; padding:15px; border-radius:8px; margin:20px 0;">
+	                <p style="margin:6px 0;"><strong>Username:</strong> %s</p>
+	                <p style="margin:6px 0;"><strong>Temporary Password:</strong> %s</p>
+	            </div>
+
+	            <p style="font-size:14px; color:#856404; background:#fff3cd; padding:12px; border-radius:6px;">
+	                ⚠️ For security reasons, please change your password after your first login.
+	            </p>
+
+	            <div style="text-align:center; margin:30px 0;">
+	                <a href="%s"
+	                   style="background:#0077B6; color:#ffffff; padding:12px 26px;
+	                          text-decoration:none; border-radius:6px; font-size:16px;">
+	                    Login to QuizPro
+	                </a>
+	            </div>
+
+	            <p style="font-size:13px; color:#6c757d; text-align:center; margin-top:30px;">
+	                If you have any questions, please contact the administrator.<br>
+	                © 2025 QuizPro. All rights reserved.
+	            </p>
+
+	        </div>
+	        """.formatted(name, email, password, loginUrl);
 	}
 }

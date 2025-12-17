@@ -214,18 +214,17 @@
                 
                 <div class="metric-item">
                     <strong><i class="fas fa-redo"></i> Retakes Available</strong>
-                    <span class="metric-value">Unavailable</span>
+                    <span class="metric-value">Available</span>
                 </div>
             </div>
 
             <div class="rules-card">
                 <h3>Rules and Format</h3>
                 <ul>
-                    <li><i class="fas fa-check-circle"></i> **Multiple Choice:** All questions are multiple-choice with only one correct answer.</li>
-                    <li><i class="fas fa-check-circle"></i> **No Penalty:** There is no penalty for incorrect answers.</li>
-                    <li><i class="fas fa-check-circle"></i> **Navigation:** You can navigate freely between questions using the sidebar navigator.</li>
-                    <li><i class="fas fa-check-circle"></i> **Review:** You may mark questions for review and return to them later.</li>
-                    <li><i class="fas fa-times-circle" style="color: var(--danger-color);"></i> **Once Submitted:** The test cannot be resumed or reset once you click "End Test."</li>
+                    <li><i class="fas fa-check-circle"></i> Multiple Choice: All questions are multiple-choice with only one correct answer.</li>
+                    <li><i class="fas fa-check-circle"></i> No Penalty: There is no penalty for incorrect answers.</li>
+                    <li><i class="fas fa-check-circle"></i> Navigation: You can navigate freely between questions using the sidebar navigator.</li>
+                    <li><i class="fas fa-times-circle" style="color: var(--danger-color);"></i> Once Submitted: The test cannot be resumed or reset once you click "End Test."</li>
                 </ul>
             </div>
             

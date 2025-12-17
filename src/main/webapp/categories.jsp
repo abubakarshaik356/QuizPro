@@ -315,19 +315,19 @@ h1 {
 						<span style="font-weight: 600;"><i class="fas fa-cubes"></i>
 							Quizzes Available:</span> <span><%=s.getQuizCount()%></span>
 					</div>
-					<div class="meta-row">
+					<%-- <div class="meta-row">
 						<span style="font-weight: 600;"><i
 							class="fas fa-chart-line"></i> Your Progress:</span> <span>0 / <%=s.getQuizCount()%>
 							Quizzes Completed
 						</span>
-					</div>
+					</div> --%>
 					<div class="meta-row">
 						<span style="font-weight: 600;"><i
 							class="fas fa-certificate"></i> Certification Path:</span> <span
 							style="color: var(--accent-color);">Available</span>
 					</div>
 				</div>
-				<a href="quizes?subId=<%=s.getSubId()%>&userId=<%=id %>&title=<%=s.getSubname() %>"
+				<a href="quizes?subId=<%=s.getSubId()%>&userId=<%=id %>&title=<%=s.getSubname() %>&desc=<%=s.getSubDesc() %>"
 					class="action-button"> <i class="fas fa-chevron-right"></i>
 					Browse All Quizzes
 				</a>

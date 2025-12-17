@@ -445,6 +445,7 @@ h1 {
 <%
 ArrayList<Quizzes> quizes = (ArrayList<Quizzes>) request.getAttribute("quizes");
 String title=(String)request.getAttribute("title");
+String desc=(String)request.getAttribute("desc");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -775,7 +776,7 @@ h1 {
 					Engineering</span>
 			</p>
 			<h1><%=title %></h1>
-			<p>Description</p>
+			<p><%=desc %></p>
 		</div>
 
 		<div class="filter-row">
@@ -807,8 +808,7 @@ h1 {
 			<div class="quiz-item">
 				<div class="quiz-info">
 					<h3 class="quiz-title"><%=q.getTitle() %></h3>
-					<p class="quiz-description">Complex topics including dynamic
-						programming and graph algorithms.</p>
+					<p class="quiz-description"><%=q.getDesc() %></p>
 				</div>
 
 				<div class="quiz-details">
@@ -830,11 +830,12 @@ h1 {
 						</div><%}else { %>
 							<span class="accuracy-score" style="color:red;"> <%=q.getMarks() %>%</span> <span
 						style="font-size: 0.9em; color: var(--success-color);">Completed</span>
+						</div>
 						<%} %>
 
 				<div class="quiz-action">
 					<a href="TestPreview?quizId=<%=q.getQuizId() %>" class="action-button"> <i
-						class="fas fa-redo"></i> Retake
+						class="fas fa-redo" ></i> Retake
 					</a>
 				</div>
 							<%} else {%>
