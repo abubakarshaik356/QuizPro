@@ -144,7 +144,7 @@ public class UserDAOImpl implements UserDAO {
 		String str = "SELECT e.eid AS empid, e.name AS ename, e.email AS email, e.role AS erole, "
 				+ "SUM(CASE WHEN r.resstatus = 'pass' THEN 1 ELSE 0 END) AS total_certificates, "
 				+ "COUNT(r.userId) AS total_quizzes_attended " + "FROM emps e LEFT JOIN result r ON e.eid = r.userid "
-				+ "WHERE e.role != 'Admin' " + "GROUP BY e.eid, e.name, e.email, e.role";
+				+ "GROUP BY e.eid, e.name, e.email, e.role";
 		ArrayList<UserManage> list = null;
 		try {
 			PreparedStatement ps = con.prepareStatement(str);
