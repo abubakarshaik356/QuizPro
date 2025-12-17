@@ -557,11 +557,11 @@ let questions = [
 {
     id: <%=q.getId()%>,
     type: "<%=q.getOptionType()%>",
-    question: "<%=q.getQuestion()%>",
-    opt1: "<%=q.getOption1()%>",
-    opt2: "<%=q.getOption2()%>",
-    opt3: "<%=q.getOption3()%>",
-    opt4: "<%=q.getOption4()%>"
+    question: `<%=q.getQuestion()%>`,
+    opt1: `<%=q.getOption1()%>`,
+    opt2: `<%=q.getOption2()%>`,
+    opt3: `<%=q.getOption3()%>`,
+    opt4: `<%=q.getOption4()%>`
 },
 <%}%>
 ];
