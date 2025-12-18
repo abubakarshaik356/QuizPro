@@ -151,15 +151,22 @@ body {
 
 /* --- Answer Options (MCQ) --- */
 .answer-option {
-	display: block;
+	display: flex;
+	flex-direction: row;
 	margin-bottom: 15px;
+	background-color: var(--dark-bg);
+	padding: 15px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.2s, border 0.2s;
+	border: 2px solid transparent;
 }
 
 .answer-label {
 	display: flex;
 	align-items: center;
 	background-color: var(--dark-bg);
-	padding: 15px;
+	/* padding: 15px; */
 	border-radius: 8px;
 	cursor: pointer;
 	transition: background-color 0.2s, border 0.2s;
@@ -397,6 +404,37 @@ body {
     pointer-events: none;
 }
 
+/* Inline code */
+#question-text code {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 14px;
+}
+
+/* Block code */
+#question-text pre {
+    background: #0f172a;
+    color: #e5e7eb;
+    padding: 16px;
+    border-radius: 10px;
+    margin: 12px 0;
+    overflow-x: auto;
+    line-height: 1.5;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+
+#question-text pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: 14px;
+    white-space: pre;
+}
+
 </style>
 </head>
 <body>
@@ -404,6 +442,7 @@ body {
 	int quizId = (int) request.getAttribute("quizId");
 	String quizName = (String) request.getAttribute("quizName");
 	String category = (String) request.getAttribute("category");
+	String difficulty= (String) request.getAttribute("difficulty");
 	int quescount = (int) request.getAttribute("quescount");
 	ArrayList<Questions> ques = (ArrayList<Questions>) request.getAttribute("questions");
 	request.setAttribute("quizId", quizId);
@@ -434,7 +473,7 @@ body {
 				<p>
 					Category:
 					<%=category%>
-					| Difficulty: Beginner
+					| Difficulty: <%=difficulty %>
 				</p>
 			</div>
 

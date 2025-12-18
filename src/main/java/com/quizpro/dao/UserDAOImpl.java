@@ -310,4 +310,23 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return false;
 	}
+
+	@Override
+	public String getResultId(int userId, int quizId) {
+		Connection conn = DBConnection.getConnector();
+		String qry="SELECT resid from result where userId=? and quizId=?";
+		try {
+			PreparedStatement pStatement=conn.prepareStatement(qry);
+			pStatement.setInt(1, userId);
+			pStatement.setInt(2, quizId);
+			ResultSet rSet=pStatement.executeQuery();
+			if(rSet.next()) {
+				return rSet.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

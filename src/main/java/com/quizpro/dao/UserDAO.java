@@ -21,4 +21,5 @@ public interface UserDAO {
 	public boolean isEmailExist(String email);
 	Performance getPerformance(int userId);
 	boolean newPassword(String email, String password);
+	String getResultId(int userId, int quizId);
 }

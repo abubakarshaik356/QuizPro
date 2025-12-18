@@ -1,8 +1,12 @@
 package com.quizpro.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
 public class EmailUtil {
 
@@ -20,7 +24,7 @@ public class EmailUtil {
 		String html = getSuccessTemplate();
 		sendMail(to, subject, html);
 	}
-	
+
 	public static void sendCreateMail(String to, String name, String password) {
 		String subject = "Account Creation Successful";
 		String html = getCreationMail(name, to, password);
@@ -61,6 +65,130 @@ public class EmailUtil {
 		}
 	}
 
+	public static void sendCertificateMail(String to, String userName, String quizName, String certificateId,
+			String date) {
+		try {
+			// 1. Generate certificate HTML
+			String html = getCertificateHtml(userName, quizName, date, certificateId);
+
+			// 2. Convert HTML to PDF
+			File pdf = generateCertificatePdf(html, "QuizPro-Certificate.pdf");
+
+			// 3. Send mail with attachment
+			sendMailWithAttachment(to, "🎓 Your QuizPro Certificate",
+					"Congratulations! Your certificate is attached with this email.", pdf);
+
+			// 4. Cleanup
+			pdf.delete();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void sendMailWithAttachment(String to, String subject, String messageText, File attachment)
+			throws Exception {
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props, new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(FROM_EMAIL, APP_PASSWORD);
+			}
+		});
+
+		Message message = new MimeMessage(session);
+		message.setFrom(new InternetAddress(FROM_EMAIL));
+		message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+		message.setSubject(subject);
+
+		// Text body
+		MimeBodyPart textPart = new MimeBodyPart();
+		textPart.setText(messageText);
+		
+		MimeBodyPart htmlPart = new MimeBodyPart();
+	    htmlPart.setContent(getCertificateMailBody(),
+	            "text/html; charset=UTF-8");
+		
+		// Attachment
+		MimeBodyPart attachmentPart = new MimeBodyPart();
+		attachmentPart.attachFile(attachment);
+
+		Multipart multipart = new MimeMultipart("mixed");
+
+	    Multipart bodyMultipart = new MimeMultipart("alternative");
+	    bodyMultipart.addBodyPart(textPart);
+	    bodyMultipart.addBodyPart(htmlPart);
+
+	    MimeBodyPart bodyWrapper = new MimeBodyPart();
+	    bodyWrapper.setContent(bodyMultipart);
+
+	    multipart.addBodyPart(bodyWrapper);
+	    multipart.addBodyPart(attachmentPart);
+	    
+		message.setContent(multipart);
+		System.out.println("Email sent successfully");
+		Transport.send(message);
+	}
+	
+	private static String getCertificateMailBody() {
+	    return """
+	        <div style="font-family: Arial, sans-serif; background:#f4f6f8; padding:25px;">
+	            <div style="
+	                max-width:600px;
+	                margin:auto;
+	                background:#ffffff;
+	                padding:30px;
+	                border-radius:10px;
+	                box-shadow:0 4px 12px rgba(0,0,0,0.1);
+	                border-top:6px solid #0077B6;
+	            ">
+
+	                <h2 style="text-align:center; color:#0077B6;">
+	                    🎓 Congratulations!
+	                </h2>
+
+	                <p style="font-size:16px; color:#333;">
+	                    You have successfully completed the quiz:
+	                </p>
+
+	                
+
+	                <p style="font-size:15px; color:#444;">
+	                    We are pleased to inform you that your <strong>certificate of mastery</strong>
+	                    has been generated successfully.
+	                </p>
+
+	                
+
+	                <p style="font-size:14px; color:#555;">
+	                    You can download and share this certificate for professional or academic use.
+	                </p>
+
+	                <p style="font-size:14px; color:#333;">
+	                    Best wishes,<br/>
+	                    <strong>QuizPro Team</strong>
+	                </p>
+
+	                <p style="
+	                    font-size:12px;
+	                    color:#888;
+	                    text-align:center;
+	                    margin-top:25px;
+	                ">
+	                    © 2025 QuizPro. All rights reserved.
+	                </p>
+
+	            </div>
+	        </div>
+	        """;
+	}
+
+	
 	public static String getOtpTemplate(int otp) {
 		return String.format("""
 				            <div style="font-family: Arial, sans-serif; background:#eef2f7; padding:25px;">
@@ -271,54 +399,254 @@ public class EmailUtil {
 
 	public static String getCreationMail(String name, String email, String password) {
 
-	    String loginUrl = "http://localhost:8080/QuizPro/login.jsp"; // change if needed
+		String loginUrl = "http://localhost:8080/QuizPro/login.jsp"; // change if needed
 
-	    return """
-	        <div style="max-width:600px; margin:40px auto; background:#ffffff; padding:30px;
-	                    border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+		return """
+				<div style="max-width:600px; margin:40px auto; background:#ffffff; padding:30px;
+				            border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
 
-	            <h2 style="text-align:center; color:#0077B6; margin-bottom:10px;">
-	                Welcome to QuizPro 🎉
-	            </h2>
-	            <p style="text-align:center; color:#6c757d; margin-top:0;">
-	                Your account has been successfully created by the administrator
-	            </p>
+				    <h2 style="text-align:center; color:#0077B6; margin-bottom:10px;">
+				        Welcome to QuizPro 🎉
+				    </h2>
+				    <p style="text-align:center; color:#6c757d; margin-top:0;">
+				        Your account has been successfully created by the administrator
+				    </p>
 
-	            <hr style="border:none; border-top:1px solid #e0e0e0; margin:25px 0;">
+				    <hr style="border:none; border-top:1px solid #e0e0e0; margin:25px 0;">
 
-	            <p style="font-size:16px; color:#333;">
-	                Hello <strong>%s</strong>,
-	            </p>
+				    <p style="font-size:16px; color:#333;">
+				        Hello <strong>%s</strong>,
+				    </p>
 
-	            <p style="font-size:15px; color:#555; line-height:1.6;">
-	                We’re excited to inform you that your <strong>QuizPro</strong> account has been
-	                successfully created by the administrator.
-	                You can now log in and start exploring quizzes, assessments, and certifications.
-	            </p>
+				    <p style="font-size:15px; color:#555; line-height:1.6;">
+				        We’re excited to inform you that your <strong>QuizPro</strong> account has been
+				        successfully created by the administrator.
+				        You can now log in and start exploring quizzes, assessments, and certifications.
+				    </p>
 
-	            <div style="background:#f8f9fa; padding:15px; border-radius:8px; margin:20px 0;">
-	                <p style="margin:6px 0;"><strong>Username:</strong> %s</p>
-	                <p style="margin:6px 0;"><strong>Temporary Password:</strong> %s</p>
-	            </div>
+				    <div style="background:#f8f9fa; padding:15px; border-radius:8px; margin:20px 0;">
+				        <p style="margin:6px 0;"><strong>Username:</strong> %s</p>
+				        <p style="margin:6px 0;"><strong>Temporary Password:</strong> %s</p>
+				    </div>
 
-	            <p style="font-size:14px; color:#856404; background:#fff3cd; padding:12px; border-radius:6px;">
-	                ⚠️ For security reasons, please change your password after your first login.
-	            </p>
+				    <p style="font-size:14px; color:#856404; background:#fff3cd; padding:12px; border-radius:6px;">
+				        ⚠️ For security reasons, please change your password after your first login.
+				    </p>
 
-	            <div style="text-align:center; margin:30px 0;">
-	                <a href="%s"
-	                   style="background:#0077B6; color:#ffffff; padding:12px 26px;
-	                          text-decoration:none; border-radius:6px; font-size:16px;">
-	                    Login to QuizPro
-	                </a>
-	            </div>
+				    <div style="text-align:center; margin:30px 0;">
+				        <a href="%s"
+				           style="background:#0077B6; color:#ffffff; padding:12px 26px;
+				                  text-decoration:none; border-radius:6px; font-size:16px;">
+				            Login to QuizPro
+				        </a>
+				    </div>
 
-	            <p style="font-size:13px; color:#6c757d; text-align:center; margin-top:30px;">
-	                If you have any questions, please contact the administrator.<br>
-	                © 2025 QuizPro. All rights reserved.
-	            </p>
+				    <p style="font-size:13px; color:#6c757d; text-align:center; margin-top:30px;">
+				        If you have any questions, please contact the administrator.<br>
+				        © 2025 QuizPro. All rights reserved.
+				    </p>
 
-	        </div>
-	        """.formatted(name, email, password, loginUrl);
+				</div>
+				""".formatted(name, email, password, loginUrl);
 	}
+
+	private static String getCertificateHtml(String name, String quiz, String date, String certId) {
+		return """
+								     <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8" />
+<title>Certificate of Mastery</title>
+
+<style>
+
+@page {
+    size: A4 landscape;
+    margin: 0;
+}
+
+html, body {
+    width: 297mm;
+    height: 210mm;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ================= CERTIFICATE ================= */
+.certificate-container {
+    width: 297mm;
+    height: 210mm;
+    background: #f7f4e4;
+    border: 10px solid #c8a853;
+    padding: 20mm 25mm;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* ================= LOGO ================= */
+.logo {
+    font-size: 46px;
+    font-weight: bold;
+    margin-bottom: 12mm;
+}
+
+.logo-quiz { color: #2b6b7f; }
+.logo-pro  { color: #d4a429; }
+
+/* ================= TITLE ================= */
+.certificate-title {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 54px;
+    letter-spacing: 1.5px;
+    margin-bottom: 5mm;
+}
+
+/* ================= BODY ================= */
+.certifies-text {
+    font-size: 18px;
+    margin-bottom: 5mm;
+}
+
+.recipient-banner {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 6mm 0 3mm;
+}
+
+.completion-text {
+    font-size: 16px;
+    margin-bottom: 6mm;
+}
+
+/* Narrow content like Image-2 */
+.course-name {
+    width: 75%%;
+    margin: 0 auto 19mm;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    line-height: 1.3;
+}
+
+/* ================= FOOTER ================= */
+.certificate-footer {
+    display: table;
+    width: 100%%;
+    table-layout: fixed;
+    margin-top: -6mm;
+}
+
+.footer-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* ================= SEAL ================= */
+.footer-left {
+    width: 25%%;
+    text-align: left;
+}
+
+.gold-seal {
+    width: 105px;
+    height: 105px;
+    border-radius: 50%%;
+    background: #d4a429;
+    border: 4px solid #c8a853;
+    text-align: center;
+}
+
+.seal-text {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: bold;
+    padding-top: 32px;
+}
+
+/* ================= DETAILS ================= */
+.footer-center {
+    width: 40%%;
+    text-align: left;
+    font-size: 14px;
+    padding-left: 10px;
+}
+
+/* ================= SIGNATURE ================= */
+.footer-right {
+    width: 35%%;
+    text-align: right;
+}
+
+.signature {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 36px;
+    color: #2b6b7f;
+}
+
+.signature-title {
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="certificate-container" id="elite-certificate">
+
+    <div class="logo">
+        <span class="logo-quiz">Quiz</span><span class="logo-pro">Pro</span>
+    </div>
+
+    <div class="certificate-title">Certificate of Mastery</div>
+
+    <div class="certifies-text">This certifies that</div>
+
+    <div class="recipient-banner">%s</div>
+
+    <div class="completion-text">
+        has successfully completed and mastered the specialized learning path in
+    </div>
+
+    <div class="course-name">%s</div>
+
+    <div class="certificate-footer">
+
+    <div class="footer-cell footer-left">
+        <div class="gold-seal">
+            <div class="seal-text">QuizPro<br/>Certified</div>
+        </div>
+    </div>
+
+    <div class="footer-cell footer-center">
+        <p><strong>Awarded on:</strong> %s</p>
+        <p><strong>Unique Verification ID:</strong> %s</p>
+    </div>
+
+    <div class="footer-cell footer-right">
+        <div class="signature">Sandesh</div>
+        <div class="signature-title">CEO, QuizPro</div>
+    </div>
+
+</div>
+</div>
+
+</body>
+</html>
+								     """.formatted(name, quiz, date, certId);
+	}
+
+	private static File generateCertificatePdf(String html, String fileName) throws Exception {
+
+		File pdfFile = new File(System.getProperty("java.io.tmpdir"), fileName);
+
+		try (OutputStream os = new FileOutputStream(pdfFile)) {
+			PdfRendererBuilder builder = new PdfRendererBuilder();
+			builder.withHtmlContent(html, null);
+			builder.toStream(os);
+			builder.run();
+		}
+		return pdfFile;
+	}
+
 }

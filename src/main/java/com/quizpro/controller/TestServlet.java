@@ -29,6 +29,7 @@ public class TestServlet extends HttpServlet {
 		req.setAttribute("quizId", quiz.getQuizId());
 		req.setAttribute("quizName", quiz.getTitle());
 		req.setAttribute("category", quiz.getCategory());
+		req.setAttribute("difficulty", quiz.getQuizLevel());
 		req.setAttribute("quescount", quiz.getQuestions());
 		req.setAttribute("activePage", "tests");
 		req.getRequestDispatcher("Test.jsp").forward(req, resp);

@@ -458,7 +458,7 @@ h2 {
 			<a href="#" class="logo">Quiz<span
 				style="color: var(--accent-color);">Pro</span></a>
 			<nav class="nav">
-				<a href="#categories">Explore</a> <a href="#">About Us</a> <a
+				<a href="#categories">Explore</a> <a href="Aboutus.jsp">About Us</a> <a
 					href="login.jsp">Login</a> <a href="signup.jsp" class="cta-button"
 					style="padding: 10px 20px; margin-left: 25px; font-size: 1em;">Get
 					Started</a>
