@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.quizpro.dto.Subject"%>
 <%@page import="com.quizpro.dto.UserTestHis"%>
 <%@page import="java.util.List"%>
 <html lang="en">
@@ -187,7 +188,7 @@ h1 {
 }
 
 .history-table th, .history-table td {
-	padding: 15px;
+	padding: 14px;
 	border-bottom: 1px solid #E9ECEF;
 }
 
@@ -278,11 +279,11 @@ h1 {
 </style>
 </head>
 <body>
-	<%-- <%
- List<UserTestHis> uhis = (List<UserTestHis>)request.getAttribute("usertesthis");
+	<%
+ List<Subject> usub = (List<Subject>)request.getAttribute("subjects");
 
 
-%> --%>
+%> 
 	<%@ include file="navbar.jsp" %>
 
 	<div class="container">
@@ -292,24 +293,46 @@ h1 {
 				progress across all categories.</p>
 		</div>
 
-		<div class="filter-controls">
+		<%-- <div class="filter-controls">
 			<select>
-				<option>Filter by Category (All)</option>
-				<option>Software Engineering</option>
+			<option>Filter by Category (All)</option>
+				<%
+					for (Subject sub : usub) {
+				%>
+				 
+				<option><%=sub.getSubname() %></option>
+				<%} %>
+				<!--
 				<option>Data Science & AI</option>
-				<option>Financial Analysis</option>
+				<option>Financial Analysis</option> -->
 			</select> <select>
 				<option>Filter by Status (All)</option>
-				<option>Completed</option>
-				<option>In Progress</option>
-				<option>Failed</option>
-			</select> <select>
+				<option id="statusPass">PASS</option>
+				<option id = "statusFail">FAIL</option>
+				
+			</select> <!-- <select>
 				<option>Show Last 30 Days</option>
 				<option>Show Last 90 Days</option>
 				<option>Show All Time</option>
-			</select>
+			</select> -->
 		</div>
+ --%>
+ 
+ <div class="filter-controls">
+    <select id="categoryFilter" onchange="applyFilters()">
+        <option value="ALL">Filter by Category (All)</option>
+        <% for (Subject sub : usub) { %>
+            <option value="<%=sub.getSubname()%>"><%=sub.getSubname()%></option>
+        <% } %>
+    </select>
 
+    <select id="statusFilter" onchange="applyFilters()">
+        <option value="ALL">Filter by Status (All)</option>
+        <option value="PASS">PASS</option>
+        <option value="FAIL">FAIL</option>
+    </select>
+</div>
+ 
 		<div class="history-table-container">
 			<table class="history-table">
 				<thead>
@@ -346,7 +369,7 @@ h1 {
 					<%
 					for (UserTestHis uHis : uhis) {
 					%>
-					<tr>
+					<%-- <tr>
 						<td><%=uHis.getQuizName()%></td>
 						<td><%=uHis.getCategory()%></td>
 						<td><%=uHis.getDateTaken()%></td>
@@ -362,75 +385,69 @@ h1 {
 								<%}
 							%>
 						</td>
-					</tr>
+					</tr> --%>
+					<tr class="data-row">
+    <td class="quiz-name"><%=uHis.getQuizName()%></td>
+    <td class="category"><%=uHis.getCategory()%></td>
+    <td><%=uHis.getDateTaken()%></td>
+    <td><%=uHis.getScorePer()%></td>
+    <td class="status"><%=uHis.getStatus()%></td>
+    <td>
+        <a href="TestPreview?quizId=<%=uHis.getQuizId() %>" class="retake-button">Retake</a>
+
+        <% if(uHis.getScorePer() >= 80){ %>
+            <a href="GenerateCertificate?quizId=<%=uHis.getQuizId()%>&Date=<%=uHis.getDateTaken() %>"
+               class="download-button" target="_blank">Download Certificate</a>
+        <% } else { %>
+            <a href="#" class="download-button" style="background-color:red">Not Available</a>
+        <% } %>
+    </td>
+</tr>
+					
 					<%
 					}
 					%>
-
-					<!-- <tr>
-                        <td>Advanced Algorithm Design</td>
-                        <td>Software Engineering</td>
-                        <td>2025-11-20</td>
-                        <td class="score-success">92%</td>
-                        <td>Pass</td>
-                            <a href="results-page.html" class="action-link"><i class="fas fa-search"></i> Review</a>
-                           <td> <a href="quiz-page.html" class="retake-button">Retake</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>System Design Fundamentals</td>
-                        <td>Software Engineering</td>
-                        <td>2025-11-15</td>
-                        <td class="score-danger">45%</td>
-                        <td>Fail</td>
-                            <a href="results-page.html" class="action-link"><i class="fas fa-search"></i> Review</a>
-                           <td> <a href="quiz-page.html" class="retake-button">Retake</a>
-                        </td> 
-                    </tr>
-                    <tr>
-                        <td>Python Fundamentals Module 1</td>
-                        <td>Data Science & AI</td>
-                        <td>2025-11-10</td>
-                        <td class="score-warning">In Progress</td>
-                        <td>Pass</td>
-                            <a href="quiz-page.html" class="action-link" style="color: var(--accent-color);"><i class="fas fa-play"></i> Resume</a>
-                            <td><a href="#" class="retake-button" style="background-color: var(--subtle-gray);">Finish Later</a>
-                        </td> 
-                    </tr>
-                    <tr>
-                        <td>Financial Modeling Basics</td>
-                        <td>Financial Analysis</td>
-                        <td>2025-10-28</td>
-                        <td class="score-warning">71%</td>
-                        <td>Pass</td>
-                            <a href="results-page.html" class="action-link"><i class="fas fa-search"></i> Review</a>
-                            <td><a href="quiz-page.html" class="retake-button">Retake</a>
-                        </td> 
-                    </tr> -->
 				</tbody>
 			</table>
 		</div>
 	</div>
 
-	<script>
-		function toggleDropdown() {
-			document.getElementById("profileDropdown").classList.toggle("show");
-		}
+<script>
+function applyFilters() {
+    const categoryValue = document.getElementById("categoryFilter").value;
+    const statusValue = document.getElementById("statusFilter").value;
 
-		// Close the dropdown if the user clicks outside of it
-		window.onclick = function(event) {
-			if (!event.target.matches('.profile-icon')) {
-				var dropdowns = document
-						.getElementsByClassName("dropdown-content");
-				for (var i = 0; i < dropdowns.length; i++) {
-					var openDropdown = dropdowns[i];
-					if (openDropdown.classList.contains('show')) {
-						openDropdown.classList.remove('show');
-					}
-				}
-			}
-		}
-	</script>
+    const rows = document.querySelectorAll(".data-row");
+
+    rows.forEach(row => {
+        const category = row.querySelector(".category").innerText.trim();
+        const status = row.querySelector(".status").innerText.trim().toUpperCase();
+
+        let categoryMatch = (categoryValue === "ALL" || category === categoryValue);
+        let statusMatch = (statusValue === "ALL" || status === statusValue);
+
+        if (categoryMatch && statusMatch) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+// Profile dropdown logic (unchanged)
+function toggleDropdown() {
+    document.getElementById("profileDropdown").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.profile-icon')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            dropdowns[i].classList.remove('show');
+        }
+    }
+}
+</script>
 
 </body>
 </html>

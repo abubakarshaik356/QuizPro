@@ -779,20 +779,40 @@ h1 {
 			<p><%=desc %></p>
 		</div>
 
-		<div class="filter-row">
+		<!-- <div class="filter-row">
 			<div class="filter-group">
-				<select class="filter-select">
-					<option>Sort by Date Added</option>
-					<option>Sort by Difficulty (Low to High)</option>
-					<option>Sort by Your Performance</option>
-				</select> <select class="filter-select">
-					<option>Filter by Status</option>
-					<option>Not Started</option>
-					<option>In Progress</option>
-					<option>Completed</option>
+				<select class="filter-select" onchange="applyFilters()">
+					<option value="ALL">Sort by Date Added</option>
+					<option value="EASY">EASY</option>
+					<option value="INTERMEDIATE">INTERMEDIATE</option>
+					<option value="ADVANCED">ADVANCED</option>
+				</select> <select class="status-select" onchange="applyFilters()">
+					<option value="ALL">Filter by Status</option>
+					<option value="NOT STARTED">Not Started</option>
+					<option value="FAIL">FAIL</option>
+					<option value="PASS">Completed</option>
 				</select>
 			</div>
-		</div>
+		</div> -->
+
+	<div class="filter-row">
+    <div class="filter-group">
+        <select id="difficultyFilter" class="filter-select" onchange="applyFilters()">
+            <option value="ALL">All Difficulties</option>
+            <option value="EASY">EASY</option>
+            <option value="INTERMEDIATE">INTERMEDIATE</option>
+            <option value="ADVANCED">ADVANCED</option>
+        </select>
+
+        <select id="statusFilter" class="filter-select" onchange="applyFilters()">
+            <option value="ALL">All Status</option>
+            <option value="NOT_STARTED">Not Started</option>
+            <option value="PASS">Completed (Pass)</option>
+            <option value="FAIL">Completed (Fail)</option>
+        </select>
+    </div>
+</div>
+	
 
 		<div class="quiz-list">
 			<%
@@ -805,7 +825,8 @@ h1 {
 			<%}
 			for (Quizzes q : quizes) {
 			%>
-			<div class="quiz-item">
+			<div class="quiz-item" data-difficulty="<%=q.getQuizLevel()%>"
+     data-marks="<%=q.getMarks()%>">
 				<div class="quiz-info">
 					<h3 class="quiz-title"><%=q.getTitle() %></h3>
 					<p class="quiz-description"><%=q.getDesc() %></p>
@@ -860,6 +881,55 @@ h1 {
 	</div>
 
 	<script>
+	
+/* 	function applyFilters() {
+	    const categoryValue = document.getElementById("categoryFilter").value;
+	    const statusValue = document.getElementById("statusFilter").value;
+
+	    const rows = document.querySelectorAll(".data-row");
+
+	    rows.forEach(row => {
+	        const category = row.querySelector(".category").innerText.trim();
+	        const status = row.querySelector(".status").innerText.trim().toUpperCase();
+
+	        let categoryMatch = (categoryValue === "ALL" || category === categoryValue);
+	        let statusMatch = (statusValue === "ALL" || status === statusValue);
+
+	        if (categoryMatch && statusMatch) {
+	            row.style.display = "";
+	        } else {
+	            row.style.display = "none";
+	        }
+	    });
+	} */
+	
+	function applyFilters() {
+	    const difficulty = document.getElementById("difficultyFilter").value;
+	    const status = document.getElementById("statusFilter").value;
+
+	    const quizzes = document.querySelectorAll(".quiz-item");
+
+	    quizzes.forEach(quiz => {
+	        const quizDifficulty = quiz.dataset.difficulty;
+	        const marks = parseInt(quiz.dataset.marks);
+
+	        // Determine status
+	        let quizStatus = "NOT_STARTED";
+	        if (marks > 0 && marks < 80) quizStatus = "FAIL";
+	        else if (marks >= 80) quizStatus = "PASS";
+
+	        const difficultyMatch = (difficulty === "ALL" || quizDifficulty === difficulty);
+	        const statusMatch = (status === "ALL" || quizStatus === status);
+
+	        if (difficultyMatch && statusMatch) {
+	            quiz.style.display = "grid";
+	        } else {
+	            quiz.style.display = "none";
+	        }
+	    });
+	}
+	
+	
 		function toggleDropdown() {
 			document.getElementById("profileDropdown").classList.toggle("show");
 		}

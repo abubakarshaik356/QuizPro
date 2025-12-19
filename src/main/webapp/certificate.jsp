@@ -1,11 +1,17 @@
+<%@page import="java.time.LocalDate"%>
 <%@page import="com.quizpro.dto.Quizzes"%>
 <%@page import="com.quizpro.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
+LocalDate currentDate = LocalDate.now();
     User user = (User) request.getAttribute("User");
     Quizzes quiz = (Quizzes) request.getAttribute("Quiz");
-    String date = (String) request.getAttribute("Date");
+    String date = request.getAttribute("Date") != null
+            ? (String) request.getAttribute("Date")
+            : currentDate.toString();
+
+    
     String resId = (String) request.getAttribute("resId");
 %>
 
@@ -50,7 +56,7 @@ html, body {
 /* ================= CERTIFICATE ================= */
 .certificate-container {
     width: 297mm;
-    height: 210mm;
+    height: 178mm;
     background: #f7f4e4;
     border: 12px solid #c8a853;
     padding: 20mm 25mm;

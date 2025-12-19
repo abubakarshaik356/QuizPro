@@ -289,12 +289,12 @@ h1 {
 
         <div class="search-bar">
         <input type="text" id="searchInput" placeholder="Search for any subject...">
-            <select class="filter-select">
+           <!--  <select class="filter-select">
                 <option>Filter by Difficulty</option>
             </select>
             <select class="filter-select">
                 <option>Filter by Progress</option>
-            </select>
+            </select> -->
         </div>
 		</div>
 
