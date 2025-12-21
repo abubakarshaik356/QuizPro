@@ -182,7 +182,7 @@ body {
 	transform: scale(1.2);
 }
 
-.answer-input:checked+.answer-label {
+.answer-input:checked+.answer-option {
 	border-color: var(--primary-color);
 	background-color: #e6f2f9;
 }
@@ -614,7 +614,8 @@ function loadQuestion(i) {
     document.getElementById("question-text").innerHTML = q.question;
     document.getElementById("count").innerHTML = i+1;
     document.getElementById("ques"+i).className = "q-button current";
-	console.log("loadquestion")
+	console.log("loadquestion");
+	console.log(q.opt1);
 
     let html = "";
     if (q.type === "mcq")
@@ -642,10 +643,10 @@ function renderMCQ(q) {
 function renderMultiSelect(q) {
     return `
        <label>Select Multiple Suitable Options</label><br>
-       <label><input type="checkbox" name="ans" value="${q.opt1}" class="answer-input"> <span class="answer-label"> ${q.opt1}</span></label><br>
-       <label><input type="checkbox" name="ans" value="${q.opt2}" class="answer-input"> <span class="answer-label"> ${q.opt2}</span></label><br>
-       <label><input type="checkbox" name="ans" value="${q.opt3}" class="answer-input"> <span class="answer-label"> ${q.opt3}</span></label><br>
-       <label><input type="checkbox" name="ans" value="${q.opt4}" class="answer-input"> <span class="answer-label"> ${q.opt4}</span></label><br>
+       <label class="answer-option"><input type="checkbox" name="ans" value="${q.opt1}" class="answer-input"> <span class="answer-label"> ${q.opt1}</span></label><br>
+       <label class="answer-option"><input type="checkbox" name="ans" value="${q.opt2}" class="answer-input"> <span class="answer-label"> ${q.opt2}</span></label><br>
+       <label class="answer-option"><input type="checkbox" name="ans" value="${q.opt3}" class="answer-input"> <span class="answer-label"> ${q.opt3}</span></label><br>
+       <label class="answer-option"><input type="checkbox" name="ans" value="${q.opt4}" class="answer-input"> <span class="answer-label"> ${q.opt4}</span></label><br>
     `;
 }
 

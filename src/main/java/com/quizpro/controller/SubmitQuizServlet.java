@@ -49,6 +49,11 @@ public class SubmitQuizServlet extends HttpServlet {
 
 			}
 			answer=answer.replace("\"", "");
+			answer = answer.replace("&", "&amp;")
+		               .replace("<", "&lt;")
+		               .replace(">", "&gt;")
+		               .replace("\"", "&quot;")
+		               .replace("'", "&#x27;");
 			if(answer.equalsIgnoreCase(answers.get(i))) {
 				score++;
 			}

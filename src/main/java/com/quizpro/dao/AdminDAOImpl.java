@@ -514,7 +514,7 @@ public class AdminDAOImpl implements AdminDAO {
 					EmailUtil.sendCompleteMail(email);
 					return true;
 				} else {
-					String uqry="UPDATE result SET percentage=?, resstatus=? where userId=? and quizId=?";
+					String uqry="UPDATE result SET percentage=?, resstatus=?, date=? where userId=? and quizId=?";
 					ps=conn.prepareStatement(uqry);
 					ps.setDouble(1, perc);
 					String status="";
@@ -524,8 +524,9 @@ public class AdminDAOImpl implements AdminDAO {
 						status="FAIL";
 					}
 					ps.setString(2, status);
-					ps.setInt(3, userId);
-					ps.setInt(4, quizId);
+					ps.setDate(3, new java.sql.Date(System.currentTimeMillis()));
+					ps.setInt(4, userId);
+					ps.setInt(5, quizId);
 					ps.executeUpdate();
 					EmailUtil.sendCompleteMail(email);
 					return true;

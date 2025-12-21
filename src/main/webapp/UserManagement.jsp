@@ -138,6 +138,33 @@ body {
 	background: var(--accent-color);
 	color: black;
 }
+
+/* User ID Link Styling */
+.user-id-link {
+    display: inline-block;
+    background-color: #E1F5FE; /* Very light blue */
+    color: var(--primary-color);
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9em;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.user-id-link:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 119, 182, 0.2);
+    border-color: var(--secondary-blue);
+}
+
+/* Optional: style the parent cell to center it */
+td:has(.user-id-link) {
+    vertical-align: middle;
+}
 </style>
 </head>
 
@@ -195,7 +222,7 @@ body {
 			<tbody id="userTableBody">
 				<% for (UserManage u : users) { %>
 				<tr data-role="user" data-status="active">
-					<td><%= u.getId() %></td>
+					<td><a href="UserDetails?userId=<%=u.getId()%>" class="user-id-link"><%= u.getId() %></a></td>
 					<td><%= u.getName() %></td>
 					<td><%= u.getEmail() %></td>
 					<td><%= u.getTotalQuizAttend() %></td>

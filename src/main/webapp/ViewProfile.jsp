@@ -309,8 +309,8 @@ h1 {
 						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwJgi2tfPov2vnIRkuxgRw_gHSqt_uRGbrdA&s"
 							alt="Profile Avatar" class="user-avatar">
 						<p style="font-size: 1.2em; font-weight: 700; margin: 5px 0 0 0;"><%=user.getName()%></p>
-						<a href="#" style="font-size: 0.9em; color: var(--primary-color);">Change
-							Photo</a>
+						<!-- <a href="#" style="font-size: 0.9em; color: var(--primary-color);">Change
+							Photo</a> -->
 					</div>
 					<div class="user-detail-row">
 						<strong><i class="fa fa-id-badge"></i> User ID:</strong> <span><%=user.getUserid()%></span>
