@@ -1,10 +1,3 @@
-<%
-    // GUEST-ONLY GUARD: Redirects logged-in users to their dashboard/categories
-    if (session.getAttribute("id") != null) {
-        response.sendRedirect("categories.jsp"); 
-        return; 
-    }
-%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -354,22 +347,22 @@
             <p style="text-align: center; color: var(--subtle-gray); margin-bottom: 50px;">A dedicated team of educators and engineers.</p>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="https://drive.google.com/thumbnail?id=1RqSL_1heCI8mMKLnGAZgQDWaSqUZUBfu&sz=w800" alt="CEO">
+                    <img src="assets/abubakar.png" alt="CEO">
                     <h4>Abubakar Siddiq</h4>
                     <p style="color: var(--primary-color); font-weight: 700;">Team Member</p>
                 </div>
                 <div class="team-member">
-                    <img src="https://drive.google.com/thumbnail?id=1Yxf4KBnH1xtEcX5NP_7PDBwOGgsbT7eN&sz=w400" alt="CTO">
+                    <img src="assets/chaitanya.jpeg" alt="CTO">
                     <h4>Chaithanya</h4>
                     <p style="color: var(--primary-color); font-weight: 700;">Team Member</p>
                 </div>
                 <div class="team-member">
-                    <img src="https://drive.google.com/thumbnail?id=1VxewKKrGE3Sqoak78Z1h3DGdVnT5qTVb&sz=w800" alt="Designer">
+                    <img src="assets/narendra.jpeg" alt="Designer">
                     <h4>Narendra Reddy</h4>
                     <p style="color: var(--primary-color); font-weight: 700;">Team Member</p>
                 </div>
                 <div class="team-member">
-                    <img src="https://drive.google.com/thumbnail?id=1hDAbBZnlfxVoezJNScljkkwF1ka2TbXl&sz=w800" alt="Content">
+                    <img src="assets/kesava.jpeg" alt="Content">
                     <h4>Kesava</h4>
                     <p style="color: var(--primary-color); font-weight: 700;">Team Member</p>
                 </div>
@@ -395,6 +388,5 @@
             </div>
         </div>
     </footer>
-
 </body>
 </html>

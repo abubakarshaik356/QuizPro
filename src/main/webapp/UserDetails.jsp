@@ -237,7 +237,7 @@ td {
 <body>
 	<%@ include file="adminSideBar.jsp"%>
 	<%
-	User user = (User) session.getAttribute("user");
+	User users = (User) request.getAttribute("users");
 	ArrayList<UserTestHis> history = (ArrayList) request.getAttribute("history");
 	Performance perf = (Performance) request.getAttribute("performance");
 	%>
@@ -256,16 +256,16 @@ td {
 						alt="Profile Avatar" class="user-avatar">
 				</div>
 				<div class="details">
-					<h2><%=user.getName()%></h2>
+					<h2><%=users.getName()%></h2>
 					<p>
 						<i class="far fa-id-badge"></i>
-						<%=user.getUserid()%></p>
+						<%=users.getUserid()%></p>
 					<p>
 						<i class="far fa-envelope"></i>
-						<%=user.getEmail()%></p>
+						<%=users.getEmail()%></p>
 					<p>
 						<i class="far fa-mobile-alt"></i>
-						<%=user.getPhone()%></p>
+						<%=users.getPhone()%></p>
 				</div>
 			</div>
 			<div class="user-stats">
