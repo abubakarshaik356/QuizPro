@@ -109,86 +109,84 @@ public class EmailUtil {
 		// Text body
 		MimeBodyPart textPart = new MimeBodyPart();
 		textPart.setText(messageText);
-		
+
 		MimeBodyPart htmlPart = new MimeBodyPart();
-	    htmlPart.setContent(getCertificateMailBody(),
-	            "text/html; charset=UTF-8");
-		
+		htmlPart.setContent(getCertificateMailBody(), "text/html; charset=UTF-8");
+
 		// Attachment
 		MimeBodyPart attachmentPart = new MimeBodyPart();
 		attachmentPart.attachFile(attachment);
 
 		Multipart multipart = new MimeMultipart("mixed");
 
-	    Multipart bodyMultipart = new MimeMultipart("alternative");
-	    bodyMultipart.addBodyPart(textPart);
-	    bodyMultipart.addBodyPart(htmlPart);
+		Multipart bodyMultipart = new MimeMultipart("alternative");
+		bodyMultipart.addBodyPart(textPart);
+		bodyMultipart.addBodyPart(htmlPart);
 
-	    MimeBodyPart bodyWrapper = new MimeBodyPart();
-	    bodyWrapper.setContent(bodyMultipart);
+		MimeBodyPart bodyWrapper = new MimeBodyPart();
+		bodyWrapper.setContent(bodyMultipart);
 
-	    multipart.addBodyPart(bodyWrapper);
-	    multipart.addBodyPart(attachmentPart);
-	    
+		multipart.addBodyPart(bodyWrapper);
+		multipart.addBodyPart(attachmentPart);
+
 		message.setContent(multipart);
 		System.out.println("Email sent successfully");
 		Transport.send(message);
 	}
-	
+
 	private static String getCertificateMailBody() {
-	    return """
-	        <div style="font-family: Arial, sans-serif; background:#f4f6f8; padding:25px;">
-	            <div style="
-	                max-width:600px;
-	                margin:auto;
-	                background:#ffffff;
-	                padding:30px;
-	                border-radius:10px;
-	                box-shadow:0 4px 12px rgba(0,0,0,0.1);
-	                border-top:6px solid #0077B6;
-	            ">
+		return """
+				<div style="font-family: Arial, sans-serif; background:#f4f6f8; padding:25px;">
+				    <div style="
+				        max-width:600px;
+				        margin:auto;
+				        background:#ffffff;
+				        padding:30px;
+				        border-radius:10px;
+				        box-shadow:0 4px 12px rgba(0,0,0,0.1);
+				        border-top:6px solid #0077B6;
+				    ">
 
-	                <h2 style="text-align:center; color:#0077B6;">
-	                    🎓 Congratulations!
-	                </h2>
+				        <h2 style="text-align:center; color:#0077B6;">
+				            🎓 Congratulations!
+				        </h2>
 
-	                <p style="font-size:16px; color:#333;">
-	                    You have successfully completed the quiz:
-	                </p>
+				        <p style="font-size:16px; color:#333;">
+				            You have successfully completed the quiz:
+				        </p>
 
-	                
 
-	                <p style="font-size:15px; color:#444;">
-	                    We are pleased to inform you that your <strong>certificate of mastery</strong>
-	                    has been generated successfully.
-	                </p>
 
-	                
+				        <p style="font-size:15px; color:#444;">
+				            We are pleased to inform you that your <strong>certificate of mastery</strong>
+				            has been generated successfully.
+				        </p>
 
-	                <p style="font-size:14px; color:#555;">
-	                    You can download and share this certificate for professional or academic use.
-	                </p>
 
-	                <p style="font-size:14px; color:#333;">
-	                    Best wishes,<br/>
-	                    <strong>QuizPro Team</strong>
-	                </p>
 
-	                <p style="
-	                    font-size:12px;
-	                    color:#888;
-	                    text-align:center;
-	                    margin-top:25px;
-	                ">
-	                    © 2025 QuizPro. All rights reserved.
-	                </p>
+				        <p style="font-size:14px; color:#555;">
+				            You can download and share this certificate for professional or academic use.
+				        </p>
 
-	            </div>
-	        </div>
-	        """;
+				        <p style="font-size:14px; color:#333;">
+				            Best wishes,<br/>
+				            <strong>QuizPro Team</strong>
+				        </p>
+
+				        <p style="
+				            font-size:12px;
+				            color:#888;
+				            text-align:center;
+				            margin-top:25px;
+				        ">
+				            © 2025 QuizPro. All rights reserved.
+				        </p>
+
+				    </div>
+				</div>
+				""";
 	}
 
-	
 	public static String getOtpTemplate(int otp) {
 		return String.format("""
 				            <div style="font-family: Arial, sans-serif; background:#eef2f7; padding:25px;">
@@ -452,188 +450,188 @@ public class EmailUtil {
 
 	private static String getCertificateHtml(String name, String quiz, String date, String certId) {
 		return """
-								     <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta charset="UTF-8" />
-<title>Certificate of Mastery</title>
+												     <!DOCTYPE html>
+				<html xmlns="http://www.w3.org/1999/xhtml">
+				<head>
+				<meta charset="UTF-8" />
+				<title>Certificate of Mastery</title>
 
-<style>
+				<style>
 
-@page {
-    size: A4 landscape;
-    margin: 0;
-}
+				@page {
+				    size: A4 landscape;
+				    margin: 0;
+				}
 
-html, body {
-    width: 297mm;
-    height: 210mm;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-}
+				html, body {
+				    width: 297mm;
+				    height: 210mm;
+				    margin: 0;
+				    padding: 0;
+				    font-family: Arial, Helvetica, sans-serif;
+				}
 
-/* ================= CERTIFICATE ================= */
-.certificate-container {
-    width: 297mm;
-    height: 210mm;
-    background: #f7f4e4;
-    border: 10px solid #c8a853;
-    padding: 20mm 25mm;
-    box-sizing: border-box;
-    text-align: center;
-}
+				/* ================= CERTIFICATE ================= */
+				.certificate-container {
+				    width: 297mm;
+				    height: 210mm;
+				    background: #f7f4e4;
+				    border: 10px solid #c8a853;
+				    padding: 20mm 25mm;
+				    box-sizing: border-box;
+				    text-align: center;
+				}
 
-/* ================= LOGO ================= */
-.logo {
-    font-size: 46px;
-    font-weight: bold;
-    margin-bottom: 12mm;
-}
+				/* ================= LOGO ================= */
+				.logo {
+				    font-size: 46px;
+				    font-weight: bold;
+				    margin-bottom: 12mm;
+				}
 
-.logo-quiz { color: #2b6b7f; }
-.logo-pro  { color: #d4a429; }
+				.logo-quiz { color: #2b6b7f; }
+				.logo-pro  { color: #d4a429; }
 
-/* ================= TITLE ================= */
-.certificate-title {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 54px;
-    letter-spacing: 1.5px;
-    margin-bottom: 5mm;
-}
+				/* ================= TITLE ================= */
+				.certificate-title {
+				    font-family: "Times New Roman", Times, serif;
+				    font-size: 54px;
+				    letter-spacing: 1.5px;
+				    margin-bottom: 5mm;
+				}
 
-/* ================= BODY ================= */
-.certifies-text {
-    font-size: 18px;
-    margin-bottom: 5mm;
-}
+				/* ================= BODY ================= */
+				.certifies-text {
+				    font-size: 18px;
+				    margin-bottom: 5mm;
+				}
 
-.recipient-banner {
-    font-size: 40px;
-    font-weight: bold;
-    margin: 6mm 0 3mm;
-}
+				.recipient-banner {
+				    font-size: 40px;
+				    font-weight: bold;
+				    margin: 6mm 0 3mm;
+				}
 
-.completion-text {
-    font-size: 16px;
-    margin-bottom: 6mm;
-}
+				.completion-text {
+				    font-size: 16px;
+				    margin-bottom: 6mm;
+				}
 
-/* Narrow content like Image-2 */
-.course-name {
-    width: 75%%;
-    margin: 0 auto 19mm;
-    font-size: 28px;
-    font-weight: bold;
-    letter-spacing: 1.5px;
-    line-height: 1.3;
-}
+				/* Narrow content like Image-2 */
+				.course-name {
+				    width: 75%%;
+				    margin: 0 auto 19mm;
+				    font-size: 28px;
+				    font-weight: bold;
+				    letter-spacing: 1.5px;
+				    line-height: 1.3;
+				}
 
-/* ================= FOOTER ================= */
-.certificate-footer {
-    display: table;
-    width: 100%%;
-    table-layout: fixed;
-    margin-top: -6mm;
-}
+				/* ================= FOOTER ================= */
+				.certificate-footer {
+				    display: table;
+				    width: 100%%;
+				    table-layout: fixed;
+				    margin-top: -6mm;
+				}
 
-.footer-cell {
-    display: table-cell;
-    vertical-align: middle;
-}
+				.footer-cell {
+				    display: table-cell;
+				    vertical-align: middle;
+				}
 
-/* ================= SEAL ================= */
-.footer-left {
-    width: 25%%;
-    text-align: left;
-}
+				/* ================= SEAL ================= */
+				.footer-left {
+				    width: 25%%;
+				    text-align: left;
+				}
 
-.gold-seal {
-    width: 105px;
-    height: 105px;
-    border-radius: 50%%;
-    background: #d4a429;
-    border: 4px solid #c8a853;
-    text-align: center;
-}
+				.gold-seal {
+				    width: 105px;
+				    height: 105px;
+				    border-radius: 50%%;
+				    background: #d4a429;
+				    border: 4px solid #c8a853;
+				    text-align: center;
+				}
 
-.seal-text {
-    color: #ffffff;
-    font-size: 13px;
-    font-weight: bold;
-    padding-top: 32px;
-}
+				.seal-text {
+				    color: #ffffff;
+				    font-size: 13px;
+				    font-weight: bold;
+				    padding-top: 32px;
+				}
 
-/* ================= DETAILS ================= */
-.footer-center {
-    width: 40%%;
-    text-align: left;
-    font-size: 14px;
-    padding-left: 10px;
-}
+				/* ================= DETAILS ================= */
+				.footer-center {
+				    width: 40%%;
+				    text-align: left;
+				    font-size: 14px;
+				    padding-left: 10px;
+				}
 
-/* ================= SIGNATURE ================= */
-.footer-right {
-    width: 35%%;
-    text-align: right;
-}
+				/* ================= SIGNATURE ================= */
+				.footer-right {
+				    width: 35%%;
+				    text-align: right;
+				}
 
-.signature {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 36px;
-    color: #2b6b7f;
-}
+				.signature {
+				    font-family: "Times New Roman", Times, serif;
+				    font-size: 36px;
+				    color: #2b6b7f;
+				}
 
-.signature-title {
-    font-size: 14px;
-}
-</style>
-</head>
+				.signature-title {
+				    font-size: 14px;
+				}
+				</style>
+				</head>
 
-<body>
+				<body>
 
-<div class="certificate-container" id="elite-certificate">
+				<div class="certificate-container" id="elite-certificate">
 
-    <div class="logo">
-        <span class="logo-quiz">Quiz</span><span class="logo-pro">Pro</span>
-    </div>
+				    <div class="logo">
+				        <span class="logo-quiz">Quiz</span><span class="logo-pro">Pro</span>
+				    </div>
 
-    <div class="certificate-title">Certificate of Mastery</div>
+				    <div class="certificate-title">Certificate of Mastery</div>
 
-    <div class="certifies-text">This certifies that</div>
+				    <div class="certifies-text">This certifies that</div>
 
-    <div class="recipient-banner">%s</div>
+				    <div class="recipient-banner">%s</div>
 
-    <div class="completion-text">
-        has successfully completed and mastered the specialized learning path in
-    </div>
+				    <div class="completion-text">
+				        has successfully completed and mastered the specialized learning path in
+				    </div>
 
-    <div class="course-name">%s</div>
+				    <div class="course-name">%s</div>
 
-    <div class="certificate-footer">
+				    <div class="certificate-footer">
 
-    <div class="footer-cell footer-left">
-        <div class="gold-seal">
-            <div class="seal-text">QuizPro<br/>Certified</div>
-        </div>
-    </div>
+				    <div class="footer-cell footer-left">
+				        <div class="gold-seal">
+				            <div class="seal-text">QuizPro<br/>Certified</div>
+				        </div>
+				    </div>
 
-    <div class="footer-cell footer-center">
-        <p><strong>Awarded on:</strong> %s</p>
-        <p><strong>Unique Verification ID:</strong> %s</p>
-    </div>
+				    <div class="footer-cell footer-center">
+				        <p><strong>Awarded on:</strong> %s</p>
+				        <p><strong>Unique Verification ID:</strong> %s</p>
+				    </div>
 
-    <div class="footer-cell footer-right">
-        <div class="signature">Sandesh</div>
-        <div class="signature-title">CEO, QuizPro</div>
-    </div>
+				    <div class="footer-cell footer-right">
+				        <div class="signature">Sandesh</div>
+				        <div class="signature-title">CEO, QuizPro</div>
+				    </div>
 
-</div>
-</div>
+				</div>
+				</div>
 
-</body>
-</html>
-								     """.formatted(name, quiz, date, certId);
+				</body>
+				</html>
+												     """.formatted(name, quiz, date, certId);
 	}
 
 	private static File generateCertificatePdf(String html, String fileName) throws Exception {
@@ -647,6 +645,75 @@ html, body {
 			builder.run();
 		}
 		return pdfFile;
+	}
+
+	public static void sendSupportQueryFromUser(String userEmail, String username, String userId, String userMessage) {
+
+		String subject = "📩 Support Query - QuizPro";
+
+		String html = """
+				<div style="font-family: Arial, sans-serif; background:#f4f6f8; padding:25px;">
+				    <div style="
+				        max-width:600px;
+				        margin:auto;
+				        background:#ffffff;
+				        padding:30px;
+				        border-radius:10px;
+				        box-shadow:0 4px 12px rgba(0,0,0,0.1);
+				        border-top:6px solid #FFB700;
+				    ">
+
+				        <h2 style="color:#0077B6;">New Support Query</h2>
+
+				        <p><strong>User Name:</strong> %s</p>
+				        <p><strong>User ID:</strong> %s</p>
+				        <p><strong>User Email:</strong> %s</p>
+
+				        <div style="
+				            background:#f0f2f5;
+				            padding:15px;
+				            border-radius:8px;
+				            margin-top:15px;
+				            line-height:1.6;
+				        ">
+				            %s
+				        </div>
+
+				        <p style="font-size:12px; color:#777; margin-top:25px;">
+				            Sent from QuizPro dashboard footer
+				        </p>
+
+				    </div>
+				</div>
+				""".formatted(username, userId, userEmail, userMessage.replaceAll("\n", "<br>"));
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
+		Session session = Session.getInstance(props, new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(FROM_EMAIL, APP_PASSWORD);
+			}
+		});
+
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(FROM_EMAIL));
+			message.setReplyTo(InternetAddress.parse(userEmail)); // ⭐ reply to user
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(FROM_EMAIL));
+			message.setSubject(subject);
+			message.setContent(html, "text/html; charset=UTF-8");
+
+			Transport.send(message);
+			System.out.println("Support query mail sent with user details");
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
