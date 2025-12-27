@@ -1,3 +1,9 @@
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /build
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
 # Use official Java image
 FROM eclipse-temurin:17-jdk
 
