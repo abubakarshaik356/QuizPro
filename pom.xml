@@ -51,8 +51,36 @@
     		<version>1.0.10</version>
 		</dependency>
 
+		<!-- Embedded Tomcat Core -->
+<dependency>
+    <groupId>org.apache.tomcat.embed</groupId>
+    <artifactId>tomcat-embed-core</artifactId>
+    <version>10.1.20</version>
+</dependency>
+
+<!-- JSP Support (IMPORTANT for JSP projects like QuizPro) -->
+<dependency>
+    <groupId>org.apache.tomcat.embed</groupId>
+    <artifactId>tomcat-embed-jasper</artifactId>
+    <version>10.1.20</version>
+</dependency>
+
+<!-- Servlet API (provided by Tomcat at runtime) -->
+<dependency>
+    <groupId>jakarta.servlet</groupId>
+    <artifactId>jakarta.servlet-api</artifactId>
+    <version>6.0.0</version>
+    <scope>provided</scope>
+</dependency>
 
 	</dependencies>
+	
+	<properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+</properties>
+
+
 	<build>
 		<finalName>Quiz-Pro</finalName>
 	</build>
