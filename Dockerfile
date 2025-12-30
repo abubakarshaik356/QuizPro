@@ -24,4 +24,5 @@ COPY --from=build /build/target/*.jar app.jar
 
 EXPOSE 10000
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-cp", "app.jar", "com.quizpro.controller.AppServer"]
+
