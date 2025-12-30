@@ -1,29 +1,25 @@
-# =======================
-# STAGE 1: Build the JAR
-# =======================
+# ===============================
+# STAGE 1: Build fat JAR
+# ===============================
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 
 WORKDIR /build
-
-# Copy only required files
 COPY pom.xml .
 COPY src ./src
 
-# Build executable JAR
 RUN mvn clean package -DskipTests
 
-# =======================
-# STAGE 2: Run the app
-# =======================
+# ===============================
+# STAGE 2: Run application
+# ===============================
 FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
-# 🔑 COPY JAR FROM BUILD STAGE (NOT local machine)
-COPY --from=build /build/target/*shaded*.jar app.jar
-
+# Copy the FAT JAR (Quiz-Pro.jar)
+COPY --from=build /build/target/Quiz-Pro.jar app.jar
 
 EXPOSE 10000
 
+# 🔑 Explicit main class (NO MANIFEST REQUIRED)
 CMD ["java", "-cp", "app.jar", "com.quizpro.controller.AppServer"]
-
