@@ -18,14 +18,14 @@ public class AppServer {
         Tomcat tomcat = new Tomcat();
         tomcat.setBaseDir("tomcat");
 
-        // 🔑 EXPLICIT CONNECTOR (THIS FIXES RENDER)
+        // 🔑 CORRECT CONNECTOR SETUP (ONLY ONCE)
         Connector connector = new Connector();
         connector.setPort(Integer.parseInt(port));
-        connector.setProperty("address", "0.0.0.0"); // 🔥 THIS IS THE KEY
-        tomcat.setConnector(connector);
-        tomcat.getService().addConnector(connector);
+        connector.setProperty("address", "0.0.0.0");
 
-        // Webapp directory (copied by Docker)
+        tomcat.setConnector(connector); // ✅ THIS IS ENOUGH
+
+        // Webapp directory copied by Docker
         File webappDir = new File("webapp");
         Context ctx = tomcat.addWebapp("", webappDir.getAbsolutePath());
         ctx.setParentClassLoader(AppServer.class.getClassLoader());
