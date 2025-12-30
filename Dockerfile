@@ -1,20 +1,27 @@
+# =======================
+# STAGE 1: Build the JAR
+# =======================
 FROM maven:3.9.6-eclipse-temurin-17 AS build
+
 WORKDIR /build
+
+# Copy only required files
 COPY pom.xml .
 COPY src ./src
+
+# Build executable JAR
 RUN mvn clean package -DskipTests
 
-# Use official Java image
+# =======================
+# STAGE 2: Run the app
+# =======================
 FROM eclipse-temurin:17-jdk
 
-# Set working directory
 WORKDIR /app
 
-# Copy Maven build output
-COPY target/*.jar app.jar
+# 🔑 COPY JAR FROM BUILD STAGE (NOT local machine)
+COPY --from=build /build/target/*.jar app.jar
 
-# Expose port (Render uses 10000 internally)
 EXPOSE 10000
 
-# Run the app
 CMD ["java", "-jar", "app.jar"]
