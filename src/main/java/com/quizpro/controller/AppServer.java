@@ -9,14 +9,16 @@ public class AppServer {
 
     public static void main(String[] args) throws Exception {
 
-        String port = System.getenv("PORT");
-        if (port == null) {
-            port = "10000";
-        }
+    	String port = System.getenv("PORT");
+    	if (port == null) {
+    	    port = "10000";
+    	}
 
-        Tomcat tomcat = new Tomcat();
-        tomcat.setPort(Integer.parseInt(port));
-        tomcat.setBaseDir("tomcat");
+    	Tomcat tomcat = new Tomcat();
+    	tomcat.setPort(Integer.parseInt(port));
+    	tomcat.setHostname("0.0.0.0"); // 🔑 REQUIRED for Render
+    	tomcat.setBaseDir("tomcat");
+
 
         // 🔑 THIS IS THE CRITICAL LINE
         File webappDir = new File("webapp");
