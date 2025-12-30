@@ -20,7 +20,8 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 # 🔑 COPY JAR FROM BUILD STAGE (NOT local machine)
-COPY --from=build /build/target/*.jar app.jar
+COPY --from=build /build/target/*shaded*.jar app.jar
+
 
 EXPOSE 10000
 
