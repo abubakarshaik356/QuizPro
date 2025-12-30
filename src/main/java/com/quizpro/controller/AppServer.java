@@ -3,7 +3,6 @@ package com.quizpro.controller;
 import java.io.File;
 
 import org.apache.catalina.Context;
-import org.apache.catalina.Host;
 import org.apache.catalina.startup.Tomcat;
 
 public class AppServer {
@@ -17,24 +16,18 @@ public class AppServer {
 
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(Integer.parseInt(port));
+        tomcat.setBaseDir("tomcat");
 
-        // ===== Base directory =====
-        File baseDir = new File("tomcat");
-        baseDir.mkdirs();
-        tomcat.setBaseDir(baseDir.getAbsolutePath());
+        // 🔑 THIS IS THE CRITICAL LINE
+        File webappDir = new File("webapp");
 
-        // ===== Host =====
-        Host host = tomcat.getHost();
-        host.setAppBase(".");
+        if (!webappDir.exists()) {
+            throw new RuntimeException("Webapp directory not found: " + webappDir.getAbsolutePath());
+        }
 
-        // ===== WebApp Context =====
-        String webappDir = new File("src/main/webapp").getAbsolutePath();
-        Context context = tomcat.addWebapp("", webappDir);
+        Context ctx = tomcat.addWebapp("", webappDir.getAbsolutePath());
+        ctx.setParentClassLoader(AppServer.class.getClassLoader());
 
-        // Fix for JSP scanning
-        context.setParentClassLoader(AppServer.class.getClassLoader());
-
-        // Start Tomcat
         tomcat.start();
         tomcat.getServer().await();
     }
