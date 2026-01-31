@@ -10,15 +10,7 @@
 	pageEncoding="UTF-8"%>
 <%
 String name = (String) session.getAttribute("name");
-Integer idObj = (Integer) session.getAttribute("id");
-
-if (name == null || idObj == null) {
-	response.sendRedirect("login.jsp");
-	return;
-}
-
-int id = idObj;
-
+int id = (int) session.getAttribute("id");
 SubjectDAO dao = new SubjectDAOImpl();
 List<Subject> list = dao.getAllSubjects();
 UserDAO userDAO = new UserDAOImpl();
@@ -36,8 +28,7 @@ List<UserTestHis> history = userDAO.userTestHistory(id);
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <style>
 :root {
@@ -240,15 +231,14 @@ h3 {
 
 .viewall {
 	width: 100%;
-	display: flex;
+	display:flex;
 	flex-direction: column;
 	align-items: center;
 }
-
 .category-card {
 	background-color: var(--card-bg);
 	padding: 25px 15px;
-	height: 180px;
+	height:180px;
 	border-radius: 8px;
 	text-align: center;
 	cursor: pointer;
@@ -454,6 +444,108 @@ h3 {
 }
 
 /* --- Support Banner Styling (Merged Contact Section) --- */
+.support-banner {
+	background-color: #1A1A1A;
+	/* Very dark background for high contrast */
+	color: white;
+	padding: 10px 0;
+	text-align: center;
+	margin-bottom: 0;
+}
+
+.support-title {
+	color: white;
+	margin-bottom: 10px;
+}
+
+.support-subtitle {
+	color: #A9A9A9;
+	margin-bottom: 30px;
+}
+
+.support-form-container {
+	max-width: 600px;
+	margin: 0 auto;
+	display: flex;
+	gap: 20px;
+	align-items: center;
+	justify-content: center;
+}
+
+.support-input {
+	padding: 14px 15px;
+	border: none;
+	border-radius: 8px;
+	flex-grow: 1;
+	font-size: 1em;
+	min-width: 250px;
+}
+
+.support-button {
+	/* Uses existing cta-button styles */
+	background-color: var(--accent-color) !important;
+	color: var(--light-text) !important;
+	padding: 14px 25px !important;
+	font-weight: 700;
+	border-radius: 8px;
+	text-decoration: none;
+	transition: opacity 0.2s;
+}
+
+.support-button:hover {
+	opacity: 0.9;
+}
+
+.support-links {
+	margin-top: 25px;
+	font-size: 0.95em;
+}
+
+.knowledge-base-link {
+	color: var(--accent-color);
+	text-decoration: none;
+	font-weight: 600;
+	transition: color 0.2s;
+}
+
+.knowledge-base-link:hover {
+	color: #FFCF40;
+	/* Lighter gold on hover */
+}
+
+.phone-number {
+	color: #A9A9A9;
+}
+
+/* --- Footer Styling --- */
+.footer {
+	background-color: #0d0d1a;
+	/* Slightly lighter dark color for distinction */
+	color: #A9A9A9;
+	margin-top: 0;
+	padding: 20px 0;
+	font-size: 0.9em;
+	text-align: center;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-copyright a {
+	color: #A9A9A9;
+	margin: 0 10px;
+	text-decoration: none;
+	transition: color 0.2s;
+}
+
+.footer-copyright a:hover {
+	color: var(--accent-color);
+}
+
+.empty {
+	width: 100%;
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+}
 </style>
 </head>
 
@@ -493,20 +585,20 @@ h3 {
 			%>
 			<ul class="test-list">
 				<%
-				int count = 0;
+				int count=0;
 				for (UserTestHis l : history) {
 					count++;
-					if (count == 5) {
+					if(count==5){
 						break;
 					}
 				%>
 				<li class="test-item">
 					<div>
 						<p>
-							<strong><%=l.getQuizName()%></strong>
+							<strong><%=l.getQuizName() %></strong>
 						</p>
 						<small>Status: Completed</small>
-					</div> <span><%=l.getScorePer()%>% Scored</span>
+					</div> <span><%=l.getScorePer() %>% Scored</span>
 				</li>
 				<%
 				}
@@ -523,21 +615,18 @@ h3 {
 			</h2>
 			<div class="category-grid">
 				<%
-				int count = 0;
+				int count=0;
 				for (Subject s : list) {
 				%>
-				<a
-					href="quizes?subId=<%=s.getSubId()%>&userId=<%=id%>&title=<%=s.getSubname()%> &desc=<%=s.getSubDesc()%>"
-					class="card-anchor">
+				<a href="quizes?subId=<%=s.getSubId()%>&userId=<%=id %>&title=<%=s.getSubname() %> &desc=<%=s.getSubDesc()%>" class="card-anchor">
 					<div class="category-card">
 						<i class="fas fa-book icon"></i>
 						<h3><%=s.getSubname()%></h3>
 						<p><%=s.getSubDesc()%></p>
 					</div>
 				</a>
-				<%
-				count++;
-				if (count == 5) {
+				<% count++;
+				if(count==5){
 					break;
 				}
 				}
@@ -570,8 +659,7 @@ h3 {
 			 -->
 			</div>
 			<div class="viewall">
-				<a href="categories" class="cta-button" style="margin-top: 40px">View
-					All Categories</a>
+				<a href="categories" class="cta-button" style="margin-top: 40px">View All Categories</a>
 			</div>
 		</div>
 		<section class="section" id="faq"
@@ -617,8 +705,7 @@ h3 {
 						<h3 style="color: var(--primary-color);">The Future of AI in
 							Cloud Computing</h3>
 						<small style="color: var(--subtle-gray);">May 15, 2025 | 7
-							min read</small> <a href="https://www.w3schools.com/ai/ai_whatis.asp"
-							class="read-more" target="_blank">Read More →</a>
+							min read</small> <a href="https://www.w3schools.com/ai/ai_whatis.asp" class="read-more" target="_blank">Read More →</a>
 					</div>
 					<div class="blog-post-card">
 						<img
@@ -627,8 +714,7 @@ h3 {
 						<h3 style="color: var(--primary-color);">5 Essential SQL
 							Tricks for Data Analysts</h3>
 						<small style="color: var(--subtle-gray);">May 8, 2025 | 5
-							min read</small> <a href="https://www.w3schools.com/sql/"
-							class="read-more" target="_blank">Read More →</a>
+							min read</small> <a href="https://www.w3schools.com/sql/" class="read-more" target="_blank">Read More →</a>
 					</div>
 					<div class="blog-post-card">
 						<img
@@ -637,16 +723,42 @@ h3 {
 						<h3 style="color: var(--primary-color);">Mastering Financial
 							Modeling in Q3 2025</h3>
 						<small style="color: var(--subtle-gray);">May 1, 2025 | 10
-							min read</small> <a
-							href="https://www.ey.com/en_in/services/ey-faas-learning-solutions/e-learning-certification-in-financial-modelling-and-valuation"
-							class="read-more" target="_blank">Read More →</a>
+							min read</small> <a href="https://www.ey.com/en_in/services/ey-faas-learning-solutions/e-learning-certification-in-financial-modelling-and-valuation" class="read-more" target="_blank">Read More →</a>
 					</div>
 				</div>
 			</div>
 		</section>
 
 	</div>
-	<%@include file="Footer.jsp"%>
+	<section class="support-banner section">
+		<div class="container">
+			<h2 class="support-title">
+				<i class="fas fa-headset"></i> Need Help?
+			</h2>
+			<!-- <p class="support-subtitle">Reach out to our professional support
+				team for assistance.</p>
+ -->
+			<!-- <div class="support-form-container">
+				<input type="email" placeholder="Enter your email"
+					class="support-input"> <a href="#"
+					class="cta-button support-button">Get Support</a>
+			</div> -->
+
+			<p class="support-links">
+				<a href="#" class="knowledge-base-link">Visit our Knowledge Base</a>
+				| <span class="phone-number">Call us at: +91 <b>7569700589</b> | <b>quizpro.org@gmail.com</b></span>
+			</p>
+		</div>
+	</section>
+
+	<footer class="footer">
+		<div class="container">
+			<p class="footer-copyright">
+				&copy; 2025 QuizPro. All Rights Reserved. <!-- | <a href="#">Legal</a> |
+				<a href="#">Privacy</a> | <a href="#">Careers</a> -->
+			</p>
+		</div>
+	</footer>
 
 	<script>
 		function toggleDropdown() {
